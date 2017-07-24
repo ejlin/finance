@@ -151,7 +151,7 @@ body{
 #profile_quick_glance{
   width: 84%;
   height: 250px;
-  background-color: #9dc068;
+  background-color:  #b9d793;
   margin-left: 8%;
   margin-top: 25px;
   float: left;
@@ -202,9 +202,8 @@ body{
 #profile_assets_box, #profile_liabilities_box{
   width: 40%;
   height: 250px;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
   overflow-y: scroll;
-  margin-top: 25px;
 }
 
 #profile_assets_box{
@@ -219,6 +218,26 @@ body{
   margin-right: 8%;
 }
 
+#profile_assets_box_top{
+  background-color: #8dce1f;
+  width: 40%;
+  height: 75px;
+  border-radius: 4px 4px 0px 0px;
+  margin-left: 8%;
+  float: left;
+  margin-top: 25px;
+}
+
+#profile_liabilities_box_top{
+  background-color: #8dce1f;
+  width: 40%;
+  height: 75px;
+  border-radius: 4px 4px 0px 0px;
+  margin-right: 8%;
+  float: right;
+  margin-top: 25px;
+}
+
 #profile_assets_box_bottom{
   background-color: #8dce1f;
   width: 40%;
@@ -226,6 +245,7 @@ body{
   border-radius: 0px 0px 4px 4px;
   margin-left: 8%;
   float: left;
+  margin-bottom: 100px;
 }
 
 #profile_liabilities_box_bottom{
@@ -235,10 +255,18 @@ body{
   border-radius: 0px 0px 4px 4px;
   margin-right: 8%;
   float: right;
+  margin-bottom: 100px;  
 }
 
-
 #profile_assets_title, #profile_liabilities_title{
+  color: white;
+  font-family: 'Economica', sans-serif;
+  font-size: 22px;
+  margin-top: 6.5%;
+
+}
+
+#profile_assets_placeholder, #profile_liabilities_placeholder{
   color: white;
   font-family: 'Economica', sans-serif;
   font-size: 22px;
@@ -248,13 +276,13 @@ body{
 
 .profile_asset_bullet, .profile_liabilities_bullet{
   width: 80%;
-  height: 25px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  height: 50px;
+  margin-top: 20px;
+  margin-bottom: 15px;
   box-sizing: border-box;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 20px;
   color: white;
   background-color: #ffa500;
   padding: 12px 12px 12px 12px;
@@ -263,7 +291,6 @@ body{
   z-index: 1;
   margin-left: calc(10% - 12px);
 }
-
 
 .modal {
     display: none; /* Hidden by default */
@@ -315,6 +342,8 @@ body{
 
 #modal_img, #modal_img_other{
   width: 40%;
+  background-color: grey;
+  border-radius: 4px;
 }
 
 #modal_img:hover, #modal_img_other:hover{
@@ -328,6 +357,44 @@ body{
   color: white;
   font-size: 16px;
 }
+
+#assets_modal_back{
+  cursor: pointer;
+  display: none;
+  float: left;
+}
+
+#asset_name, #asset_worth{
+  width: 60%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #ffa500;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 7.5%;
+  margin-left: 20%;
+}
+
+
+#save_other_button{
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:  #85bb65;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10%;
+  display: none;
+}
+
+
 
 /***************************PROFILE.HTMl***********************/
 

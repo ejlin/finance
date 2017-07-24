@@ -60,18 +60,35 @@
 
     <div class = "clearfix"/>    
     
+
+    <div id="profile_assets_box_top">
+      <center>
+        <div id="profile_assets_title">
+          Assets:
+        </div>
+      </center>
+    </div>
+
+     <div id="profile_liabilities_box_top">
+      <center>
+        <div id="profile_liabilities_title">
+        Liabilities:
+      </div>
+      </center>
+    </div>
+
+    
+    <div class = "clearfix"/>    
+    
     <div id="profile_assets_box">
-      <div id="profile_assets_title">
-        Assets:
+      <div id="profile_assets_placeholder">
       </div>
     </div>
        
     
     <div id="profile_liabilities_box">
-      <div id="profile_liabilities_title">
-        Liabilities:
+      <div id="profile_liabilities_placeholder">
       </div>
-
     </div>
 
     <div class = "clearfix"/>    
@@ -84,12 +101,12 @@
           </img>
         </a>
       
-        <a onclick="update_net()">
+   <!--     <a onclick="update_net()">
           <img id="profile_save_assets_button" src="Images/check.png">
           </img>
         </a>
-
-        <a id="add_asset_modal_button" onclick="add_asset()">
+-->
+        <a id="add_asset_modal_button" onclick="open_assets_modal()">
           <img id="profile_add_assets_button" src="Images/add.png">
           </img>
         </a>
@@ -102,12 +119,12 @@
           <img id="profile_remove_liabilities_button" src="Images/minus.png">
           </img>
         </a>
-      
+     <!-- 
         <a onclick="update_net()">
           <img id="profile_save_liabilities_button" src="Images/check.png">
           </img>
         </a>
-
+-->
         <a onclick="add_liabilities()">
           <img id="profile_add_liabilities_button" src="Images/add.png">
           </img>
@@ -117,9 +134,13 @@
      
     <div class = "clearfix"/>   
 
+
+
     <div id="assets_add_menu" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <img onclick="show_menu()" id="assets_modal_back" src="Images/back.png">
+        </img>
+        <span onclick="close_assets_modal()" class="close">&times;</span>
         <center>
         <div id="modal_logo" class="modal_logo">
           <img id="modal_img" src="Images/account.png">
@@ -134,14 +155,14 @@
         </div>
 
         <div id="modal_logo" class="modal_logo">
-          <img id="modal_img" src="Images/account.png">
+          <img id="modal_img" src="Images/rent.png">
           </img>
           <p id="modal_logo_text"> Rent </p>
         </div>
         
         </center>
         <div class = "clearfix"/>   
-        
+        <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="modal_logo"></hr>
         <br></br>
         
         <center>
@@ -158,15 +179,32 @@
         </div>
 
         <div id="modal_logo" class="modal_logo">        
-          <img id="modal_img_other" src="Images/other.png">
+          <img id="modal_img_other" onclick="open_others()" src="Images/other.png">
           </img>
           <p id="modal_logo_text"> Other </p>
         </div>
         </center>
+
+        <input id="asset_name" class="others_input" type="text" name="signup_username" maxlength=20 placeholder="Name of Asset" required>
+        </input>
+        <input id="asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required>
+        </input>
+        <center>
+          <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
       </div>
     </div>
 
     
+    
+
+    
+
     <div id="footer">
 
     </div>    
@@ -175,14 +213,4 @@
   
 </html>
 
-
-<!--
-
-FOR SELF:
-<input id="signup_username" type="text" name="signup_username" placeholder="Name of Asset" required>
-        </input>
-        <input id="signup_username" type="text" name="signup_username" placeholder="Estimated Worth" required>
-        </input>
-
--->
 

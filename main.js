@@ -7,6 +7,7 @@ const url = require('url')
 let win
 var net = 0.0;
 var assetsBullets = new Array();
+var assetsBulletsWorth = new Array();
 var liabilitiesBullets = new Array();
 
 function assetsBullet () {
@@ -58,7 +59,7 @@ function signup_login () {
   var password = document.getElementById('signup_password').value;
   
   if (username == "tgih1999" && password == "jianwu13"){
-    document.addEventListener('DOMContentLoaded', function() { 
+      document.addEventListener('DOMContentLoaded', function() { 
       setup_profile();  
     }, false);
     window.location.href = "profile.html";    
@@ -95,15 +96,17 @@ function update_net(){
 }
 
 
-function add_asset () {
-    var input = document.createElement("INPUT");
+function add_asset (name, worth) {
+    var input = document.createElement("P");
+    input.style.padding = '15px 10px 10px 10px';
     input.setAttribute("class", "profile_asset_bullet");
     assetsBullets.push(input);
+    assetsBulletsWorth.push(worth);
+    input.innerHTML = assetsBullets.length + ". " + name;        
     var para = document.getElementById("profile_assets_box");
     var child =  document.getElementById("profile_add_assets_button");
-    document.getElementById('profile_assets_title').appendChild(input); 
+    document.getElementById('profile_assets_placeholder').appendChild(input); 
     para.scrollTop = para.scrollHeight;
-  
 }
 
 function add_liabilities () {
@@ -112,16 +115,19 @@ function add_liabilities () {
     liabilitiesBullets.push(input);
     var para = document.getElementById("profile_liabilities_box");
     var child =  document.getElementById("profile_add_liabilities_button");
-    document.getElementById('profile_liabilities_title').appendChild(input);
+    document.getElementById('profile_liabilities_placeholder').appendChild(input);
     para.scrollTop = para.scrollHeight;    
   
 }
 
 function remove_asset(){
   var element = assetsBullets[assetsBullets.length - 1];
+  var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
+  net -= elementWorth;
   element.parentNode.removeChild(element);
   assetsBullets.splice(assetsBullets.length - 1, 1);
-  update_net();
+  assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
+  document.getElementById('profile_worth_text').innerHTML = "$" + net;
 }
 
 function remove_liabilities(){
@@ -132,34 +138,16 @@ function remove_liabilities(){
 }
 
 
-
-
-
-var assets_menu = document.getElementById('assets_add_menu');
-var assets_other = document.getElementById('modal_img_other');
-
-
-// Get the button that opens the modal
-var assets_menu_button = document.getElementById("add_asset_modal_button");
-
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-
 // When the user clicks on the button, open the modal 
-assets_menu_button.onclick = function() {
+function open_assets_modal() {
+    var assets_menu = document.getElementById('assets_add_menu');
     assets_menu.style.display = "block";
     show_menu();
 }
 
-assets_other.onclick = function() {
-  hide_menu();
-}
-
-
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+function close_assets_modal() {
+    var assets_menu = document.getElementById('assets_add_menu');    
     assets_menu.style.display = "none";
 }
 
@@ -171,22 +159,69 @@ function hide_menu() {
 }
 
 function show_menu() {
+  var others_input = document.getElementsByClassName('others_input');
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "none";
+    others_input[i].value = "";
+  }
+
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
   }
+  hide('assets_modal_back');
+}
+
+function show(id){
+  document.getElementById(id).style.display = "block";
+}
+
+function hide(id){
+  document.getElementById(id).style.display = "none";
+}
+
+function open_others(){
+  hide_menu();
+  show('assets_modal_back');
+  var others_input = document.getElementsByClassName('others_input');
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "block";
+  }
+}
+
+function add_net(asset){
+  net += parseFloat(asset);
+  document.getElementById('profile_worth_text').innerHTML = "$" + net;
+}
+
+function save_other(){
+  var name = document.getElementById('asset_name').value;
+  var worth = document.getElementById('asset_worth').value;
+  if ( name != "" && worth != ""){
+    add_asset(name, worth);
+    add_net(worth);
+    close_assets_modal();
+  }
 }
 
 
+
+
+
+
+
+
+/*
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == assets_menu) {
+        var assets_menu = document.getElementById('assets_add_menu');        
         assets_menu.style.display = "none";
     }
 }
 
 
-
+*/
 
 ///////////
 
