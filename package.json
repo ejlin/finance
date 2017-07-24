@@ -1,0 +1,12 @@
+{
+  "name": "Financr",
+  "version": "0.1.0",
+  "main": "./main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "electron-prebuilt": "^1.4.13"
+  }
+}

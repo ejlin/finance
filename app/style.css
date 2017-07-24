@@ -1,0 +1,352 @@
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+body{
+  padding:0;
+  margin:0;
+  background-color: grey;
+}
+
+.clearfix{
+    clear:both;
+  }
+
+
+/***************************SIGNUP.HTMl************************/
+
+#signup_body{
+  background-color: grey;
+}
+
+#signup_username, #signup_password{
+  width: 35%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #ffa500;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1;
+}
+
+#signup_username{
+  margin-top: calc(37.5% - 80px) ;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: white;
+}
+
+#signup_button{
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:  #85bb65;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#signup_button_text{
+  font-size: 16px;
+  color: white;
+}
+
+#signup_member_text{
+  
+  font-family: 'Economica', sans-serif;  
+  color: white;
+}
+
+/***************************SIGNUP.HTMl************************/
+
+/***************************LOADING.HTMl***********************/
+
+.loader {
+  border: 16px solid white;
+  border-radius: 50%;
+  border-top: 16px solid #85bb65;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: calc(37.5% - 107px/2);
+  left: calc(50% - 132px/2);
+  z-index: 3;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loading_text{
+  font-family: 'Economica', sans-serif;
+  color: white;
+  font-size: 24px;
+  margin-top: calc(37.5% + 107px/2);
+}
+
+/***************************LOADING.HTMl***********************/
+
+/***************************PROFILE.HTMl***********************/
+
+#menu{
+  margin-top: 15%;
+  width: 5%;
+  height: 70%;
+  position: fixed;
+  background-color: #D3D3D3;
+  border-radius: 0px 15px 15px 0px;
+}
+
+#menu_icon{
+  width: 80%;
+  margin-left: 10%;
+  height: 7.14%;
+  float: left;
+  margin-top: 55px ;
+}
+
+#profile_welcome_text, #profile_worth_text{
+  font-family: 'Economica', sans-serif;
+  font-size: 22px;
+  float: left;
+  margin-top: 5%;
+}
+
+#profile_welcome_text{
+  color: white;
+  margin-left: 10%;  
+}
+
+#profile_worth_text{
+  color: #85bb65;
+  float: right;
+  margin-right: 10%;
+}
+
+#profile_signout{
+  color: white;
+  float: right;
+  margin-right: 10%;
+  font-family: 'Economica', sans-serif;
+  font-size: 16px;
+  margin-top: 10px;  
+  cursor: pointer;
+}
+
+#profile_quick_glance{
+  width: 84%;
+  height: 250px;
+  background-color: #9dc068;
+  margin-left: 8%;
+  margin-top: 25px;
+  float: left;
+  border-radius: 4px;
+}
+
+#profile_quick_glance_title{
+  font-size:22px;
+  font-family: 'Economica', sans-serif;
+  color: white;
+  margin-left: 3%;
+  margin-top: 25px;
+}
+
+#profile_quick_glance_text{
+  margin-left: 3%;
+  margin-top: 25px;
+  font-size: 16px;
+  font-family: 'Economica', sans-serif;
+  color: white;
+}
+
+#profile_add_assets_button, #profile_add_liabilities_button, 
+#profile_save_assets_button,#profile_save_liabilities_button, 
+#profile_remove_assets_button, #profile_remove_liabilities_button{
+  width: 25px;
+  height: 25px;
+  margin-top: 25px;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+#profile_add_assets_button:hover, #profile_add_liabilities_button:hover, 
+#profile_save_assets_button:hover,#profile_save_liabilities_button:hover, 
+#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover{
+  background-color: #ffa500;
+  transition: 0.5s;
+}
+
+#profile_assets_text{
+  color: white;
+  font-size: 18px;
+  margin-top: 50px;
+  font-family: 'Economica', sans-serif;
+  margin-left: 2%;
+}
+
+#profile_assets_box, #profile_liabilities_box{
+  width: 40%;
+  height: 250px;
+  border-radius: 4px 4px 0px 0px;
+  overflow-y: scroll;
+  margin-top: 25px;
+}
+
+#profile_assets_box{
+  background-color: #b9d793;
+  float: left;
+  margin-left: 8%;
+}
+
+#profile_liabilities_box{
+  background-color: #b9d793;
+  float: right;
+  margin-right: 8%;
+}
+
+#profile_assets_box_bottom{
+  background-color: #8dce1f;
+  width: 40%;
+  height: 75px;
+  border-radius: 0px 0px 4px 4px;
+  margin-left: 8%;
+  float: left;
+}
+
+#profile_liabilities_box_bottom{
+  background-color: #8dce1f;
+  width: 40%;
+  height: 75px;
+  border-radius: 0px 0px 4px 4px;
+  margin-right: 8%;
+  float: right;
+}
+
+
+#profile_assets_title, #profile_liabilities_title{
+  color: white;
+  font-family: 'Economica', sans-serif;
+  font-size: 22px;
+  margin-left: 5%;
+  margin-top: 3%;
+}
+
+.profile_asset_bullet, .profile_liabilities_bullet{
+  width: 80%;
+  height: 25px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #ffa500;
+  padding: 12px 12px 12px 12px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1;
+  margin-left: calc(10% - 12px);
+}
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #D3D3D3;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 4px;
+    width: 70%; /* Could be more or less, depending on screen size */
+    height: 60%;
+    position: fixed;
+    margin-left: calc(15% - 20px);
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.close:hover,
+.close:focus {
+    color: grey;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal_logo{
+  float: left;
+  width: 20%;
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+#modal_img, #modal_img_other{
+  width: 40%;
+}
+
+#modal_img:hover, #modal_img_other:hover{
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+#modal_logo_text{
+  font-family: 'Economica', sans-serif;
+  color: white;
+  font-size: 16px;
+}
+
+/***************************PROFILE.HTMl***********************/
+
+#footer{
+  background-color: #D3D3D3;
+  margin-top: 75px;
+  width: 100%;
+  float: left;
+}
+
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
