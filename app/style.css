@@ -12,7 +12,7 @@ body{
 
 .clearfix{
     clear:both;
-  }
+}
 
 
 /***************************SIGNUP.HTMl************************/
@@ -34,6 +34,7 @@ body{
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
   z-index: 1;
+  margin-top: 10px;
 }
 
 #login_username{
@@ -44,13 +45,14 @@ body{
     color: white;
 }
 
-#signup_button{
+#login_button{
   width: 15%;
   height: 35px;
   border: none;
   background-color:  #85bb65;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 #signup_button_text{
@@ -58,8 +60,8 @@ body{
   color: white;
 }
 
-#signup_member_text{
-  
+#login_member_text{
+  margin-top: 10px;
   font-family: 'Economica', sans-serif;  
   color: white;
 }

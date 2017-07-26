@@ -1,0 +1,77 @@
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+body{
+  padding:0;
+  margin:0;
+  background-color: grey;
+}
+
+.clearfix{
+    clear:both;
+}
+
+.signup_input{
+  width: 35%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #ffa500;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1;
+  margin-top: 2%;
+  margin-left: 10%;
+  float: left;
+}
+
+#signup_first_name{
+  margin-top: 15%;
+}
+
+#signup_button{
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:  #85bb65;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 20%;
+  margin-top: 4%;
+  float: left;
+}
+
+#signup_vertical_line{
+  width: 2px;
+  height: 575px;
+  float: right;
+  margin-right: 50%;
+  background-color: #85bb65;
+  margin-top: 10%;
+}
+
+#signup_member_text{
+  font-family: 'Economica', sans-serif;  
+  color: white;
+  margin-left: 10%;
+  float: left;
+  margin-top: 25px;
+}
+
+#signup_slogan_title{
+  font-family: 'Palatino';
+  color: white;
+  font-size: 64px;
+  float: right;
+  margin-right: 10%;
+  width: 35%;
+  margin-top: -500px;
+}
+

@@ -5,6 +5,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+var name = "";
 var net = 0.0;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
@@ -21,13 +22,6 @@ assetsBullet.prototype.getInfo = function(){
 function property (address) {
   this.address = address;
 }
-
-/*
-function createAsset () {
-  var asset = new assetsBullet()
-}
-*/
-
   
 
 function createWindow () {
@@ -36,7 +30,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'app/login.html'),
+    pathname: path.join(__dirname, 'app/signup.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -90,20 +84,23 @@ var config = {
 function validate_input(){
   var first_name = document.getElementById('signup_first_name').value;
   var last_name = document.getElementById('signup_last_name').value;
+  name = first_name + last_name;
   var email = document.getElementById('signup_email').value;
-  var username = document.getElementById('signup_username').value;
   var password = document.getElementById('signup_password').value;
-  firebase.auth().createUserWithEmailAndPassword(email, password);
+  var confirm_password = document.getElementById('signup_confirm_password').value;
+  if (password == confirm_password){
+    firebase.auth().createUserWithEmailAndPassword(email, password);
+    //  setup_profile();
+  }
 }
 
 function setup_profile () {
-
-  var assetLen = assetsBullets.length;
-    
-  document.getElementById('profile_welcome_text').innerHTML = "Welcome Eric,"; 
-  update_net();  
+  window.location.href = "profile.html";    
+  document.onload = function(){
+    document.getElementById('profile_welcome_text').innerHTML = "Welcome " + name + ","; 
+  }
 }
-
+/*
 function update_net(){
   
   var assetLen = assetsBullets.length;
@@ -122,7 +119,7 @@ function update_net(){
   }
   
   document.getElementById('profile_worth_text').innerHTML = "$" + net;
-}
+}*/
 
 function add_asset (name, worth) {
     var input = document.createElement("P");
@@ -298,8 +295,6 @@ window.onclick = function(event) {
 function signout () {
     window.location.href = "login.html";      
 }
-
-
 
 
 

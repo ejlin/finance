@@ -11,31 +11,44 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
     </link>
+    <link rel="stylesheet" type="text/css" href="signup.css">
+    </link>
+
   </head>
 
   <body id="signup_body">
-      <input id="signup_first_name" type="text" name="signup_username" placeholder="First Name">
+  
+      
+      <div id="signup_vertical_line">
+      </div>
+
+      <input class="signup_input" id="signup_first_name" type="text" name="signup_username" placeholder="First Name">
       <br></br>
-      <input id="signup_last_name" type="text" name="signup_username" placeholder="Last Name">
+      <input class="signup_input" id="signup_last_name" type="text" name="signup_username" placeholder="Last Name">
       <br></br>
-      <input id="signup_email" type="text" name="signup_username" placeholder="Email">
+      <input class="signup_input" id="signup_email" type="text" name="signup_username" placeholder="Email">
       <br></br>
-      <input id="signup_username" type="text" name="signup_username" placeholder="Username">
+      <input class="signup_input" id="signup_password" type="password" name="signup_password" placeholder="Password">
       <br></br>
-      <input id="signup_password" type="password" name="signup_password" placeholder="Password">
+      <input class="signup_input" id="signup_confirm_password" type="password" name="signup_password" placeholder="Confirm Password">
       <br></br>
-      <button onclick="signup_login()" id = "signup_button" class="submit_button">
-        <div onclick="validate_input()" id="signup_button_text">
+      <button onclick="validate_input()" id = "signup_button" class="submit_button">
+        <div id="signup_button_text">
           Sign Up
         </div>
       </button>
-      <br></br>
-      <div onclick="temp_login()" id="signup_member_text">
-        Login
-      </div>
-      <br></br>
-        
+            
       
+      <div onclick="temp_login()" id="signup_member_text">
+        Already have an account? <a style="cursor:pointer;"><u>Login</u></a>
+      </div>
+      
+      <div class = "clearfix"/>    
+      
+      <div id="signup_slogan_title">
+        Take control of your Life. <br></br> Today. 
+      </div>
+
     <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
