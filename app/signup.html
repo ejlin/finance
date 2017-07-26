@@ -6,7 +6,6 @@
 
 <html>
   <head>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
 
@@ -15,24 +14,44 @@
   </head>
 
   <body id="signup_body">
-    <center>
+      <input id="signup_first_name" type="text" name="signup_username" placeholder="First Name">
+      <br></br>
+      <input id="signup_last_name" type="text" name="signup_username" placeholder="Last Name">
+      <br></br>
+      <input id="signup_email" type="text" name="signup_username" placeholder="Email">
+      <br></br>
       <input id="signup_username" type="text" name="signup_username" placeholder="Username">
       <br></br>
       <input id="signup_password" type="password" name="signup_password" placeholder="Password">
       <br></br>
       <button onclick="signup_login()" id = "signup_button" class="submit_button">
-        <div id="signup_button_text">
-          Login
+        <div onclick="validate_input()" id="signup_button_text">
+          Sign Up
         </div>
       </button>
       <br></br>
-      <div id="signup_member_text">
-        Not a member yet? Sign Up
+      <div onclick="temp_login()" id="signup_member_text">
+        Login
       </div>
       <br></br>
         
-    </center>
-
+      
+    <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-database.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCHHlVq5m3o3ZbrDdDvlfViDCa3M2yRV80",
+        authDomain: "financr-3456e.firebaseapp.com",
+        databaseURL: "https://financr-3456e.firebaseio.com",
+        projectId: "financr-3456e",
+        storageBucket: "",
+        messagingSenderId: "547178365013"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script src = "../main.js"></script>
   </body>
     

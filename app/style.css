@@ -21,7 +21,7 @@ body{
   background-color: grey;
 }
 
-#signup_username, #signup_password{
+#login_username, #login_password{
   width: 35%;
   height: 50px;
   box-sizing: border-box;
@@ -36,7 +36,7 @@ body{
   z-index: 1;
 }
 
-#signup_username{
+#login_username{
   margin-top: calc(37.5% - 80px) ;
 }
 
@@ -149,21 +149,58 @@ body{
 }
 
 #profile_quick_glance{
-  width: 84%;
-  height: 250px;
+  width: 55%;
+  height: 190px;
   background-color:  #b9d793;
   margin-left: 8%;
-  margin-top: 25px;
   float: left;
-  border-radius: 4px;
+  border-radius: 0px 0px 4px 4px;
+}
+
+#profile_quick_glance_top{
+  height: 60px;
+  width: 55%;
+  margin-top: 25px;
+  margin-left: 8%;
+  background-color:#8dce1f;
+  border-radius: 4px 4px 0px 0px;
+  float: left;
+}
+
+#profile_quick_glance_profile{
+  float: right;
+  height: 190px;
+  width: 25%;
+  margin-right: 8%;
+  background-color: #b9d793;
+  border-radius: 0px 0px 4px 4px;
+}
+
+#profile_box_top{
+  float: right;
+  height: 60px;
+  width: 25%;
+  margin-right: 8%;
+  margin-top: 25px;
+  background-color: #8dce1f;
+  border-radius: 4px 4px 0px 0px;
+}
+
+#profile_box_top_text{
+  font-family: 'Economica', sans-serif;
+  color: white;
+  font-size: 22px;
+  margin-top: 15px;
+  margin-left: 8%;
 }
 
 #profile_quick_glance_title{
-  font-size:22px;
+  font-size: 22px;
   font-family: 'Economica', sans-serif;
   color: white;
-  margin-left: 3%;
-  margin-top: 25px;
+  margin-left: 8%;
+  float: left;
+  margin-top: 15px;
 }
 
 #profile_quick_glance_text{
@@ -179,7 +216,7 @@ body{
 #profile_remove_assets_button, #profile_remove_liabilities_button{
   width: 25px;
   height: 25px;
-  margin-top: 25px;
+  margin-top: 20px;
   cursor: pointer;
   margin-bottom: 25px;
 }
@@ -191,6 +228,17 @@ body{
   transition: 0.5s;
 }
 
+#profile_add_assets_button, #profile_add_liabilities_button{
+  float: right;
+  margin-right: 10%;
+}
+
+#profile_remove_assets_button, #profile_remove_liabilities_button{
+  float: right;
+  margin-right: 10%;
+}
+
+
 #profile_assets_text{
   color: white;
   font-size: 18px;
@@ -201,9 +249,10 @@ body{
 
 #profile_assets_box, #profile_liabilities_box{
   width: 40%;
-  height: 250px;
-  border-radius: 0px 0px 0px 0px;
+  height: 300px;
+  border-radius: 0px 0px 4px 4px;
   overflow-y: scroll;
+  margin-bottom: 100px;
 }
 
 #profile_assets_box{
@@ -221,7 +270,7 @@ body{
 #profile_assets_box_top{
   background-color: #8dce1f;
   width: 40%;
-  height: 75px;
+  height: 60px;
   border-radius: 4px 4px 0px 0px;
   margin-left: 8%;
   float: left;
@@ -231,38 +280,21 @@ body{
 #profile_liabilities_box_top{
   background-color: #8dce1f;
   width: 40%;
-  height: 75px;
+  height: 60px;
   border-radius: 4px 4px 0px 0px;
   margin-right: 8%;
   float: right;
   margin-top: 25px;
 }
 
-#profile_assets_box_bottom{
-  background-color: #8dce1f;
-  width: 40%;
-  height: 75px;
-  border-radius: 0px 0px 4px 4px;
-  margin-left: 8%;
-  float: left;
-  margin-bottom: 100px;
-}
-
-#profile_liabilities_box_bottom{
-  background-color: #8dce1f;
-  width: 40%;
-  height: 75px;
-  border-radius: 0px 0px 4px 4px;
-  margin-right: 8%;
-  float: right;
-  margin-bottom: 100px;  
-}
-
 #profile_assets_title, #profile_liabilities_title{
   color: white;
   font-family: 'Economica', sans-serif;
   font-size: 22px;
-  margin-top: 6.5%;
+  margin-top: 20px;
+  float: left;
+  margin-left: 15%;
+  margin-right: 15%;
 
 }
 
@@ -378,10 +410,26 @@ body{
   transition: width 0.4s ease-in-out;
   z-index: 3;
   display: none;
-  margin-top: 7.5%;
+  margin-top: 5%;
   margin-left: 20%;
 }
 
+.salary_input{
+  display: none;
+}
+
+#salary_dropdown{
+  width: 60%;
+  border: none;
+  height: 50px;
+  font-size: 16px;
+  margin-left: 20%;
+  margin-top: 5%;
+  background-color: #ffa500;
+  color: white;
+  padding: 12px 20px 12px 40px;
+  text-align-last:center;
+}
 
 #save_other_button{
   width: 15%;
@@ -394,7 +442,12 @@ body{
   display: none;
 }
 
-
+#asset_input_title{
+  color: white;
+  font-size: 18px;
+  font-family: 'Economica', sans-serif;
+  width: 70%;
+}
 
 /***************************PROFILE.HTMl***********************/
 

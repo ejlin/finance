@@ -47,10 +47,21 @@
 
     <div class = "clearfix"/>    
 
-    <div id="profile_quick_glance">
+    <div id="profile_quick_glance_top">
       <div id="profile_quick_glance_title">
         Today's Quick Glance
       </div>
+    </div>
+
+    <div id="profile_box_top">
+      <div id="profile_box_top_text">
+        Profile
+      </div>
+    </div>
+    <div id="profile_quick_glance_profile">
+    </div>
+    
+    <div id="profile_quick_glance">
       <div id=" profile_quick_glance_date">
       </div>
       <div id="profile_quick_glance_text">
@@ -58,23 +69,38 @@
       </div>
     </div>
 
+    
+
     <div class = "clearfix"/>    
     
 
     <div id="profile_assets_box_top">
-      <center>
-        <div id="profile_assets_title">
-          Assets:
-        </div>
-      </center>
+      <div id="profile_assets_title">
+        Assets:
+      </div>
+
+      <a id="add_asset_modal_button" onclick="open_assets_modal()">
+        <img id="profile_add_assets_button" src="Images/add.png">
+        </img>
+      </a>
+      <a onclick="remove_asset()">
+        <img id="profile_remove_assets_button" src="Images/minus.png">
+        </img>
+      </a>
     </div>
 
      <div id="profile_liabilities_box_top">
-      <center>
-        <div id="profile_liabilities_title">
-        Liabilities:
+      <div id="profile_liabilities_title">
+         Liabilities:
       </div>
-      </center>
+      <a onclick="add_liabilities()">
+        <img id="profile_add_liabilities_button" src="Images/add.png">
+        </img>
+      </a>
+      <a onclick="remove_liabilities()">
+        <img id="profile_remove_liabilities_button" src="Images/minus.png">
+        </img>
+      </a>
     </div>
 
     
@@ -92,50 +118,7 @@
     </div>
 
     <div class = "clearfix"/>    
-    
-
-     <div id="profile_assets_box_bottom">
-      <center>
-        <a onclick="remove_asset()">
-          <img id="profile_remove_assets_button" src="Images/minus.png">
-          </img>
-        </a>
-      
-   <!--     <a onclick="update_net()">
-          <img id="profile_save_assets_button" src="Images/check.png">
-          </img>
-        </a>
--->
-        <a id="add_asset_modal_button" onclick="open_assets_modal()">
-          <img id="profile_add_assets_button" src="Images/add.png">
-          </img>
-        </a>
-      </center>
-    </div>
-
-    <div id="profile_liabilities_box_bottom">
-     <center>
-        <a onclick="remove_liabilities()">
-          <img id="profile_remove_liabilities_button" src="Images/minus.png">
-          </img>
-        </a>
-     <!-- 
-        <a onclick="update_net()">
-          <img id="profile_save_liabilities_button" src="Images/check.png">
-          </img>
-        </a>
--->
-        <a onclick="add_liabilities()">
-          <img id="profile_add_liabilities_button" src="Images/add.png">
-          </img>
-        </a>
-      </center>
-    </div>
-     
-    <div class = "clearfix"/>   
-
-
-
+        
     <div id="assets_add_menu" class="modal">
       <div class="modal-content">
         <img onclick="show_menu()" id="assets_modal_back" src="Images/back.png">
@@ -143,19 +126,19 @@
         <span onclick="close_assets_modal()" class="close">&times;</span>
         <center>
         <div id="modal_logo" class="modal_logo">
-          <img id="modal_img" src="Images/account.png">
+          <img onclick="open_account()" id="modal_img" src="Images/account.png">
           </img>
           <p id="modal_logo_text"> Account</p>
         </div>
 
         <div id="modal_logo" class="modal_logo">
-          <img id="modal_img" src="Images/house.png">
+          <img onclick="open_property()" id="modal_img" src="Images/house.png">
           </img>
           <p id="modal_logo_text"> Property </p>
         </div>
 
         <div id="modal_logo" class="modal_logo">
-          <img id="modal_img" src="Images/rent.png">
+          <img onclick="open_rent()" id="modal_img" src="Images/rent.png">
           </img>
           <p id="modal_logo_text"> Rent </p>
         </div>
@@ -167,13 +150,13 @@
         
         <center>
         <div id="modal_logo" class="modal_logo">        
-          <img id="modal_img" src="Images/salary.png">
+          <img onclick="open_salary()" id="modal_img" src="Images/salary.png">
           </img>
           <p id="modal_logo_text"> Salary </p>
         </div>
 
         <div id="modal_logo" class="modal_logo">        
-          <img id="modal_img" src="Images/stock.png">
+          <img onclick="open_stocks()" id="modal_img" src="Images/stock.png">
           </img>
           <p id="modal_logo_text"> Stocks </p>
         </div>
@@ -185,9 +168,34 @@
         </div>
         </center>
 
-        <input id="asset_name" class="others_input" type="text" name="signup_username" maxlength=20 placeholder="Name of Asset" required>
+<!-- Salary-->
+        <center>
+          <p id="asset_input_title" class="salary_input">
+            Add your estimated salary for this year.
+          </p>
+        </center>        
+          <input id="asset_name" class="salary_input" type="text" maxlength=15 placeholder="Name" required>
+          </input>
+          <input id="asset_worth" class="salary_input" type="number" placeholder="Salary" required>
+          <form class="salary_input">
+            <select id="salary_dropdown" name="salary_occurence">
+              <option value="Daily">Daily</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Yearly">Yearly</option>
+            </select>
+          </form>
+
+
+<!-- Other -->
+        <center>
+          <p id="asset_input_title" class="others_input">
+            Manually add any asset that doesn't fit in any of the other categories. Ex: Antique Worth
+          </p>
+        </center>
+        <input id="asset_name" class="others_input" type="text" name="signup_username" maxlength=15 placeholder="Name of Asset" required>
         </input>
-        <input id="asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required>
+        <input id="asset_worth" class="others_input" type="number" name="signup_username" maxlength=15 placeholder="Estimated Worth" required>
         </input>
         <center>
           <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
@@ -200,14 +208,25 @@
       </div>
     </div>
 
-    
-    
-
-    
 
     <div id="footer">
 
-    </div>    
+    </div>   
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCHHlVq5m3o3ZbrDdDvlfViDCa3M2yRV80",
+        authDomain: "financr-3456e.firebaseapp.com",
+        databaseURL: "https://financr-3456e.firebaseio.com",
+        projectId: "financr-3456e",
+        storageBucket: "",
+        messagingSenderId: "547178365013"
+      };
+      firebase.initializeApp(config);
+    </script>
+
     <script src = "../main.js"></script>
   </body>
   

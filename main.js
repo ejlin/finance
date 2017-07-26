@@ -36,12 +36,12 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'app/signup.html'),
+    pathname: path.join(__dirname, 'app/login.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  //win.webContents.openDevTools()
+  win.webContents.openDevTools()
   
 
   // Emitted when the window is closed.
@@ -65,6 +65,35 @@ function signup_login () {
     window.location.href = "profile.html";    
 
   } 
+}
+
+function signup(){
+  window.location.href = "signup.html";
+}
+
+//REMOVE LATER
+function temp_login(){
+  window.location.href = "login.html";
+}
+
+var firebase = require("firebase");
+var config = {
+        apiKey: "AIzaSyCHHlVq5m3o3ZbrDdDvlfViDCa3M2yRV80",
+        authDomain: "financr-3456e.firebaseapp.com",
+        databaseURL: "https://financr-3456e.firebaseio.com",
+        projectId: "financr-3456e",
+        storageBucket: "",
+        messagingSenderId: "547178365013"
+      };
+      firebase.initializeApp(config);
+
+function validate_input(){
+  var first_name = document.getElementById('signup_first_name').value;
+  var last_name = document.getElementById('signup_last_name').value;
+  var email = document.getElementById('signup_email').value;
+  var username = document.getElementById('signup_username').value;
+  var password = document.getElementById('signup_password').value;
+  firebase.auth().createUserWithEmailAndPassword(email, password);
 }
 
 function setup_profile () {
@@ -95,14 +124,20 @@ function update_net(){
   document.getElementById('profile_worth_text').innerHTML = "$" + net;
 }
 
-
 function add_asset (name, worth) {
     var input = document.createElement("P");
-    input.style.padding = '15px 10px 10px 10px';
+    input.style.padding = '15px 10px 10px 15px';
     input.setAttribute("class", "profile_asset_bullet");
     assetsBullets.push(input);
-    assetsBulletsWorth.push(worth);
-    input.innerHTML = assetsBullets.length + ". " + name;        
+    assetsBulletsWorth.push(worth); 
+    //input.innerHTML = name + " - $" + worth;  
+    input.innerHTML = name;
+    input.onmouseover = function(){
+      input.innerHTML = "$" + worth;
+    }
+    input.onmouseout = function(){
+      input.innerHTML = name;
+    }
     var para = document.getElementById("profile_assets_box");
     var child =  document.getElementById("profile_add_assets_button");
     document.getElementById('profile_assets_placeholder').appendChild(input); 
@@ -159,6 +194,12 @@ function hide_menu() {
 }
 
 function show_menu() {
+  var others_input = document.getElementsByClassName('salary_input');
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "none";
+    others_input[i].value = "";
+  }
+
   var others_input = document.getElementsByClassName('others_input');
   for (var i = 0; i < others_input.length; i++){
     others_input[i].style.display = "none";
@@ -178,6 +219,35 @@ function show(id){
 
 function hide(id){
   document.getElementById(id).style.display = "none";
+}
+
+function open_property(){
+  hide_menu();
+  show('assets_modal_back'); 
+}
+
+function open_account(){
+  hide_menu();
+  show('assets_modal_back');
+}
+
+function open_rent(){
+  hide_menu();
+  show('assets_modal_back');
+}
+
+function open_salary(){
+  hide_menu();
+  show('assets_modal_back');
+  var others_input = document.getElementsByClassName('salary_input');
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "block";
+  }
+}
+
+function open_stocks(){
+  hide_menu();
+  show('assets_modal_back');
 }
 
 function open_others(){
@@ -226,7 +296,7 @@ window.onclick = function(event) {
 ///////////
 
 function signout () {
-    window.location.href = "signup.html";      
+    window.location.href = "login.html";      
 }
 
 
