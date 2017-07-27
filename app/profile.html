@@ -29,16 +29,16 @@
       </img>
     </div>
     
-    <div id="profile_welcome_text">
-      Welcome
-    </div>
-
     <div id="profile_worth_text">
       $0
     </div>
 
     <div class = "clearfix"/>    
     
+    <div id="profile_name">
+      Welcome,
+    </div>
+
     <a onclick="signout()">
       <div id="profile_signout">
         Sign Out
@@ -174,7 +174,7 @@
             Add your estimated salary for this year.
           </p>
         </center>        
-          <input id="asset_name" class="salary_input" type="text" maxlength=15 placeholder="Name" required>
+          <input id="asset_name" class="salary_input" type="text" placeholder="Name" required>
           </input>
           <input id="asset_worth" class="salary_input" type="number" placeholder="Salary" required>
           <form class="salary_input">
@@ -193,9 +193,9 @@
             Manually add any asset that doesn't fit in any of the other categories. Ex: Antique Worth
           </p>
         </center>
-        <input id="asset_name" class="others_input" type="text" name="signup_username" maxlength=15 placeholder="Name of Asset" required>
+        <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name of Asset" required>
         </input>
-        <input id="asset_worth" class="others_input" type="number" name="signup_username" maxlength=15 placeholder="Estimated Worth" required>
+        <input id="other_asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required>
         </input>
         <center>
           <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
@@ -207,25 +207,6 @@
 
       </div>
     </div>
-
-
-    <div id="footer">
-
-    </div>   
-
-    <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCHHlVq5m3o3ZbrDdDvlfViDCa3M2yRV80",
-        authDomain: "financr-3456e.firebaseapp.com",
-        databaseURL: "https://financr-3456e.firebaseio.com",
-        projectId: "financr-3456e",
-        storageBucket: "",
-        messagingSenderId: "547178365013"
-      };
-      firebase.initializeApp(config);
-    </script>
 
     <script src = "../main.js"></script>
   </body>

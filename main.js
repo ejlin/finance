@@ -5,6 +5,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+var curr_user;
 var name = "";
 var net = 0.0;
 var assetsBullets = new Array();
@@ -30,12 +31,12 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'app/signup.html'),
+    pathname: path.join(__dirname, 'app/login.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
   
 
   // Emitted when the window is closed.
@@ -49,16 +50,14 @@ function createWindow () {
 
 // This method will take care of signon
 function signup_login () {
-  var username = document.getElementById('signup_username').value;
-  var password = document.getElementById('signup_password').value;
+  var email = document.getElementById('login_username').value;
+  var password = document.getElementById('login_password').value;
   
-  if (username == "tgih1999" && password == "jianwu13"){
-      document.addEventListener('DOMContentLoaded', function() { 
-      setup_profile();  
-    }, false);
-    window.location.href = "profile.html";    
-
-  } 
+  firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
+    setup_profile("eric", 0);
+  }).catch(function(error) {
+  // An error happened.
+  });
 }
 
 function signup(){
@@ -71,6 +70,7 @@ function temp_login(){
 }
 
 var firebase = require("firebase");
+
 var config = {
         apiKey: "AIzaSyCHHlVq5m3o3ZbrDdDvlfViDCa3M2yRV80",
         authDomain: "financr-3456e.firebaseapp.com",
@@ -81,24 +81,42 @@ var config = {
       };
       firebase.initializeApp(config);
 
+var database = firebase.database();
+
 function validate_input(){
   var first_name = document.getElementById('signup_first_name').value;
   var last_name = document.getElementById('signup_last_name').value;
-  name = first_name + last_name;
+  var name = first_name + " " + last_name;
   var email = document.getElementById('signup_email').value;
   var password = document.getElementById('signup_password').value;
   var confirm_password = document.getElementById('signup_confirm_password').value;
   if (password == confirm_password){
-    firebase.auth().createUserWithEmailAndPassword(email, password);
-    //  setup_profile();
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+      curr_user = firebase.auth().currentUser;
+      curr_user.updateProfile({
+        displayName: name,
+      }).then(function() {
+        setup_profile(name, 0);        
+      }).catch(function(error) {
+        // An error happened.
+      });
+
+    }, function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
   }
 }
 
-function setup_profile () {
+function display_name(){
+    document.getElementById('profile_name').innerHTML = "Welcome asdfasfs"; //+ name + ",";     
+}
+
+function setup_profile(name, worth) {
   window.location.href = "profile.html";    
-  document.onload = function(){
-    document.getElementById('profile_welcome_text').innerHTML = "Welcome " + name + ","; 
-  }
+  console.log(name);
+  display_name();
 }
 /*
 function update_net(){
@@ -123,7 +141,7 @@ function update_net(){
 
 function add_asset (name, worth) {
     var input = document.createElement("P");
-    input.style.padding = '15px 10px 10px 15px';
+    input.style.padding = '15px 15px 15px 15px';
     input.setAttribute("class", "profile_asset_bullet");
     assetsBullets.push(input);
     assetsBulletsWorth.push(worth); 
@@ -262,20 +280,14 @@ function add_net(asset){
 }
 
 function save_other(){
-  var name = document.getElementById('asset_name').value;
-  var worth = document.getElementById('asset_worth').value;
+  var name = document.getElementById('other_asset_name').value;
+  var worth = document.getElementById('other_asset_worth').value;
   if ( name != "" && worth != ""){
     add_asset(name, worth);
     add_net(worth);
     close_assets_modal();
   }
 }
-
-
-
-
-
-
 
 
 /*
@@ -293,11 +305,12 @@ window.onclick = function(event) {
 ///////////
 
 function signout () {
+  firebase.auth().signOut().then(function() {
     window.location.href = "login.html";      
+  }).catch(function(error) {
+    // An error happened.
+  });
 }
-
-
-
 
 
 

@@ -14,6 +14,9 @@ body{
     clear:both;
 }
 
+*:focus {
+    outline: none;
+}
 
 /***************************SIGNUP.HTMl************************/
 
@@ -26,7 +29,7 @@ body{
   height: 50px;
   box-sizing: border-box;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 16px;
   color: white;
   background-color: #ffa500;
@@ -50,9 +53,13 @@ body{
   height: 35px;
   border: none;
   background-color:  #85bb65;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   margin-top: 10px;
+}
+
+#login_button:hover{
+  opacity: 0.7;
 }
 
 #signup_button_text{
@@ -111,7 +118,7 @@ body{
   height: 70%;
   position: fixed;
   background-color: #D3D3D3;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 
 #menu_icon{
@@ -122,22 +129,26 @@ body{
   margin-top: 55px ;
 }
 
-#profile_welcome_text, #profile_worth_text{
+#profile_worth_text{
   font-family: 'Economica', sans-serif;
   font-size: 22px;
   float: left;
   margin-top: 5%;
 }
 
-#profile_welcome_text{
-  color: white;
-  margin-left: 10%;  
-}
-
 #profile_worth_text{
   color: #85bb65;
   float: right;
   margin-right: 10%;
+}
+
+#profile_name{
+  color: white;
+  float: left;
+  margin-left: 10%;
+  font-family: 'Economica', sans-serif;
+  font-size: 22px;
+  margin-top: 10px;
 }
 
 #profile_signout{
@@ -156,7 +167,7 @@ body{
   background-color:  #b9d793;
   margin-left: 8%;
   float: left;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 2px 2px;
 }
 
 #profile_quick_glance_top{
@@ -165,7 +176,7 @@ body{
   margin-top: 25px;
   margin-left: 8%;
   background-color:#8dce1f;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
   float: left;
 }
 
@@ -175,7 +186,7 @@ body{
   width: 25%;
   margin-right: 8%;
   background-color: #b9d793;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 2px 2px;
 }
 
 #profile_box_top{
@@ -185,7 +196,7 @@ body{
   margin-right: 8%;
   margin-top: 25px;
   background-color: #8dce1f;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
 }
 
 #profile_box_top_text{
@@ -252,7 +263,7 @@ body{
 #profile_assets_box, #profile_liabilities_box{
   width: 40%;
   height: 300px;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 2px 2px;
   overflow-y: scroll;
   margin-bottom: 100px;
 }
@@ -273,7 +284,7 @@ body{
   background-color: #8dce1f;
   width: 40%;
   height: 60px;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
   margin-left: 8%;
   float: left;
   margin-top: 25px;
@@ -283,7 +294,7 @@ body{
   background-color: #8dce1f;
   width: 40%;
   height: 60px;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
   margin-right: 8%;
   float: right;
   margin-top: 25px;
@@ -315,7 +326,7 @@ body{
   margin-bottom: 15px;
   box-sizing: border-box;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 20px;
   color: white;
   background-color: #ffa500;
@@ -324,6 +335,7 @@ body{
   transition: width 0.4s ease-in-out;
   z-index: 1;
   margin-left: calc(10% - 12px);
+  overflow-x: scroll;
 }
 
 .modal {
@@ -344,7 +356,7 @@ body{
     background-color: #D3D3D3;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border-radius: 4px;
+    border-radius: 2px;
     width: 70%; /* Could be more or less, depending on screen size */
     height: 60%;
     position: fixed;
@@ -377,7 +389,7 @@ body{
 #modal_img, #modal_img_other{
   width: 40%;
   background-color: grey;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 #modal_img:hover, #modal_img_other:hover{
@@ -398,12 +410,12 @@ body{
   float: left;
 }
 
-#asset_name, #asset_worth{
+#asset_name, #asset_worth, #other_asset_name, #other_asset_worth{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 16px;
   color: white;
   background-color: #ffa500;
@@ -438,7 +450,7 @@ body{
   height: 35px;
   border: none;
   background-color:  #85bb65;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   margin-top: 10%;
   display: none;
