@@ -14,26 +14,12 @@
 /*                            GLOBAL VARIABLES                                */
 /******************************************************************************/
 
+var curr_user;
 var name = "";
 var net = 0.0;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var liabilitiesBullets = new Array();
-
-/** 
-  * Name:         display_name()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will display the current user's name by 
-  *               setting the innerText of a div. 
-  **/
-
-function display_name()
-{
-    //TODO
-    document.getElementById('profile_name').innerHTML = "Welcome asdfasfs"; //+ name + ",";     
-}
-
 
 /** 
   * Name:         setup_profile()
@@ -45,11 +31,23 @@ function display_name()
   *               name, net worth, etc. 
   **/
 
-function setup_profile(name, worth) 
+function setup_profile() 
 {
-  window.location.href = "profile.html";    
-  console.log(name);
-  display_name();
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log(user.displayName);
+    document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ",";          
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+});
+ /* curr_user = firebase.auth().currentUser;
+  if (curr_user)
+  {
+    console.log(curr_user.displayName);
+    display_name(curr_user.displayName);
+  }*/
 }
 
 /** 

@@ -43,9 +43,10 @@ function validate_signup_input()
       curr_user.updateProfile(
       {
         displayName: name,
+        
       }).then(function() 
               {
-                setup_profile(name, 0);        
+                window.location.href = "profile.html";
               }).catch(function(error) 
               {
                 //TODO
