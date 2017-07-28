@@ -10,22 +10,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     </link>
   </head>
 
   <body>
 
     <div id="menu">
-      <img id="menu_icon" src="Images/avatar.png">
+      <img id="menu_icon" src="../Images/avatar.png">
       </img>
-      <img id="menu_icon" src="Images/news.png">
+      <img id="menu_icon" src="../Images/news.png">
       </img>
-      <img id="menu_icon" src="Images/stock.png">
+      <img id="menu_icon" src="../Images/stock.png">
       </img>
-      <img id="menu_icon" src="Images/data.png">
+      <img id="menu_icon" src="../Images/data.png">
       </img>
-      <img id="menu_icon" src="Images/settings.png">
+      <img id="menu_icon" src="../Images/settings.png">
       </img>
     </div>
     
@@ -80,11 +80,11 @@
       </div>
 
       <a id="add_asset_modal_button" onclick="open_assets_modal()">
-        <img id="profile_add_assets_button" src="Images/add.png">
+        <img id="profile_add_assets_button" src="../Images/add.png">
         </img>
       </a>
       <a onclick="remove_asset()">
-        <img id="profile_remove_assets_button" src="Images/minus.png">
+        <img id="profile_remove_assets_button" src="../Images/minus.png">
         </img>
       </a>
     </div>
@@ -94,11 +94,11 @@
          Liabilities:
       </div>
       <a onclick="add_liabilities()">
-        <img id="profile_add_liabilities_button" src="Images/add.png">
+        <img id="profile_add_liabilities_button" src="../Images/add.png">
         </img>
       </a>
       <a onclick="remove_liabilities()">
-        <img id="profile_remove_liabilities_button" src="Images/minus.png">
+        <img id="profile_remove_liabilities_button" src="../Images/minus.png">
         </img>
       </a>
     </div>
@@ -121,24 +121,24 @@
         
     <div id="assets_add_menu" class="modal">
       <div class="modal-content">
-        <img onclick="show_menu()" id="assets_modal_back" src="Images/back.png">
+        <img onclick="show_menu()" id="assets_modal_back" src="../Images/back.png">
         </img>
         <span onclick="close_assets_modal()" class="close">&times;</span>
         <center>
         <div id="modal_logo" class="modal_logo">
-          <img onclick="open_account()" id="modal_img" src="Images/account.png">
+          <img onclick="open_account()" id="modal_img" src="../Images/account.png">
           </img>
           <p id="modal_logo_text"> Account</p>
         </div>
 
         <div id="modal_logo" class="modal_logo">
-          <img onclick="open_property()" id="modal_img" src="Images/house.png">
+          <img onclick="open_property()" id="modal_img" src="../Images/house.png">
           </img>
           <p id="modal_logo_text"> Property </p>
         </div>
 
         <div id="modal_logo" class="modal_logo">
-          <img onclick="open_rent()" id="modal_img" src="Images/rent.png">
+          <img onclick="open_rent()" id="modal_img" src="../Images/rent.png">
           </img>
           <p id="modal_logo_text"> Rent </p>
         </div>
@@ -150,19 +150,19 @@
         
         <center>
         <div id="modal_logo" class="modal_logo">        
-          <img onclick="open_salary()" id="modal_img" src="Images/salary.png">
+          <img onclick="open_salary()" id="modal_img" src="../Images/salary.png">
           </img>
           <p id="modal_logo_text"> Salary </p>
         </div>
 
         <div id="modal_logo" class="modal_logo">        
-          <img onclick="open_stocks()" id="modal_img" src="Images/stock.png">
+          <img onclick="open_stocks()" id="modal_img" src="../Images/stock.png">
           </img>
           <p id="modal_logo_text"> Stocks </p>
         </div>
 
         <div id="modal_logo" class="modal_logo">        
-          <img id="modal_img_other" onclick="open_others()" src="Images/other.png">
+          <img id="modal_img_other" onclick="open_others()" src="../Images/other.png">
           </img>
           <p id="modal_logo_text"> Other </p>
         </div>
@@ -208,7 +208,10 @@
       </div>
     </div>
 
-    <script src = "../main.js"></script>
+    <script src = "../../main.js"></script>    
+    <script src = "../JavaScript/login.js"></script>
+    <script src = "../JavaScript/signup.js"></script>
+    <script src = "../JavaScript/profile.js"></script> 
   </body>
   
 </html>
