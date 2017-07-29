@@ -47,9 +47,11 @@ function setup_profile()
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
       curr_user_assets_len.on('value', function(snapshot) {
       assets_len = snapshot.val();
-      restore_assets(assets_len);
+      if (assets_len > assetsBullets.length){
+        restore_assets(assets_len);
+      }
     });
-    }
+    
     // User is signed in.
   } else {
     // No user is signed in.
@@ -66,23 +68,23 @@ function setup_profile()
   **/
 
 function restore_assets(assets_len){
- var counter = 0;
+  var counter = 0;
+  //assetsBullets = new Array();
+  //assetsBulletsWorth = new Array();
   while (counter < assets_len)
   { 
-    console.log(assets_len);
-    console.log("test");
     var name;
-    var worth;
     var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name/');
     curr_user_assets_name.on('value', function(snapshot) {
       name = snapshot.val();
+      var worth;    
       var curr_user_assets_worth = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/worth/');
         curr_user_assets_worth.on('value', function(snapshot) {
           worth = snapshot.val();
-          restore_asset_bullet(name, worth);          
+          restore_asset_bullet(name, worth);   
       });
     });
-  counter++;
+    counter++;
   }
 }
 
@@ -115,8 +117,8 @@ function restore_asset_bullet(name, worth)
   var input = document.createElement("P");
   input.style.padding = '15px 15px 15px 15px';
   input.setAttribute("class", "profile_asset_bullet");
-  assetsBullets.push(input);
-  assetsBulletsWorth.push(worth); 
+  //assetsBullets.push(input);
+  //assetsBulletsWorth.push(worth); 
   input.innerHTML = name;
   input.onmouseover = function(){
     input.innerHTML = "$" + worth;
