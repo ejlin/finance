@@ -21,8 +21,8 @@ body{
   border: none;
   border-radius: 2px;
   font-size: 16px;
-  color: white;
-  background-color: #ffa500;
+  color: #5c7598;
+  background-color: #dadadb;
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
@@ -40,7 +40,7 @@ body{
   width: 15%;
   height: 35px;
   border: none;
-  background-color:  #85bb65;
+  background-color: #5c7598;
   border-radius: 2px;
   cursor: pointer;
   margin-left: 20%;
@@ -57,7 +57,7 @@ body{
   height: 575px;
   float: right;
   margin-right: 50%;
-  background-color: #85bb65;
+  background-color: #5c7598;
   margin-top: 10%;
 }
 

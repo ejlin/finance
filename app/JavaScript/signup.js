@@ -17,6 +17,29 @@
 var curr_user;
 
 /** 
+  * Name:         write_user_data()
+  * Parameters:   userId = The identifying ID of the user in Firebase
+  *               name = The name of the user in Firebase
+  *               email = The name of the email in Firebase
+  * Return:       None
+  * Description:  This function will validate the input the user uses to 
+  *               sign up for a new account. If successfully validated, this
+  *               function will call the Firebase API to create a new account
+  *               in Firebase. 
+  **/
+
+function write_user_data(userId, fname, lname, email, pass) {
+  database.ref('users/' + userId).set({
+    first_name: fname,
+    last_name: lname,
+    email: email,
+    net_worth: 0,
+    assets_len : 0,
+    liabilities_len : 0
+  });
+}
+
+/** 
   * Name:         validate_signup_input()
   * Parameters:   None
   * Return:       None
@@ -40,6 +63,7 @@ function validate_signup_input()
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) 
     {
       curr_user = firebase.auth().currentUser;
+      write_user_data(user.uid, first_name, last_name, email, password);
       curr_user.updateProfile(
       {
         displayName: name,
@@ -52,8 +76,7 @@ function validate_signup_input()
                 //TODO
                 // An error happened.
               });
-
-    },function(error) 
+      },function(error) 
       {
         //TODO
         // Handle Errors here.

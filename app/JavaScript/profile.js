@@ -16,7 +16,7 @@
 
 var curr_user;
 var name = "";
-var net = 0.0;
+var net;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var liabilitiesBullets = new Array();
@@ -35,25 +35,61 @@ function setup_profile()
 {
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    console.log(user.displayName);
-    document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ",";          
+    curr_user = user;
+    document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
+
+    var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
+      curr_user_net.on('value', function(snapshot) {
+      net = snapshot.val();
+      document.getElementById('profile_worth_text').innerHTML = "$" + snapshot.val();            
+    });
+    var assets_len = 0;
+    var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
+      curr_user_assets_len.on('value', function(snapshot) {
+      assets_len = snapshot.val();
+      restore_assets(assets_len);
+    });
+    }
     // User is signed in.
   } else {
     // No user is signed in.
   }
 });
- /* curr_user = firebase.auth().currentUser;
-  if (curr_user)
-  {
-    console.log(curr_user.displayName);
-    display_name(curr_user.displayName);
-  }*/
+}
+
+/** 
+  * Name:         restore_assets()
+  * Parameters:   assets_len = The length of the user's assets
+  * Return:       None
+  * Description:  This function will update the current assets of the
+  *               user according to the asset length passed in. 
+  **/
+
+function restore_assets(assets_len){
+ var counter = 0;
+  while (counter < assets_len)
+  { 
+    console.log(assets_len);
+    console.log("test");
+    var name;
+    var worth;
+    var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name/');
+    curr_user_assets_name.on('value', function(snapshot) {
+      name = snapshot.val();
+      var curr_user_assets_worth = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/worth/');
+        curr_user_assets_worth.on('value', function(snapshot) {
+          worth = snapshot.val();
+          restore_asset_bullet(name, worth);          
+      });
+    });
+  counter++;
+  }
 }
 
 /** 
   * Name:         add_net()
   * Parameters:   asset = The new asset to add to the current net worth
-  * Return:       None
+  * Return:       Returns the update to Firebase
   * Description:  This function will update the current net worth of the
   *               user according to the new asset passed in. 
   **/
@@ -61,6 +97,37 @@ function setup_profile()
 function add_net(asset){
   net += parseFloat(asset);
   document.getElementById('profile_worth_text').innerHTML = "$" + net;
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/net_worth/'] = net;
+  return database.ref().update(updates);  
+}
+
+/** 
+  * Name:         restore_asset_bullet()
+  * Parameters:   name = The name of the asset
+  *               worth = The worth of the asset
+  * Return:       None
+  * Description:  This function will restore existing assets for returning users 
+  **/
+
+function restore_asset_bullet(name, worth)
+{
+  var input = document.createElement("P");
+  input.style.padding = '15px 15px 15px 15px';
+  input.setAttribute("class", "profile_asset_bullet");
+  assetsBullets.push(input);
+  assetsBulletsWorth.push(worth); 
+  input.innerHTML = name;
+  input.onmouseover = function(){
+    input.innerHTML = "$" + worth;
+  }
+  input.onmouseout = function(){
+    input.innerHTML = name;
+  }
+  var para = document.getElementById("profile_assets_box");
+  var child =  document.getElementById("profile_add_assets_button");
+  document.getElementById('profile_assets_placeholder').appendChild(input); 
+  para.scrollTop = para.scrollHeight;
 }
 
 /** 
@@ -73,22 +140,29 @@ function add_net(asset){
   **/
 
 function add_asset (name, worth) {
-    var input = document.createElement("P");
-    input.style.padding = '15px 15px 15px 15px';
-    input.setAttribute("class", "profile_asset_bullet");
-    assetsBullets.push(input);
-    assetsBulletsWorth.push(worth); 
+  var input = document.createElement("P");
+  input.style.padding = '15px 15px 15px 15px';
+  input.setAttribute("class", "profile_asset_bullet");
+  assetsBullets.push(input);
+  assetsBulletsWorth.push(worth); 
+  input.innerHTML = name;
+  input.onmouseover = function(){
+    input.innerHTML = "$" + worth;
+  }
+  input.onmouseout = function(){
     input.innerHTML = name;
-    input.onmouseover = function(){
-      input.innerHTML = "$" + worth;
-    }
-    input.onmouseout = function(){
-      input.innerHTML = name;
-    }
-    var para = document.getElementById("profile_assets_box");
-    var child =  document.getElementById("profile_add_assets_button");
-    document.getElementById('profile_assets_placeholder').appendChild(input); 
-    para.scrollTop = para.scrollHeight;
+  }
+  var para = document.getElementById("profile_assets_box");
+  var child =  document.getElementById("profile_add_assets_button");
+  document.getElementById('profile_assets_placeholder').appendChild(input); 
+  para.scrollTop = para.scrollHeight;
+  database.ref('users/' + curr_user.uid + '/assets/' + (assetsBullets.length - 1).toString()).set({
+    name: name,
+    worth: worth
+  });
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsBullets.length;
+  return database.ref().update(updates);
 }
 
 /** 
@@ -168,7 +242,7 @@ function close_assets_modal() {
 }
 
 /** 
-  * Name:         hide_menu()
+  * Name:         hide_assets_menu()
   * Parameters:   None
   * Return:       None
   * Description:  This function will clear the menu display of
@@ -183,7 +257,7 @@ function hide_assets_menu() {
 }
 
 /** 
-  * Name:         show_menu()
+  * Name:         show_assets_menu()
   * Parameters:   None
   * Return:       None
   * Description:  This function will display the menu of the assets modal
@@ -231,7 +305,7 @@ function open_account()
 
 function open_property()
 {
-  hide_menu();
+  hide_assets_menu();
   show('assets_modal_back'); 
 }
 
@@ -244,7 +318,7 @@ function open_property()
 
 function open_rent()
 {
-  hide_menu();
+  hide_assets_menu();
   show('assets_modal_back');
 }
 
@@ -257,7 +331,7 @@ function open_rent()
 
 function open_stocks()
 {
-  hide_menu();
+  hide_assets_menu();
   show('assets_modal_back');
 }
 
@@ -271,7 +345,7 @@ function open_stocks()
 
 function open_salary()
 {
-  hide_menu();
+  hide_assets_menu();
   show('assets_modal_back');
   var others_input = document.getElementsByClassName('salary_input');
   for (var i = 0; i < others_input.length; i++)
@@ -289,7 +363,7 @@ function open_salary()
 
 function open_others()
 {
-  hide_menu();
+  hide_assets_menu();
   show('assets_modal_back');
   var others_input = document.getElementsByClassName('others_input');
   for (var i = 0; i < others_input.length; i++)

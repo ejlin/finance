@@ -7,7 +7,8 @@ html {
 body{
   padding:0;
   margin:0;
-  background-color: grey;
+  /*background-color: #b9d793;*/
+  background-color:#abb7c8;
 }
 
 .clearfix{
@@ -21,7 +22,7 @@ body{
 /***************************SIGNUP.HTMl************************/
 
 #signup_body{
-  background-color: grey;
+  background-color:#abb7c8;
 }
 
 #login_username, #login_password{
@@ -31,8 +32,8 @@ body{
   border: none;
   border-radius: 2px;
   font-size: 16px;
-  color: white;
-  background-color: #ffa500;
+  color: #5c7598;
+  background-color: #dadadb;
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
@@ -52,7 +53,7 @@ body{
   width: 15%;
   height: 35px;
   border: none;
-  background-color:  #85bb65;
+  background-color:#5c7598;
   border-radius: 2px;
   cursor: pointer;
   margin-top: 10px;
@@ -117,7 +118,7 @@ body{
   width: 5%;
   height: 70%;
   position: fixed;
-  background-color: #D3D3D3;
+  background-color:#5c7598; /*#D3D3D3;*/
   border-radius: 0px 5px 5px 0px;
 }
 
@@ -137,7 +138,7 @@ body{
 }
 
 #profile_worth_text{
-  color: #85bb65;
+  color:#5c7598;
   float: right;
   margin-right: 10%;
 }
@@ -164,18 +165,18 @@ body{
 #profile_quick_glance{
   width: 55%;
   height: 190px;
-  background-color:  #b9d793;
+  background-color:#dadadb;
   margin-left: 8%;
   float: left;
   border-radius: 0px 0px 2px 2px;
 }
 
 #profile_quick_glance_top{
-  height: 60px;
+  height: 45px;
   width: 55%;
   margin-top: 25px;
   margin-left: 8%;
-  background-color:#8dce1f;
+  background-color:#5c7598;
   border-radius: 2px 2px 0px 0px;
   float: left;
 }
@@ -185,35 +186,36 @@ body{
   height: 190px;
   width: 25%;
   margin-right: 8%;
-  background-color: #b9d793;
+  background-color: #dadadb;
   border-radius: 0px 0px 2px 2px;
 }
 
 #profile_box_top{
   float: right;
-  height: 60px;
+  height: 45px;
   width: 25%;
   margin-right: 8%;
   margin-top: 25px;
-  background-color: #8dce1f;
+  /*background-color: #8dce1f;*/
+  background-color:#5c7598;
   border-radius: 2px 2px 0px 0px;
 }
 
 #profile_box_top_text{
   font-family: 'Economica', sans-serif;
   color: white;
-  font-size: 22px;
-  margin-top: 15px;
+  font-size: 20px;
+  margin-top: 12.5px;
   margin-left: 8%;
 }
 
 #profile_quick_glance_title{
-  font-size: 22px;
+  font-size: 20px;
   font-family: 'Economica', sans-serif;
   color: white;
-  margin-left: 8%;
+  margin-left: 5%;
   float: left;
-  margin-top: 15px;
+  margin-top: 12.5px;
 }
 
 #profile_quick_glance_text{
@@ -229,7 +231,7 @@ body{
 #profile_remove_assets_button, #profile_remove_liabilities_button{
   width: 25px;
   height: 25px;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
   margin-bottom: 25px;
 }
@@ -237,7 +239,7 @@ body{
 #profile_add_assets_button:hover, #profile_add_liabilities_button:hover, 
 #profile_save_assets_button:hover,#profile_save_liabilities_button:hover, 
 #profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover{
-  background-color: #ffa500;
+  background-color: #dadadb;
   transition: 0.5s;
 }
 
@@ -248,7 +250,7 @@ body{
 
 #profile_remove_assets_button, #profile_remove_liabilities_button{
   float: right;
-  margin-right: 10%;
+  margin-right: 5%;
 }
 
 
@@ -265,25 +267,24 @@ body{
   height: 300px;
   border-radius: 0px 0px 2px 2px;
   overflow-y: scroll;
+  background-color: #dadadb;
   margin-bottom: 50px;
 }
 
 #profile_assets_box{
-  background-color: #b9d793;
   float: left;
   margin-left: 8%;
 }
 
 #profile_liabilities_box{
-  background-color: #b9d793;
   float: right;
   margin-right: 8%;
 }
 
 #profile_assets_box_top{
-  background-color: #8dce1f;
+  background-color: #5c7598;
   width: 40%;
-  height: 60px;
+  height: 45px;
   border-radius: 2px 2px 0px 0px;
   margin-left: 8%;
   float: left;
@@ -291,9 +292,9 @@ body{
 }
 
 #profile_liabilities_box_top{
-  background-color: #8dce1f;
+  background-color:#5c7598;
   width: 40%;
-  height: 60px;
+  height: 45px;
   border-radius: 2px 2px 0px 0px;
   margin-right: 8%;
   float: right;
@@ -303,10 +304,10 @@ body{
 #profile_assets_title, #profile_liabilities_title{
   color: white;
   font-family: 'Economica', sans-serif;
-  font-size: 22px;
-  margin-top: 20px;
+  font-size: 20px;
+  margin-top: 12.5px;
   float: left;
-  margin-left: 15%;
+  margin-left: 10%;
   margin-right: 15%;
 
 }
@@ -329,7 +330,7 @@ body{
   border-radius: 2px;
   font-size: 20px;
   color: white;
-  background-color: #ffa500;
+  background-color: #abb7c8;
   padding: 12px 12px 12px 12px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
@@ -353,7 +354,7 @@ body{
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #D3D3D3;
+    background-color: #abb7c8;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border-radius: 2px;
@@ -388,11 +389,11 @@ body{
 
 #modal_img, #modal_img_other{
   width: 40%;
-  background-color: grey;
+  background-color:#5c7598;
   border-radius: 2px;
 }
 
-#modal_img:hover, #modal_img_other:hover{
+#modal_img:hover, #modal_img_other:hover, #save_other_button:hover{
   cursor: pointer;
   opacity: 0.5;
   transition: 0.5s;
@@ -417,8 +418,8 @@ body{
   border: none;
   border-radius: 2px;
   font-size: 16px;
-  color: white;
-  background-color: #ffa500;
+  color: #5c7598;
+  background-color:  #dadadb;
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
@@ -439,8 +440,8 @@ body{
   font-size: 16px;
   margin-left: 20%;
   margin-top: 5%;
-  background-color: #ffa500;
-  color: white;
+  background-color:  #dadadb;
+  color: #5c7598;
   padding: 12px 20px 12px 40px;
   text-align-last:center;
 }
@@ -449,19 +450,20 @@ body{
   width: 15%;
   height: 35px;
   border: none;
-  background-color:  #85bb65;
+  background-color:#5c7598;
   border-radius: 2px;
   cursor: pointer;
-  margin-top: 10%;
+  margin-top: 5%;
   display: none;
 }
 
 #asset_input_title{
-  color: white;
+  color: #5c7598;
   font-size: 18px;
   font-family: 'Economica', sans-serif;
   width: 70%;
 }
+
 
 /***************************PROFILE.HTMl***********************/
 
@@ -483,4 +485,16 @@ body{
     opacity: 1;
     transform: none;
   }
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #5c7598;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }

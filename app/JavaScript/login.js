@@ -26,7 +26,7 @@ function signup_login () {
   
   firebase.auth().signInWithEmailAndPassword(email, password).then(function() 
   {
-    setup_profile("eric", 0);
+    window.location.href = "profile.html";
   }).catch(function(error) 
   {
   //TODO
