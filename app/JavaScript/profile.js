@@ -56,8 +56,7 @@ function setup_profile()
       {
         restore_assets();
       }
-    });
-    
+    });   
     // User is signed in.
   } else {
     // No user is signed in.
@@ -211,6 +210,11 @@ function remove_asset(){
   assetsBullets.splice(assetsBullets.length - 1, 1);
   assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
   document.getElementById('profile_worth_text').innerHTML = "$" + net;
+  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/net_worth'] = net;
+  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
+  return database.ref().update(updates);
 }
 
 /** 
