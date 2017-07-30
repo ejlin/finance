@@ -49,8 +49,8 @@ function setup_profile()
     });
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
-      curr_user_assets_len.on('value', function(snapshot) 
-      {
+    curr_user_assets_len.on('value', function(snapshot) 
+    {
       assetsLen = snapshot.val();
       if (assetsLen > assetsBullets.length)
       {
@@ -75,22 +75,19 @@ function setup_profile()
 
 function restore_assets(){
   var counter = 0;
-  //assetsBullets = new Array();
-  //assetsBulletsWorth = new Array();
   while (counter < assetsLen)
   { 
-    var name;
-    var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter.toString() + '/name/');
-    curr_user_assets_name.on('value', function(snapshot) 
+  
+    var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name_worth/');
+    curr_user_assets_name.once('value', function(snapshot) 
     {
-      name = snapshot.val();
-      var worth;    
-      var curr_user_assets_worth = database.ref('users/' + curr_user.uid + '/assets/' + counter.toString() + '/worth/');
-        curr_user_assets_worth.on('value', function(snapshot) 
-        {
-          worth = snapshot.val();
-          restore_asset_bullet(name, worth);   
-      });
+      var str = snapshot.val();
+      console.log(str);
+      var name = str.replace(/[0-9]/g, '');
+      console.log(name);
+      var worth = parseInt(str);
+      console.log(worth);
+      restore_asset_bullet(name, worth);
     });
     counter++;
   }
@@ -171,9 +168,8 @@ function add_asset(name, worth)
   var child =  document.getElementById("profile_add_assets_button");
   document.getElementById('profile_assets_placeholder').appendChild(input); 
   para.scrollTop = para.scrollHeight;
-  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen).toString()).set({
-    name: name,
-    worth: worth
+  database.ref('users/' + curr_user.uid + '/assets/' + assetsLen).set({
+    name_worth: (worth + name),
   });
   var updates = {};
   updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen + 1;
