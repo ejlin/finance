@@ -398,6 +398,30 @@ function open_others()
 }
 
 /** 
+  * Name:         save_property()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will save the 'other asset' the user inputs
+  **/
+
+function save_property()
+{
+  var zillowID = "X1-ZWz193nbeoak97_6wmn8";
+  var address = document.getElementById('asset_address').value;
+  var city = document.getElementById('asset_city').value;
+  var zip = document.getElementById('asset_zip').value;
+  var state = document.getElementById('asset_state_dropdown').value;
+  address = address.trim().replace(/[' ']/g, '-');  
+  city = city.trim().replace(/[' ']/g, '-');
+  if ( address != "" && city != "" && zip != "")
+  {
+    
+    close_assets_modal();
+  }
+}
+
+
+/** 
   * Name:         save_other()
   * Parameters:   None
   * Return:       None

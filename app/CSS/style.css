@@ -430,7 +430,26 @@ body{
 }
 
 #asset_zip{
-  width: 30%;
+  width: 16.5%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 16px;
+  color: #5c7598;
+  background-color:  #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 5%;
+  margin-left: 3%;
+  float: left;
+}
+
+#asset_city{
+  width: 22.5%;
   height: 50px;
   box-sizing: border-box;
   border: none;
@@ -466,11 +485,11 @@ body{
 }
 
 #asset_state_dropdown{
-  width: 25%;
+  width: 15%;
   border: none;
   height: 50px;
   font-size: 16px;
-  margin-left: 5%;
+  margin-left: 3%;
   margin-top: 5%;
   background-color:  #dadadb;
   color: #5c7598;
@@ -487,6 +506,17 @@ body{
   border-radius: 2px;
   cursor: pointer;
   margin-top: 5%;
+  display: none;
+}
+
+#save_property_button{
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:#5c7598;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 20%;
   display: none;
 }
 

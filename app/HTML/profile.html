@@ -164,17 +164,18 @@
           <p id="modal_logo_text"> Other </p>
         </div>
         </center>
-  </body>
 
 <!-- Property-->
         <center>
           <p id="asset_input_title" class="property_input">
-            Enter property address
+            Enter property address (*Currently supporting U.S. addresses only)
           </p>
         </center>        
           <input id="asset_address" class="property_input" type="text" placeholder="Address" required>
           </input>
-          <input id="asset_zip" class="property_input" type="text" pattern="\[0-9]*" maxlength="5" placeholder="Zip Code" required>
+          <input id="asset_city" class="property_input" type="text" placeholder="City" required>
+          </input>
+          <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip" required>
           </input>
           <!--<input id="asset_state" class="property_input" type="text" placeholder="State" required>
           </input>-->
@@ -232,6 +233,15 @@
               <option value="WY">WY</option>                  
             </select>
           </form>
+          <div class="clearfix"/>
+          <center>
+          <button onclick="save_property()" class="property_input" id = "save_property_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
 
 
 <!-- Salary-->
@@ -279,6 +289,7 @@
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>
     <script src = "../JavaScript/profile.js"></script> 
+  </body>
   
 </html>
 
