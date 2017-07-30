@@ -166,15 +166,84 @@
         </center>
   </body>
 
+<!-- Property-->
+        <center>
+          <p id="asset_input_title" class="property_input">
+            Enter property address
+          </p>
+        </center>        
+          <input id="asset_address" class="property_input" type="text" placeholder="Address" required>
+          </input>
+          <input id="asset_zip" class="property_input" type="text" pattern="\[0-9]*" maxlength="5" placeholder="Zip Code" required>
+          </input>
+          <!--<input id="asset_state" class="property_input" type="text" placeholder="State" required>
+          </input>-->
+          <form class="property_input">
+            <select id="asset_state_dropdown" name="salary_occurence">
+              <option value="AL">AL</option>
+              <option value="AK">AK</option>
+              <option value="AZ">AZ</option>
+              <option value="AR">AR</option>
+              <option value="CA">CA</option>
+              <option value="CO">CO</option>
+              <option value="CT">CT</option>
+              <option value="DE">DE</option>
+              <option value="FL">FL</option>
+              <option value="GA">GA</option>
+              <option value="HI">HI</option>
+              <option value="ID">ID</option>
+              <option value="IL">IL</option>
+              <option value="IN">IN</option>
+              <option value="IA">IA</option>
+              <option value="KS">KS</option>
+              <option value="KY">KY</option>
+              <option value="LA">LA</option>
+              <option value="ME">ME</option>
+              <option value="MD">MD</option>
+              <option value="MA">MA</option>
+              <option value="MI">MI</option>
+              <option value="MN">MN</option>
+              <option value="MS">MS</option>
+              <option value="MO">MO</option>
+              <option value="MT">MT</option>
+              <option value="NE">NE</option>
+              <option value="NV">NV</option>
+              <option value="NH">NH</option>
+              <option value="NJ">NJ</option>
+              <option value="NM">NM</option>
+              <option value="NY">NY</option>
+              <option value="NC">NC</option>
+              <option value="ND">ND</option>
+              <option value="OH">OH</option>
+              <option value="OK">OK</option>
+              <option value="OR">OR</option>
+              <option value="PA">PA</option>
+              <option value="RI">RI</option>
+              <option value="SC">SC</option>
+              <option value="SD">SD</option>
+              <option value="TN">TN</option>
+              <option value="TX">TX</option>
+              <option value="UT">UT</option>
+              <option value="VT">VT</option>
+              <option value="VA">VA</option>
+              <option value="WA">WA</option>
+              <option value="WV">WV</option>
+              <option value="WI">WI</option>
+              <option value="WY">WY</option>                  
+            </select>
+          </form>
+
+
 <!-- Salary-->
         <center>
           <p id="asset_input_title" class="salary_input">
-            Add your estimated salary for this year.
+            Add your estimated salary for this year
           </p>
         </center>        
           <input id="asset_name" class="salary_input" type="text" placeholder="Name" required>
           </input>
           <input id="asset_worth" class="salary_input" type="number" placeholder="Salary" required>
+          </input>
           <form class="salary_input">
             <select id="salary_dropdown" name="salary_occurence">
               <option value="Daily">Daily</option>
@@ -188,7 +257,7 @@
 <!-- Other -->
         <center>
           <p id="asset_input_title" class="others_input">
-            Manually add any asset that doesn't fit in any of the other categories. 
+            Manually add any asset that doesn't fit in any of the other categories
           </p>
         </center>
         <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name of Asset" required>

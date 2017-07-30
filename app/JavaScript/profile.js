@@ -75,8 +75,7 @@ function setup_profile()
 function restore_assets(){
   var counter = 0;
   while (counter < assetsLen)
-  { 
-  
+  {   
     var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name_worth/');
     curr_user_assets_name.once('value', function(snapshot) 
     {
@@ -279,6 +278,12 @@ function hide_assets_menu() {
   **/
 
 function show_assets_menu() {
+  var others_input = document.getElementsByClassName('property_input');
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "none";
+    others_input[i].value = "";
+  }
+
   var others_input = document.getElementsByClassName('salary_input');
   for (var i = 0; i < others_input.length; i++){
     others_input[i].style.display = "none";
@@ -321,7 +326,12 @@ function open_account()
 function open_property()
 {
   hide_assets_menu();
-  show('assets_modal_back'); 
+  show('assets_modal_back');
+  var others_input = document.getElementsByClassName('property_input');
+  for (var i = 0; i < others_input.length; i++)
+  {
+    others_input[i].style.display = "block";
+  }
 }
 
 /** 

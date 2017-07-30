@@ -411,7 +411,7 @@ body{
   float: left;
 }
 
-#asset_name, #asset_worth, #other_asset_name, #other_asset_worth{
+#asset_name, #asset_worth, #other_asset_name, #other_asset_worth, #asset_address{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -429,7 +429,26 @@ body{
   margin-left: 20%;
 }
 
-.salary_input{
+#asset_zip{
+  width: 30%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 16px;
+  color: #5c7598;
+  background-color:  #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 5%;
+  margin-left: 20%;
+  float: left;
+}
+
+.salary_input, .property_input{
   display: none;
 }
 
@@ -444,6 +463,20 @@ body{
   color: #5c7598;
   padding: 12px 20px 12px 40px;
   text-align-last:center;
+}
+
+#asset_state_dropdown{
+  width: 25%;
+  border: none;
+  height: 50px;
+  font-size: 16px;
+  margin-left: 5%;
+  margin-top: 5%;
+  background-color:  #dadadb;
+  color: #5c7598;
+  padding: 12px 20px 12px 40px;
+  text-align-last:center;
+  float: left;
 }
 
 #save_other_button{
