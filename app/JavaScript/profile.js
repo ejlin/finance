@@ -17,6 +17,7 @@
 var curr_user;
 var name = "";
 var net;
+var assetsLen;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var liabilitiesBullets = new Array();
@@ -33,22 +34,27 @@ var liabilitiesBullets = new Array();
 
 function setup_profile() 
 {
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
+  firebase.auth().onAuthStateChanged(function(user) 
+  {
+  if (user) 
+  {
     curr_user = user;
     document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
 
     var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
-      curr_user_net.on('value', function(snapshot) {
+      curr_user_net.on('value', function(snapshot) 
+      {
       net = snapshot.val();
       document.getElementById('profile_worth_text').innerHTML = "$" + snapshot.val();            
     });
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
-      curr_user_assets_len.on('value', function(snapshot) {
-      assets_len = snapshot.val();
-      if (assets_len > assetsBullets.length){
-        restore_assets(assets_len);
+      curr_user_assets_len.on('value', function(snapshot) 
+      {
+      assetsLen = snapshot.val();
+      if (assetsLen > assetsBullets.length)
+      {
+        restore_assets();
       }
     });
     
@@ -67,19 +73,21 @@ function setup_profile()
   *               user according to the asset length passed in. 
   **/
 
-function restore_assets(assets_len){
+function restore_assets(){
   var counter = 0;
   //assetsBullets = new Array();
   //assetsBulletsWorth = new Array();
-  while (counter < assets_len)
+  while (counter < assetsLen)
   { 
     var name;
-    var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name/');
-    curr_user_assets_name.on('value', function(snapshot) {
+    var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter.toString() + '/name/');
+    curr_user_assets_name.on('value', function(snapshot) 
+    {
       name = snapshot.val();
       var worth;    
-      var curr_user_assets_worth = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/worth/');
-        curr_user_assets_worth.on('value', function(snapshot) {
+      var curr_user_assets_worth = database.ref('users/' + curr_user.uid + '/assets/' + counter.toString() + '/worth/');
+        curr_user_assets_worth.on('value', function(snapshot) 
+        {
           worth = snapshot.val();
           restore_asset_bullet(name, worth);   
       });
@@ -114,22 +122,26 @@ function add_net(asset){
 
 function restore_asset_bullet(name, worth)
 {
-  var input = document.createElement("P");
-  input.style.padding = '15px 15px 15px 15px';
-  input.setAttribute("class", "profile_asset_bullet");
-  //assetsBullets.push(input);
-  //assetsBulletsWorth.push(worth); 
-  input.innerHTML = name;
-  input.onmouseover = function(){
-    input.innerHTML = "$" + worth;
-  }
-  input.onmouseout = function(){
+  if (assetsLen > assetsBullets.length){
+    var input = document.createElement("P");
+    input.style.padding = '15px 15px 15px 15px';
+    input.setAttribute("class", "profile_asset_bullet");
+    assetsBullets.push(input);
+    assetsBulletsWorth.push(worth); 
     input.innerHTML = name;
+    input.onmouseover = function()
+    {
+      input.innerHTML = "$" + worth;
+    }
+    input.onmouseout = function()
+    {
+      input.innerHTML = name;
+    }
+    var para = document.getElementById("profile_assets_box");
+    var child =  document.getElementById("profile_add_assets_button");
+    document.getElementById('profile_assets_placeholder').appendChild(input); 
+    para.scrollTop = para.scrollHeight;
   }
-  var para = document.getElementById("profile_assets_box");
-  var child =  document.getElementById("profile_add_assets_button");
-  document.getElementById('profile_assets_placeholder').appendChild(input); 
-  para.scrollTop = para.scrollHeight;
 }
 
 /** 
@@ -141,7 +153,8 @@ function restore_asset_bullet(name, worth)
   *               in the assets box
   **/
 
-function add_asset (name, worth) {
+function add_asset(name, worth) 
+{ 
   var input = document.createElement("P");
   input.style.padding = '15px 15px 15px 15px';
   input.setAttribute("class", "profile_asset_bullet");
@@ -158,12 +171,12 @@ function add_asset (name, worth) {
   var child =  document.getElementById("profile_add_assets_button");
   document.getElementById('profile_assets_placeholder').appendChild(input); 
   para.scrollTop = para.scrollHeight;
-  database.ref('users/' + curr_user.uid + '/assets/' + (assetsBullets.length - 1).toString()).set({
+  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen).toString()).set({
     name: name,
     worth: worth
   });
   var updates = {};
-  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsBullets.length;
+  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen + 1;
   return database.ref().update(updates);
 }
 
