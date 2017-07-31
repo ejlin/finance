@@ -397,6 +397,14 @@ function open_others()
   }
 }
 
+function read_address_xml(xml)
+{
+  var i;
+  var xmlDoc = xml.responseXML;
+  var x = xmlDoc.getElementsByTagName("street");
+  console.log(x);  
+}
+
 /** 
   * Name:         save_property()
   * Parameters:   None
@@ -407,15 +415,29 @@ function open_others()
 function save_property()
 {
   var zillowID = "X1-ZWz193nbeoak97_6wmn8";
+  var zillowID = "X1-ZWz193nbeoak97_6wmn8";
+  var zillowHTML =  "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=";
+  var zillowAddress = "&address=";
+  var zillowCityStateZip = "&citystatezip=";
+  var delim = "-";
+  var property_name = document.getElementById('asset_property_name').value;
   var address = document.getElementById('asset_address').value;
   var city = document.getElementById('asset_city').value;
   var zip = document.getElementById('asset_zip').value;
   var state = document.getElementById('asset_state_dropdown').value;
   address = address.trim().replace(/[' ']/g, '-');  
   city = city.trim().replace(/[' ']/g, '-');
-  if ( address != "" && city != "" && zip != "")
+  var zillowGET = zillowHTML + zillowID + zillowAddress + address + zillowCityStateZip + city + delim + state + delim + zip;  
+  if ( property_name != "" && address != "" && city != "" && zip != "")
   {
-    
+    var myXML = ""
+    var request = new XMLHttpRequest();
+    request.open("GET", zillowGET, false);
+    request.send();
+    myXML = request.responseXML;
+    var x = myXML.getElementsByTagName("amount");
+    var worth = x[0].childNodes[0].nodeValue; 
+    add_asset(property_name, worth);
     close_assets_modal();
   }
 }

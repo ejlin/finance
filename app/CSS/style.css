@@ -411,7 +411,7 @@ body{
   float: left;
 }
 
-#asset_name, #asset_worth, #other_asset_name, #other_asset_worth, #asset_address{
+#asset_name, #asset_worth, #other_asset_name, #other_asset_worth, #asset_address, #asset_property_name{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -527,6 +527,13 @@ body{
   width: 70%;
 }
 
+#asset_property_input_title{
+  color: #5c7598;
+  font-size: 18px;
+  font-family: 'Economica', sans-serif;
+  width: 70%;
+  margin-top: -30px;
+}
 
 /***************************PROFILE.HTMl***********************/
 
