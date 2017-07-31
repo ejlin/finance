@@ -40,7 +40,8 @@ function setup_profile()
   {
     curr_user = user;
     document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
-
+    var profile_quick_glance_text = document.getElementById('profile_quick_glance_text').innerHTML;
+    //TODO
     var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
       curr_user_net.on('value', function(snapshot) 
       {

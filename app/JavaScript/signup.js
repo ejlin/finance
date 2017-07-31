@@ -34,6 +34,7 @@ function write_user_data(userId, fname, lname, email, pass) {
     last_name: lname,
     email: email,
     net_worth: 0,
+    net_worth_yesterday: 0,
     assets_len : 0,
     liabilities_len : 0
   });
