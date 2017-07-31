@@ -568,3 +568,7 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
+
+input.formInvalid::-webkit-input-placeholder {
+   color: red;
+}

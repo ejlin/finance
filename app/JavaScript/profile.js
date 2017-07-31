@@ -80,11 +80,8 @@ function restore_assets(){
     curr_user_assets_name.once('value', function(snapshot) 
     {
       var str = snapshot.val();
-      console.log(str);
       var name = str.replace(/[0-9]/g, '');
-      console.log(name);
       var worth = parseInt(str);
-      console.log(worth);
       restore_asset_bullet(name, worth);
     });
     counter++;
@@ -148,7 +145,7 @@ function restore_asset_bullet(name, worth)
   *               in the assets box
   **/
 
-function add_asset(name, worth) 
+function add_asset(name, worth, type) 
 { 
   var input = document.createElement("P");
   input.style.padding = '15px 15px 15px 15px';
@@ -420,15 +417,25 @@ function save_property()
   var zillowAddress = "&address=";
   var zillowCityStateZip = "&citystatezip=";
   var delim = "-";
-  var property_name = document.getElementById('asset_property_name').value;
-  var address = document.getElementById('asset_address').value;
-  var city = document.getElementById('asset_city').value;
-  var zip = document.getElementById('asset_zip').value;
-  var state = document.getElementById('asset_state_dropdown').value;
+  var property = document.getElementById('asset_property_name');
+  var property_name = property.value;
+
+  var address_id = document.getElementById('asset_address');
+  var address = address_id.value;
+
+  var city_id = document.getElementById('asset_city');
+  var city = city_id.value;
+
+  var zip_id = document.getElementById('asset_zip');
+  var zip = zip_id.value;
+  
+  var state_id = document.getElementById('asset_state_dropdown');
+  var state = state_id.value;
+  
   address = address.trim().replace(/[' ']/g, '-');  
   city = city.trim().replace(/[' ']/g, '-');
   var zillowGET = zillowHTML + zillowID + zillowAddress + address + zillowCityStateZip + city + delim + state + delim + zip;  
-  if ( property_name != "" && address != "" && city != "" && zip != "")
+  if ( property_name != "" && address != "" && city != "" && zip != "" && state != "")
   {
     var myXML = ""
     var request = new XMLHttpRequest();
@@ -437,8 +444,30 @@ function save_property()
     myXML = request.responseXML;
     var x = myXML.getElementsByTagName("amount");
     var worth = x[0].childNodes[0].nodeValue; 
-    add_asset(property_name, worth);
+    add_asset(property_name, worth, "property");
     close_assets_modal();
+  }
+  else{
+    if (property_name == "")
+    {
+      property.className += " formInvalid";
+    }
+    if (address == "")
+    {
+      address_id.className += " formInvalid";
+    }
+    if (city == "")
+    {
+      city_id.className += " formInvalid";
+    }
+    if (zip == "")
+    {
+      zip_id.className += " formInvalid";
+    }
+    if (state == "")
+    {
+      state.className += " formInvalid";
+    }
   }
 }
 
@@ -452,13 +481,26 @@ function save_property()
 
 function save_other()
 {
-  var name = document.getElementById('other_asset_name').value;
-  var worth = document.getElementById('other_asset_worth').value;
+  var name_id = document.getElementById('other_asset_name');
+  var name = name_id.value;
+  var worth_id = document.getElementById('other_asset_worth');
+  var worth = worth_id.value;
   if ( name != "" && worth != "")
   {
-    add_asset(name, worth);
+    add_asset(name, worth, "other");
     add_net(worth);
     close_assets_modal();
+  }
+  else
+  {
+    if (name == "")
+    {
+      name_id.className += " formInvalid";
+    }
+    if (worth == "")
+    {
+      worth_id.className += " formInvalid";
+    }
   }
 }
 
