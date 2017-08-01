@@ -48,7 +48,7 @@ function setup_profile()
       curr_user_net.on('value', function(snapshot) 
       {
       net = snapshot.val();
-      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(snapshot.val());            
+      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net));            
     });
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
@@ -154,7 +154,7 @@ function restore_asset_bullet(name, worth)
     input.innerHTML = name;
     input.onmouseover = function()
     {
-      input.innerHTML = "$" + worth;
+      input.innerHTML = "$" + convert_with_commas(worth);
     }
     input.onmouseout = function()
     {
