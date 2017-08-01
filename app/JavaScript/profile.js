@@ -17,9 +17,11 @@
 var curr_user;
 var name = "";
 var net;
+var earning_power;
 var assetsLen;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
+var assetsBulletsType = new Array();
 var liabilitiesBullets = new Array();
 
 /** 
@@ -110,12 +112,27 @@ function convert_with_commas(num) {
   *               user according to the new asset passed in. 
   **/
 
-function add_net(asset){
+function add_net(asset)
+{
   net += parseFloat(asset);
   document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   return database.ref().update(updates);  
+}
+
+/** 
+  * Name:         add_earning_power()
+  * Parameters:   asset = The new asset to add to the current earning power
+  * Return:       Returns the update to Firebase
+  * Description:  This function will update the current earning power of the
+  *               user according to the new asset passed in. 
+  **/
+
+function add_earning_power(asset)
+{
+  //TODO
+  return;
 }
 
 /** 
@@ -165,7 +182,8 @@ function add_asset(name, worth, type)
   input.style.padding = '15px 15px 15px 15px';
   input.setAttribute("class", "profile_asset_bullet");
   assetsBullets.push(input);
-  assetsBuleltsWorth.push(worth);
+  assetsBulletsWorth.push(worth);
+  assetsBulletsType.push(type);    
   input.innerHTML = name;
   input.onmouseover = function(){
     input.innerHTML = "$" + convert_with_commas(worth);
@@ -194,15 +212,15 @@ function add_asset(name, worth, type)
   *               in the liabilities box
   **/
 
-function add_liabilities (name, worth) {
-    var input = document.createElement("INPUT");
-    input.setAttribute("class", "profile_liabilities_bullet");
-    liabilitiesBullets.push(input);
-    var para = document.getElementById("profile_liabilities_box");
-    var child =  document.getElementById("profile_add_liabilities_button");
-    document.getElementById('profile_liabilities_placeholder').appendChild(input);
-    para.scrollTop = para.scrollHeight;    
-  
+function add_liabilities (name, worth) 
+{
+  var input = document.createElement("INPUT");
+  input.setAttribute("class", "profile_liabilities_bullet");
+  liabilitiesBullets.push(input);
+  var para = document.getElementById("profile_liabilities_box");
+  var child =  document.getElementById("profile_add_liabilities_button");
+  document.getElementById('profile_liabilities_placeholder').appendChild(input);
+  para.scrollTop = para.scrollHeight;    
 }
 
 /** 
@@ -212,19 +230,24 @@ function add_liabilities (name, worth) {
   * Description:  This function will remove the last added asset
   **/
 
-function remove_asset(){
-  var element = assetsBullets[assetsBullets.length - 1];
-  var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
-  net -= elementWorth;
-  element.parentNode.removeChild(element);
-  assetsBullets.splice(assetsBullets.length - 1, 1);
-  assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
-  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
-  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
-  var updates = {};
-  updates['/users/' + curr_user.uid + '/net_worth'] = net;
-  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
-  return database.ref().update(updates);
+function remove_asset()
+{
+  if (assetsBulletsType[assetsBulletsType.length - 1] != "salary")
+  {
+    var element = assetsBullets[assetsBullets.length - 1];
+    var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
+    net -= elementWorth;
+    element.parentNode.removeChild(element);
+    assetsBullets.splice(assetsBullets.length - 1, 1);
+    assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
+    assetsBulletsType.splice(assetsBulletsType.length - 1, 1);  
+    document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+    database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
+    var updates = {};
+    updates['/users/' + curr_user.uid + '/net_worth'] = net;
+    updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
+    return database.ref().update(updates);
+  }
 }
 
 /** 
@@ -238,7 +261,6 @@ function remove_liabilities(){
   var element = liabilitiesBullets[liabilitiesBullets.length - 1];
   element.parentNode.removeChild(element);
   liabilitiesBullets.splice(liabilitiesBullets.length - 1, 1);
-  update_net();
 }
 
 /** 
@@ -459,6 +481,7 @@ function save_property()
     var x = myXML.getElementsByTagName("amount");
     var worth = x[0].childNodes[0].nodeValue; 
     add_asset(property_name, worth, "property");
+    add_net(worth);
     close_assets_modal();
   }
   else{
@@ -485,6 +508,39 @@ function save_property()
   }
 }
 
+/** 
+  * Name:         save_salary()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will save the 'salary asset' the user inputs
+  **/
+
+function save_salary()
+{
+  assetsBulletsType.push("salary");
+  var name = document.getElementById('asset_salary_name')
+  var salary = document.getElementById('asset_salary_worth');
+  var time = document.getElementById('salary_dropdown');
+  var worth = salary.value * parseInt(time.value);
+  if ( time.value == "12")
+  {
+    worth = (worth * 0.9615);
+  }
+  add_asset(name.value, worth, "salary");
+  close_assets_modal();
+  if (name.value == "")
+  {
+    name.className += " formInvalid";
+  }
+  if (salary.value == "")
+  {
+    salary.className += " formInvalid";
+  }
+  if (time.value == "")
+  {
+    time.className += " formInvalid";
+  }
+}
 
 /** 
   * Name:         save_other()
@@ -495,6 +551,7 @@ function save_property()
 
 function save_other()
 {
+  assetsBulletsType.push("other");  
   var name_id = document.getElementById('other_asset_name');
   var name = name_id.value;
   var worth_id = document.getElementById('other_asset_worth');

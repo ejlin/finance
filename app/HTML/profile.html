@@ -251,23 +251,32 @@
 
 <!-- Salary-->
         <center>
-          <p id="asset_input_title" class="salary_input">
+          <p id="asset_input_title" class="salary_input" style="margin-top: -20px;">
             Add your estimated salary for this year
           </p>
         </center>        
-          <input id="asset_name" class="salary_input" type="text" placeholder="Name" required>
+          <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required>
           </input>
-          <input id="asset_worth" class="salary_input" type="number" placeholder="Salary" required>
+          <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required>
           </input>
           <form class="salary_input">
             <select id="salary_dropdown" name="salary_occurence">
-              <option value="Hourly">Hourly</option>
-              <option value="Daily">Daily</option>
-              <option value="Weekly">Weekly</option>
-              <option value="Monthly">Monthly</option>
-              <option value="Yearly">Yearly</option>
+              <option value="">Occurrence</option>
+              <option value="2000">Hourly</option>
+              <option value="250">Daily</option>
+              <option value="50">Weekly</option>
+              <option value="12">Monthly</option>
+              <option value="1">Yearly</option>
             </select>
           </form>
+           <center>
+          <button onclick="save_salary()" class="salary_input" id = "save_salary_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
 
 
 <!-- Other -->
