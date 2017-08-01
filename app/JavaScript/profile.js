@@ -46,7 +46,7 @@ function setup_profile()
       curr_user_net.on('value', function(snapshot) 
       {
       net = snapshot.val();
-      document.getElementById('profile_worth_text').innerHTML = "$" + snapshot.val();            
+      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(snapshot.val());            
     });
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
@@ -90,6 +90,19 @@ function restore_assets(){
 }
 
 /** 
+  * Name:         convert_with_commas()
+  * Parameters:   num = The number to convert
+  * Return:       Returns the number with commas every thousand.
+  * Description:  This function will place appropriate commas to resemble actual money
+  * Source (Optional): Found at: 
+  * "https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript"
+  **/
+
+function convert_with_commas(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/** 
   * Name:         add_net()
   * Parameters:   asset = The new asset to add to the current net worth
   * Return:       Returns the update to Firebase
@@ -99,7 +112,7 @@ function restore_assets(){
 
 function add_net(asset){
   net += parseFloat(asset);
-  document.getElementById('profile_worth_text').innerHTML = "$" + net;
+  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   return database.ref().update(updates);  
@@ -152,10 +165,10 @@ function add_asset(name, worth, type)
   input.style.padding = '15px 15px 15px 15px';
   input.setAttribute("class", "profile_asset_bullet");
   assetsBullets.push(input);
-  assetsBulletsWorth.push(worth); 
+  assetsBuleltsWorth.push(worth);
   input.innerHTML = name;
   input.onmouseover = function(){
-    input.innerHTML = "$" + worth;
+    input.innerHTML = "$" + convert_with_commas(worth);
   }
   input.onmouseout = function(){
     input.innerHTML = name;
@@ -206,7 +219,7 @@ function remove_asset(){
   element.parentNode.removeChild(element);
   assetsBullets.splice(assetsBullets.length - 1, 1);
   assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
-  document.getElementById('profile_worth_text').innerHTML = "$" + net;
+  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
   database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth'] = net;
