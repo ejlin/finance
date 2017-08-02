@@ -63,9 +63,15 @@
       <div id="profile_quick_glance_text">
         Net Worth:
       </div>
+      <div id="profile_quick_glance_text_net_worth">
+        $0
+      </div>
 
       <div id="profile_quick_glance_text">
         Earning Power: 
+      </div>
+      <div id="profile_quick_glance_text_earning_power">
+        $0
       </div>
     </div>
     
@@ -174,6 +180,33 @@
         </div>
         </center>
 
+<!-- Rent -->
+        <center>
+          <p id="asset_input_title" class="rent_input" style="margin-top: -20px;">
+            Add your estimated rent income
+          </p>
+        </center>        
+          <input id="asset_rent_name" class="rent_input" type="text" placeholder="Name" required>
+          </input>
+          <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required>
+          </input>
+          <form class="rent_input">
+            <select id="rent_dropdown" name="salary_occurence">
+              <option value="">Occurrence</option>
+              <option value="365">Daily</option>
+              <option value="52">Weekly</option>
+              <option value="12">Monthly</option>
+              <option value="1">Yearly</option>
+            </select>
+          </form>
+           <center>
+          <button onclick="save_rent()" class="rent_input" id = "save_rent_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
 <!-- Property-->
         <center>
           <p id="asset_property_input_title" class="property_input">
@@ -259,7 +292,7 @@
 <!-- Salary-->
         <center>
           <p id="asset_input_title" class="salary_input" style="margin-top: -20px;">
-            Add your estimated salary for this year
+            Add your estimated salary
           </p>
         </center>        
           <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required>
@@ -283,8 +316,6 @@
             </div>
           </button>
         </center>
-
-
 
 <!-- Other -->
         <center>

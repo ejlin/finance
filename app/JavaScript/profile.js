@@ -48,7 +48,14 @@ function setup_profile()
       curr_user_net.on('value', function(snapshot) 
       {
       net = snapshot.val();
-      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net));            
+      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net)); 
+      document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(parseInt(net));      
+    });
+    var curr_user_earning_power = database.ref('users/' + user.uid + '/earning_power');
+    curr_user_earning_power.on('value', function(snapshot)
+    {
+      earning_power = snapshot.val();
+      document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power));            
     });
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
@@ -68,6 +75,25 @@ function setup_profile()
 }
 
 /** 
+  * Name:         parse_string()
+  * Parameters:   str = The string to convert
+  * Return:       None
+  * Description:  This function will return the truncated string without the worth
+  **/
+
+function parse_string(str)
+{
+  var len = str.length;
+  for (var i = 0; i < len; i++)
+  {
+    if (isNaN(parseInt(str.charAt(i))) )
+    {
+      return str.slice(i, len - 2);
+    }
+  }
+}
+
+/** 
   * Name:         restore_assets()
   * Parameters:   assets_len = The length of the user's assets
   * Return:       None
@@ -83,8 +109,9 @@ function restore_assets(){
     curr_user_assets_name.once('value', function(snapshot) 
     {
       var str = snapshot.val();
-      var name = str.replace(/[0-9]/g, '');
+      var name = parse_string(str);
       var worth = parseInt(str);
+      var type = str.slice(len-2, len);
       restore_asset_bullet(name, worth);
     });
     counter++;
@@ -116,6 +143,7 @@ function add_net(asset)
 {
   net += parseFloat(asset);
   document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+  document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   return database.ref().update(updates);  
@@ -131,8 +159,11 @@ function add_net(asset)
 
 function add_earning_power(asset)
 {
-  //TODO
-  return;
+  earning_power += parseFloat(asset);
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
+  return database.ref().update(updates);  
 }
 
 /** 
@@ -143,7 +174,7 @@ function add_earning_power(asset)
   * Description:  This function will restore existing assets for returning users 
   **/
 
-function restore_asset_bullet(name, worth)
+function restore_asset_bullet(name, worth, type)
 {
   if (assetsLen > assetsBullets.length){
     var input = document.createElement("P");
@@ -151,6 +182,7 @@ function restore_asset_bullet(name, worth)
     input.setAttribute("class", "profile_asset_bullet");
     assetsBullets.push(input);
     assetsBulletsWorth.push(worth); 
+    assetsBulletsType.push(type);
     input.innerHTML = name;
     input.onmouseover = function()
     {
@@ -196,7 +228,7 @@ function add_asset(name, worth, type)
   document.getElementById('profile_assets_placeholder').appendChild(input); 
   para.scrollTop = para.scrollHeight;
   database.ref('users/' + curr_user.uid + '/assets/' + assetsLen).set({
-    name_worth: (worth + name),
+    name_worth: (worth + name + type),
   });
   var updates = {};
   updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen + 1;
@@ -232,22 +264,30 @@ function add_liabilities (name, worth)
 
 function remove_asset()
 {
-  if (assetsBulletsType[assetsBulletsType.length - 1] != "salary")
-  {
+    var updates = {};    
     var element = assetsBullets[assetsBullets.length - 1];
     var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
-    net -= elementWorth;
+    var type = assetsBulletsType[assetsBulletsType.length - 1];
+    if (type != "sa" && type != "re" && (net - elementWorth) >= 0)
+    {
+      net -= elementWorth;
+      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+      document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
+      updates['/users/' + curr_user.uid + '/net_worth'] = net;          
+    }
+    else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
+    { 
+      earning_power -= elementWorth;
+      document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
+      updates['/users/' + curr_user.uid + '/earning_power'] = earning_power;  
+    }
     element.parentNode.removeChild(element);
     assetsBullets.splice(assetsBullets.length - 1, 1);
     assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
     assetsBulletsType.splice(assetsBulletsType.length - 1, 1);  
-    document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
     database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
-    var updates = {};
-    updates['/users/' + curr_user.uid + '/net_worth'] = net;
     updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
     return database.ref().update(updates);
-  }
 }
 
 /** 
@@ -303,6 +343,16 @@ function hide_assets_menu() {
   }
 }
 
+
+function show_assets_menu_helper(asset_type)
+{
+  var others_input = document.getElementsByClassName(asset_type);
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "none";
+    others_input[i].value = "";
+  }
+} 
+
 /** 
   * Name:         show_assets_menu()
   * Parameters:   None
@@ -311,24 +361,10 @@ function hide_assets_menu() {
   **/
 
 function show_assets_menu() {
-  var others_input = document.getElementsByClassName('property_input');
-  for (var i = 0; i < others_input.length; i++){
-    others_input[i].style.display = "none";
-    others_input[i].value = "";
-  }
-
-  var others_input = document.getElementsByClassName('salary_input');
-  for (var i = 0; i < others_input.length; i++){
-    others_input[i].style.display = "none";
-    others_input[i].value = "";
-  }
-
-  var others_input = document.getElementsByClassName('others_input');
-  for (var i = 0; i < others_input.length; i++){
-    others_input[i].style.display = "none";
-    others_input[i].value = "";
-  }
-
+  show_assets_menu_helper('property_input');
+  show_assets_menu_helper('rent_input');
+  show_assets_menu_helper('salary_input');
+  show_assets_menu_helper('others_input');
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -378,6 +414,11 @@ function open_rent()
 {
   hide_assets_menu();
   show('assets_modal_back');
+  var others_input = document.getElementsByClassName('rent_input');
+  for (var i = 0; i < others_input.length; i++)
+  {
+    others_input[i].style.display = "block";
+  }
 }
 
 /** 
@@ -480,7 +521,7 @@ function save_property()
     myXML = request.responseXML;
     var x = myXML.getElementsByTagName("amount");
     var worth = x[0].childNodes[0].nodeValue; 
-    add_asset(property_name, worth, "property");
+    add_asset(property_name, worth, "pr");
     add_net(worth);
     close_assets_modal();
   }
@@ -509,6 +550,39 @@ function save_property()
 }
 
 /** 
+  * Name:         save_rent()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will save the 'salary asset' the user inputs
+  **/
+
+function save_rent()
+{
+  var name = document.getElementById('asset_rent_name')
+  var rent= document.getElementById('asset_rent_worth');
+  var time = document.getElementById('rent_dropdown');
+  var worth = rent.value * parseInt(time.value);
+  if (name.value != "" && rent.value != "" && time.value != "")
+  {
+    add_asset(name.value, worth, "re");
+    add_earning_power(worth);
+    close_assets_modal();
+  }
+  if (name.value == "")
+  {
+    name.className += " formInvalid";
+  }
+  if (rent.value == "")
+  {
+    rent.className += " formInvalid";
+  }
+  if (time.value == "")
+  {
+    time.className += " formInvalid";
+  }
+}
+
+/** 
   * Name:         save_salary()
   * Parameters:   None
   * Return:       None
@@ -517,17 +591,20 @@ function save_property()
 
 function save_salary()
 {
-  assetsBulletsType.push("salary");
   var name = document.getElementById('asset_salary_name')
   var salary = document.getElementById('asset_salary_worth');
   var time = document.getElementById('salary_dropdown');
   var worth = salary.value * parseInt(time.value);
-  if ( time.value == "12")
+  if (name.value != "" && salary.value != "" && time.value != "")
   {
-    worth = (worth * 0.9615);
+    if ( time.value == "12")
+    {
+      worth = (worth * 0.9615);
+    }
+    add_asset(name.value, worth, "sa");
+    add_earning_power(worth);
+    close_assets_modal();
   }
-  add_asset(name.value, worth, "salary");
-  close_assets_modal();
   if (name.value == "")
   {
     name.className += " formInvalid";
@@ -551,14 +628,13 @@ function save_salary()
 
 function save_other()
 {
-  assetsBulletsType.push("other");  
   var name_id = document.getElementById('other_asset_name');
   var name = name_id.value;
   var worth_id = document.getElementById('other_asset_worth');
   var worth = worth_id.value;
   if ( name != "" && worth != "")
   {
-    add_asset(name, worth, "other");
+    add_asset(name, worth, "ot");
     add_net(worth);
     close_assets_modal();
   }

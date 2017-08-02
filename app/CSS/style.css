@@ -218,12 +218,20 @@ body{
   margin-top: 12.5px;
 }
 
-#profile_quick_glance_text{
-  margin-left: 3%;
-  margin-top: 25px;
-  font-size: 18px;
+#profile_quick_glance_text, #profile_quick_glance_text_net_worth, #profile_quick_glance_text_earning_power{
+  margin-top: 15px;
   font-family: 'Josefin Sans', sans-serif;
   color: #5c7598;
+}
+
+#profile_quick_glance_text{
+  margin-left: 4%;
+  font-size: 18px;  
+}
+
+#profile_quick_glance_text_net_worth, #profile_quick_glance_text_earning_power{
+  text-align: center;
+  font-size: 24px;
 }
 
 #profile_add_assets_button, #profile_add_liabilities_button, 
@@ -412,7 +420,9 @@ body{
   float: left;
 }
 
-#asset_name, #asset_worth, #other_asset_name, #other_asset_worth, #asset_address, #asset_property_name, #asset_salary_name, #asset_salary_worth{
+#asset_name, #asset_worth, #other_asset_name, #other_asset_worth, 
+#asset_address, #asset_property_name, #asset_salary_name, 
+#asset_salary_worth, #asset_rent_name, #asset_rent_worth{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -471,11 +481,11 @@ body{
   font-family: 'Josefin Sans', sans-serif;  
 }
 
-.salary_input, .property_input{
+.salary_input, .property_input, .rent_input{
   display: none;
 }
 
-#salary_dropdown{
+#salary_dropdown, #rent_dropdown{
   width: 60%;
   border: none;
   height: 50px;
@@ -518,7 +528,7 @@ body{
   font-size: 18px;
 }
 
-#save_salary_button{
+#save_salary_button, #save_rent_button{
   width: 15%;
   height: 35px;
   border: none;
