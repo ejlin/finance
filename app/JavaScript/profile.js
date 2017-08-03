@@ -433,6 +433,7 @@ function show_assets_menu() {
   show_assets_menu_helper('property_input');
   show_assets_menu_helper('rent_input');
   show_assets_menu_helper('salary_input');
+  show_assets_menu_helper('stock_input');
   show_assets_menu_helper('others_input');
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++){
@@ -501,6 +502,11 @@ function open_stocks()
 {
   hide_assets_menu();
   show('assets_modal_back');
+  var others_input = document.getElementsByClassName('stock_input');
+  for (var i = 0; i < others_input.length; i++)
+  {
+    others_input[i].style.display = "block";
+  }
 }
 
 /** 
@@ -686,6 +692,18 @@ function save_salary()
   {
     time.className += " formInvalid";
   }
+}
+
+/** 
+  * Name:         save_stock()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will save the 'stock asset' the user inputs
+  **/
+
+function save_stock()
+{
+
 }
 
 /** 

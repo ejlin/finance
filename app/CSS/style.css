@@ -578,7 +578,7 @@ body{
   font-size: 18px;
 }
 
-#asset_input_title{
+#asset_input_title, #asset_stock_input_title{
   color: #5c7598;
   font-size: 18px;
   font-family: 'Josefin Sans', sans-serif;
