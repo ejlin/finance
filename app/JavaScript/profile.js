@@ -23,6 +23,7 @@ var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var assetsBulletsType = new Array();
 var liabilitiesBullets = new Array();
+var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL"];
 
 /** 
   * Name:         setup_profile()
@@ -57,6 +58,12 @@ function setup_profile()
       earning_power = snapshot.val();
       document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power));            
     });
+    //post_news("https://newsapi.org/v1/articles?source=financial-times&sortBy=top&apiKey=d7dea837a070469480674f9bec576256");
+    var counter = 0;
+    while ( counter < defaultCompanies.length)
+    {
+      post_news(defaultCompanies[counter++]);
+    }
     var assets_len = 0;
     var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
     curr_user_assets_len.on('value', function(snapshot) 
@@ -72,6 +79,68 @@ function setup_profile()
     // No user is signed in.
   }
 });
+}
+
+/** 
+  * Name:         truncate_title()
+  * Parameters:   title = The string to truncate
+  * Return:       A truncated version of the string or the original string if
+  *               there is no need to truncate it
+  * Description:  This function will truncate a string if it is too long or return
+  *               the original string if it is not. 
+  **/
+
+function truncate_title(title)
+{
+  if (title.length > 48)
+  {
+    return (title.slice(0, 48) + "...");
+  }
+  return title;
+}
+
+/** 
+  * Name:         post_news()
+  * Parameters:   company_ticker = The ticker for the company to post news of
+  * Return:       None
+  * Description:  This function will post worthy news from the company mentioned
+  **/
+
+function post_news(company_ticker)
+{
+  var https = require("https");
+
+  var username = "8de2ab9294eb7387e13bed32e87c5ed2";
+  var password = "382da3d89f22a7e554dc1770ec1a055d";
+  var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+
+  var request = https.request({
+    method: "GET",
+    host: "api.intrinio.com",
+    path: "/news?identifier=" + company_ticker,
+    headers: {
+        "Authorization": auth
+    }
+  }, function(response) {
+    var json = "";
+    response.on('data', function (chunk) {
+        json += chunk;
+        
+     });
+    response.on('end', function() {
+        var company = JSON.parse(json);
+        var headline = document.createElement("A");
+        headline.setAttribute("class", "profile_news_bullet");
+        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title);
+        headline.href = company.data[0].url;
+        headline.target = "_blank";
+        document.getElementById('profile_news_placeholder').appendChild(headline);
+    });
+    
+ 
+  });
+
+  request.end();
 }
 
 /** 
@@ -178,7 +247,7 @@ function restore_asset_bullet(name, worth, type)
 {
   if (assetsLen > assetsBullets.length){
     var input = document.createElement("P");
-    input.style.padding = '15px 15px 15px 15px';
+    //input.style.padding = '15px 15px 15px 15px';
     input.setAttribute("class", "profile_asset_bullet");
     assetsBullets.push(input);
     assetsBulletsWorth.push(worth); 
@@ -268,7 +337,7 @@ function remove_asset()
     var element = assetsBullets[assetsBullets.length - 1];
     var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
     var type = assetsBulletsType[assetsBulletsType.length - 1];
-    if (type != "sa" && type != "re" && (net - elementWorth) >= 0)
+    if (type != "sa" && type != "re" && type != "OT" && (net - elementWorth) >= 0)
     {
       net -= elementWorth;
       document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
@@ -632,10 +701,22 @@ function save_other()
   var name = name_id.value;
   var worth_id = document.getElementById('other_asset_worth');
   var worth = worth_id.value;
-  if ( name != "" && worth != "")
+
+  var time_id = document.getElementById('others_dropdown');
+  var time = time_id.value;
+  
+  if ( name != "" && worth != "" && time != "")
   {
-    add_asset(name, worth, "ot");
-    add_net(worth);
+    if (time == "reoccurring")
+    {
+      add_asset(name, worth, "OT");
+      add_earning_power(worth);      
+    }
+    else if (time == "single")
+    {
+      add_asset(name, worth, "ot");
+      add_net(worth);
+    }
     close_assets_modal();
   }
   else
@@ -647,6 +728,10 @@ function save_other()
     if (worth == "")
     {
       worth_id.className += " formInvalid";
+    }
+    if (time == "")
+    {
+      time_id.className += " formInvalid";
     }
   }
 }
@@ -716,4 +801,25 @@ window.onclick = function(event) {
 
 */
 
+// How to request JSON API.
+ /*
+  var counter = 0;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.responseType = 'json';
+  xhr.onload = function() {
+    var status = xhr.status;
+    if (status == 200) {
+      var data = xhr.response;
+      //console.log("here");
+      //console.log(data.articles[0].title);
+      while (data.data[counter] != null)
+      {
+        
+      }
+    } else {
+      //TODO
+    }
+  };
+  xhr.send(); */
 

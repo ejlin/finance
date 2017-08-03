@@ -74,12 +74,9 @@
         $0
       </div>
     </div>
-    
+     
     <div id="profile_quick_glance">
-      <div id=" profile_quick_glance_date">
-      </div>
-      <div id="profile_quick_glance_text">
-           
+      <div id="profile_news_placeholder">
       </div>
     </div>
 
@@ -114,7 +111,6 @@
         </img>
       </a>
     </div>
-
     
     <div class = "clearfix"/>    
     
@@ -123,7 +119,6 @@
       </div>
     </div>
        
-    
     <div id="profile_liabilities_box">
       <div id="profile_liabilities_placeholder">
       </div>
@@ -319,7 +314,7 @@
 
 <!-- Other -->
         <center>
-          <p id="asset_input_title" class="others_input">
+          <p id="asset_others_input_title" class="others_input">
             Manually add any asset that doesn't fit in any of the other categories
           </p>
         </center>
@@ -327,6 +322,13 @@
         </input>
         <input id="other_asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required>
         </input>
+        <form class="others_input">
+          <select id="others_dropdown" name="salary_occurence">
+            <option value="">Occurrence</option>
+            <option value="reoccurring">Reoccurring</option>
+            <option value="single">One Time</option>            
+            </select>
+        </form>
         <center>
           <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
             <div id="signup_button_text">

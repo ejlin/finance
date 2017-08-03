@@ -169,6 +169,7 @@ body{
   margin-left: 8%;
   float: left;
   border-radius: 0px 0px 2px 2px;
+  overflow: scroll;
 }
 
 #profile_quick_glance_top{
@@ -229,7 +230,7 @@ body{
   font-size: 18px;  
 }
 
-#profile_quick_glance_text_net_worth, #profile_quick_glance_text_earning_power{
+#profile_quick_glance_text_net_worth, #profile_quick_glance_text_earning_power, #profile_quick_glance_text_news{
   text-align: center;
   font-size: 24px;
 }
@@ -320,7 +321,7 @@ body{
 
 }
 
-#profile_assets_placeholder, #profile_liabilities_placeholder{
+#profile_assets_placeholder, #profile_liabilities_placeholder, #profile_news_placeholder{
   color: white;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 24px;
@@ -346,6 +347,29 @@ body{
   margin-left: calc(10% - 12px);
   overflow-x: scroll;
   text-align: center;
+}
+
+.profile_news_bullet
+{
+  width: 90%;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 20px;
+  color: white;
+  background-color: #abb7c8;
+  padding: 12px 12px 12px 12px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1;
+  margin-left: calc(5% - 12px);
+  margin-right: calc(5% - 12px);
+  float: left;
+  overflow: scroll;
+  text-decoration: none;
 }
 
 .modal {
@@ -481,11 +505,11 @@ body{
   font-family: 'Josefin Sans', sans-serif;  
 }
 
-.salary_input, .property_input, .rent_input{
+.salary_input, .property_input, .rent_input, .others_input{
   display: none;
 }
 
-#salary_dropdown, #rent_dropdown{
+#salary_dropdown, #rent_dropdown, #others_dropdown{
   width: 60%;
   border: none;
   height: 50px;
@@ -567,6 +591,15 @@ body{
   font-family: 'Josefin Sans', sans-serif;
   width: 70%;
   margin-top: -30px;
+}
+
+#asset_others_input_title{
+  color: #5c7598;
+  font-size: 18px;
+  font-family: 'Josefin Sans', sans-serif;
+  width: 70%;
+  margin-top: -15px;
+
 }
 
 /***************************PROFILE.HTMl***********************/
