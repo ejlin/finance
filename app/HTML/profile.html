@@ -9,14 +9,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
-  
+
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     </link>
   </head>
 
   <body onload="setup_profile()">
-
+<!--
     <div id="menu">
       <img id="menu_icon" src="../Images/avatar.png">
       </img>
@@ -29,15 +29,15 @@
       <img id="menu_icon" src="../Images/settings.png">
       </img>
     </div>
-    
+-->
     <div id="profile_worth_text">
       $0
     </div>
 
-    <div class = "clearfix"/>    
-    
+    <div class = "clearfix"/>
+
     <div id="profile_name">
-      Welcome, 
+      Welcome,
     </div>
 
     <a onclick="signout()">
@@ -46,18 +46,32 @@
       </div>
     </a>
 
-    <div class = "clearfix"/>    
+    <div class = "clearfix"/>
 
     <div id="profile_quick_glance_top">
       <div id="profile_quick_glance_title">
         Today's Quick Glance
       </div>
+    <!--  <img id="profile_quick_glance_info" class = "tooltip" src="../Images/Info.png">
+    -->
+    <div id="profile_quick_glance_info" class="tooltip">
+        <img src="../Images/Info.png">
+        <span class="tooltip_text">Find relevant news in the financial world. All in one easily accessible feed.</span>
+        </img>
     </div>
+  <!--    </img>
+  -->  </div>
 
     <div id="profile_box_top">
+      <div id="profile_quick_glance_info" class="tooltip">
+          <img src="../Images/Info.png">
+          <span class="tooltip_text">A quick snapshot of your current net worth and your earning power for the year.</span>
+          </img>
+      </div>
       <div id="profile_box_top_text">
         Profile
       </div>
+
     </div>
     <div id="profile_quick_glance_profile">
       <div id="profile_quick_glance_text">
@@ -68,20 +82,20 @@
       </div>
 
       <div id="profile_quick_glance_text">
-        Earning Power: 
+        Earning Power:
       </div>
       <div id="profile_quick_glance_text_earning_power">
         $0
       </div>
     </div>
-     
+
     <div id="profile_quick_glance">
       <div id="profile_news_placeholder">
       </div>
     </div>
 
-    <div class = "clearfix"/>    
-    
+    <div class = "clearfix"/>
+
 
     <div id="profile_assets_box_top">
       <div id="profile_assets_title">
@@ -111,21 +125,21 @@
         </img>
       </a>
     </div>
-    
-    <div class = "clearfix"/>    
-    
+
+    <div class = "clearfix"/>
+
     <div id="profile_assets_box">
       <div id="profile_assets_placeholder">
       </div>
     </div>
-       
+
     <div id="profile_liabilities_box">
       <div id="profile_liabilities_placeholder">
       </div>
     </div>
 
-    <div class = "clearfix"/>    
-        
+    <div class = "clearfix"/>
+
     <div id="assets_add_menu" class="modal">
       <div class="modal-content">
         <img onclick="show_assets_menu()" id="assets_modal_back" src="../Images/back.png">
@@ -149,26 +163,26 @@
           </img>
           <p id="modal_logo_text"> Rent </p>
         </div>
-        
+
         </center>
-        <div class = "clearfix"/>   
+        <div class = "clearfix"/>
         <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="modal_logo"></hr>
         <br></br>
-        
+
         <center>
-        <div id="modal_logo" class="modal_logo">        
+        <div id="modal_logo" class="modal_logo">
           <img onclick="open_salary()" id="modal_img" src="../Images/salary.png">
           </img>
           <p id="modal_logo_text"> Salary </p>
         </div>
 
-        <div id="modal_logo" class="modal_logo">        
+        <div id="modal_logo" class="modal_logo">
           <img onclick="open_stocks()" id="modal_img" src="../Images/stock.png">
           </img>
           <p id="modal_logo_text"> Stocks </p>
         </div>
 
-        <div id="modal_logo" class="modal_logo">        
+        <div id="modal_logo" class="modal_logo">
           <img id="modal_img_other" onclick="open_others()" src="../Images/other.png">
           </img>
           <p id="modal_logo_text"> Other </p>
@@ -180,7 +194,12 @@
           <p id="asset_input_title" class="rent_input" style="margin-top: -20px;">
             Add your estimated rent income
           </p>
-        </center>        
+        </center>
+        <div id="property_info" class="tooltip rent_input">
+          <img src="../Images/Info.png">
+          <span class="tooltip_text">Add any rent income you may be taking in with their occurrence per year</span>
+          </img>
+        </div>
           <input id="asset_rent_name" class="rent_input" type="text" placeholder="Name" required>
           </input>
           <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required>
@@ -205,9 +224,14 @@
 <!-- Property-->
         <center>
           <p id="asset_property_input_title" class="property_input">
-            Enter property address (*Currently supporting U.S. addresses only)
+            Enter property address
           </p>
-        </center>  
+        </center>
+        <div id="property_info" class="tooltip property_input">
+            <img src="../Images/Info.png">
+            <span class="tooltip_text">Property valuations are based off of Zillow Estimates. Currently only supporting U.S. addresses</span>
+            </img>
+        </div>
           <input id="asset_property_name" class="property_input" type="text" placeholder="Name" required>
           </input>
           <input id="asset_address" class="property_input" type="text" placeholder="Address" required>
@@ -270,7 +294,7 @@
               <option value="WA">WA</option>
               <option value="WV">WV</option>
               <option value="WI">WI</option>
-              <option value="WY">WY</option>                  
+              <option value="WY">WY</option>
             </select>
           </form>
           <div class="clearfix"/>
@@ -289,7 +313,12 @@
           <p id="asset_input_title" class="salary_input" style="margin-top: -20px;">
             Add your estimated salary
           </p>
-        </center>        
+        </center>
+        <div id="property_info" class="tooltip salary_input">
+            <img src="../Images/Info.png">
+            <span class="tooltip_text">Salaries using Occurrences of "Hourly", "Daily", "Weekly" are calculated using a standard 8 hour workday and 50 weeks per year</span>
+            </img>
+        </div>
           <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required>
           </input>
           <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required>
@@ -319,6 +348,11 @@
             Add members of your stock portfolio
           </p>
         </center>
+        <div id="property_info" class="tooltip stock_input">
+          <img src="../Images/Info.png">
+          <span class="tooltip_text">Add members of your stock portfolio</span>
+          </img>
+        </div>
         <input id="other_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Name of Company" required>
         </input>
         <input id="other_asset_worth" class="stock_input" type="number" name="signup_username" placeholder="Number of Shares" required>
@@ -337,6 +371,11 @@
             Manually add any asset that doesn't fit in any of the other categories
           </p>
         </center>
+        <div id="property_info" class="tooltip others_input">
+            <img src="../Images/Info.png">
+            <span class="tooltip_text">Add an asset that occurs once (eg. Art painting) or occurs periodically (eg. Monthly income)</span>
+            </img>
+        </div>
         <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name of Asset" required>
         </input>
         <input id="other_asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required>
@@ -345,7 +384,7 @@
           <select id="others_dropdown" name="salary_occurence">
             <option value="">Occurrence</option>
             <option value="reoccurring">Reoccurring</option>
-            <option value="single">One Time</option>            
+            <option value="single">One Time</option>
             </select>
         </form>
         <center>
@@ -359,12 +398,10 @@
       </div>
     </div>
 
-    <script src = "../../main.js"></script>    
+    <script src = "../../main.js"></script>
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>
-    <script src = "../JavaScript/profile.js"></script> 
+    <script src = "../JavaScript/profile.js"></script>
   </body>
-  
+
 </html>
-
-

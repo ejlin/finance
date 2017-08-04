@@ -92,9 +92,9 @@ function setup_profile()
 
 function truncate_title(title)
 {
-  if (title.length > 48)
+  if (title.length > 45)
   {
-    return (title.slice(0, 48) + "...");
+    return (title.slice(0, 45) + "...");
   }
   return title;
 }
@@ -131,13 +131,13 @@ function post_news(company_ticker)
         var company = JSON.parse(json);
         var headline = document.createElement("A");
         headline.setAttribute("class", "profile_news_bullet");
-        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title);
-        headline.href = company.data[0].url;
+        var article = company.data[0];
+        headline.innerHTML = truncate_title(company_ticker + ": " + article.title);
+        headline.href = article.url;
+        headline.title = article.title;
         headline.target = "_blank";
         document.getElementById('profile_news_placeholder').appendChild(headline);
     });
-    
- 
   });
 
   request.end();
