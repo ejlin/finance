@@ -60,6 +60,27 @@ function validate_signup_input()
   var confirm_password = document.getElementById('signup_confirm_password').value;
   var name = first_name + " " + last_name;
   
+  if (first_name == "")
+  {
+    return;
+  }
+  if (last_name == "")
+  {
+    return;
+  }
+  if (email == "")
+  {
+    return;
+  }
+  if (password == "")
+  {
+    return;
+  }
+  if (confirm_password == "")
+  {
+    return;
+  }
+
   if (password == confirm_password)
   {
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) 
@@ -88,3 +109,18 @@ function validate_signup_input()
   }
 }
 
+/** 
+  * Name:         N/A
+  * Parameters:   e
+  * Return:       None
+  * Description:  This function will listen for an Enter key press
+  *               which will attempt to sign up the user
+  **/
+
+window.onkeyup = function(e) {
+   var key = e.keyCode ? e.keyCode : e.which;
+
+   if (key == 13) {
+     validate_signup_input();
+   }
+}

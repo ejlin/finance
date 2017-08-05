@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
 
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">    
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     </link>
   </head>
@@ -17,21 +18,27 @@
   <body id="signup_body">
     <center>
       <input id="login_username" type="text" name="signup_username" placeholder="Email">
-      <br></br>
+      <br>
+      </br>
       <input id="login_password" type="password" name="signup_password" placeholder="Password">
-      <br></br>
+      <br>
+      </br>
       <button onclick="signup_login()" id = "login_button" class="submit_button">
         <div id="signup_button_text">
           Login
         </div>
       </button>
-      <br></br>
+      <br>
+      </br>
       <div id="login_member_text">
         Not a member yet? <a style="cursor:pointer;" onclick="signup()"><u>Sign Up</u></a>
       </div>
-      <br></br>
-        
+      <div id="login_fail">     
+      </div>
+      <br>
+      </br>        
     </center>
+    
     <script src = "../../main.js"></script>    
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>

@@ -6,17 +6,15 @@
 
 <html>
   <head>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
-
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     </link>
   </head>
 
   <body onload="setup_profile()">
-<!--
+
     <div id="menu">
       <img id="menu_icon" src="../Images/avatar.png">
       </img>
@@ -29,7 +27,7 @@
       <img id="menu_icon" src="../Images/settings.png">
       </img>
     </div>
--->
+
     <div id="profile_worth_text">
       $0
     </div>
@@ -52,27 +50,25 @@
       <div id="profile_quick_glance_title">
         Today's Quick Glance
       </div>
-    <!--  <img id="profile_quick_glance_info" class = "tooltip" src="../Images/Info.png">
-    -->
-    <div id="profile_quick_glance_info" class="tooltip">
+
+      <div id="profile_quick_glance_info" class="tooltip">
         <img src="../Images/Info.png">
-        <span class="tooltip_text">Find relevant news in the financial world. All in one easily accessible feed.</span>
+          <span class="tooltip_text">Find relevant news in the financial world. All in one easily accessible feed.</span>
         </img>
+      </div>
     </div>
-  <!--    </img>
-  -->  </div>
 
     <div id="profile_box_top">
       <div id="profile_quick_glance_info" class="tooltip">
-          <img src="../Images/Info.png">
+        <img src="../Images/Info.png">
           <span class="tooltip_text">A quick snapshot of your current net worth and your earning power for the year.</span>
-          </img>
-      </div>
+        </img>
+      </div>      
       <div id="profile_box_top_text">
         Profile
       </div>
-
     </div>
+    
     <div id="profile_quick_glance_profile">
       <div id="profile_quick_glance_text">
         Net Worth:
@@ -80,7 +76,6 @@
       <div id="profile_quick_glance_text_net_worth">
         $0
       </div>
-
       <div id="profile_quick_glance_text">
         Earning Power:
       </div>
@@ -95,7 +90,6 @@
     </div>
 
     <div class = "clearfix"/>
-
 
     <div id="profile_assets_box_top">
       <div id="profile_assets_title">
@@ -112,7 +106,7 @@
       </a>
     </div>
 
-     <div id="profile_liabilities_box_top">
+    <div id="profile_liabilities_box_top">
       <div id="profile_liabilities_title">
          Liabilities:
       </div>
@@ -144,49 +138,59 @@
       <div class="modal-content">
         <img onclick="show_assets_menu()" id="assets_modal_back" src="../Images/back.png">
         </img>
-        <span onclick="close_assets_modal()" class="close">&times;</span>
+        <span onclick="close_assets_modal()" class="close">&times;
+        </span>
+        
         <center>
-        <div id="modal_logo" class="modal_logo">
-          <img onclick="open_account()" id="modal_img" src="../Images/account.png">
-          </img>
-          <p id="modal_logo_text"> Account</p>
-        </div>
+          <div id="modal_logo" class="modal_logo">
+            <img onclick="open_account()" id="modal_img" src="../Images/account.png">
+            </img>
+            <p id="modal_logo_text"> Account
+            </p>
+          </div>
 
-        <div id="modal_logo" class="modal_logo">
-          <img onclick="open_property()" id="modal_img" src="../Images/house.png">
-          </img>
-          <p id="modal_logo_text"> Property </p>
-        </div>
+          <div id="modal_logo" class="modal_logo">
+            <img onclick="open_property()" id="modal_img" src="../Images/house.png">
+            </img>
+            <p id="modal_logo_text"> Property   
+            </p>
+          </div>
 
-        <div id="modal_logo" class="modal_logo">
-          <img onclick="open_rent()" id="modal_img" src="../Images/rent.png">
-          </img>
-          <p id="modal_logo_text"> Rent </p>
-        </div>
-
+          <div id="modal_logo" class="modal_logo">
+            <img onclick="open_rent()" id="modal_img" src="../Images/rent.png">
+            </img>
+            <p id="modal_logo_text"> Rent 
+            </p>
+          </div>
         </center>
+        
         <div class = "clearfix"/>
-        <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="modal_logo"></hr>
-        <br></br>
+        <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="modal_logo">
+        </hr>
+        <br>
+        </br>
 
         <center>
-        <div id="modal_logo" class="modal_logo">
-          <img onclick="open_salary()" id="modal_img" src="../Images/salary.png">
-          </img>
-          <p id="modal_logo_text"> Salary </p>
-        </div>
+          <div id="modal_logo" class="modal_logo">
+            <img onclick="open_salary()" id="modal_img" src="../Images/salary.png">
+            </img>
+            <p id="modal_logo_text"> Salary 
+            </p>
+          </div>
 
-        <div id="modal_logo" class="modal_logo">
-          <img onclick="open_stocks()" id="modal_img" src="../Images/stock.png">
-          </img>
-          <p id="modal_logo_text"> Stocks </p>
-        </div>
+          <div id="modal_logo" class="modal_logo">
+            <img onclick="open_stocks()" id="modal_img" src="../Images/stock.png">
+            </img>
+            <p id="modal_logo_text"> Stocks 
+            </p>
+          </div>
 
-        <div id="modal_logo" class="modal_logo">
-          <img id="modal_img_other" onclick="open_others()" src="../Images/other.png">
-          </img>
-          <p id="modal_logo_text"> Other </p>
-        </div>
+          <div id="modal_logo" class="modal_logo">
+            <img id="modal_img_other" onclick="open_others()" src="../Images/other.png">
+            </img>
+            <p id="modal_logo_text"> Other 
+            </p>
+          </div>
         </center>
 
 <!-- Rent -->
@@ -197,23 +201,24 @@
         </center>
         <div id="property_info" class="tooltip rent_input">
           <img src="../Images/Info.png">
-          <span class="tooltip_text">Add any rent income you may be taking in with their occurrence per year</span>
+            <span class="tooltip_text">Add any rent income you may be taking in with their occurrence per year
+            </span>
           </img>
         </div>
-          <input id="asset_rent_name" class="rent_input" type="text" placeholder="Name" required>
-          </input>
-          <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required>
-          </input>
-          <form class="rent_input">
-            <select id="rent_dropdown" name="salary_occurence">
-              <option value="">Occurrence</option>
-              <option value="365">Daily</option>
-              <option value="52">Weekly</option>
-              <option value="12">Monthly</option>
-              <option value="1">Yearly</option>
-            </select>
-          </form>
-           <center>
+        <input id="asset_rent_name" class="rent_input" type="text" placeholder="Name" required>
+        </input>
+        <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required>
+        </input>
+        <form class="rent_input">
+          <select id="rent_dropdown" name="salary_occurence">
+            <option value="">Occurrence</option>
+            <option value="365">Daily</option>
+            <option value="52">Weekly</option>
+            <option value="12">Monthly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </form>
+        <center>
           <button onclick="save_rent()" class="rent_input" id = "save_rent_button" class="submit_button">
             <div id="signup_button_text">
               Save
@@ -227,86 +232,84 @@
             Enter property address
           </p>
         </center>
+        
         <div id="property_info" class="tooltip property_input">
-            <img src="../Images/Info.png">
-            <span class="tooltip_text">Property valuations are based off of Zillow Estimates. Currently only supporting U.S. addresses</span>
-            </img>
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">Property valuations are based off of Zillow Estimates. Currently only supporting U.S. addresses
+            </span>
+          </img>
         </div>
-          <input id="asset_property_name" class="property_input" type="text" placeholder="Name" required>
-          </input>
-          <input id="asset_address" class="property_input" type="text" placeholder="Address" required>
-          </input>
-          <input id="asset_city" class="property_input" type="text" placeholder="City" required>
-          </input>
-          <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip" required>
-          </input>
-          <!--<input id="asset_state" class="property_input" type="text" placeholder="State" required>
-          </input>-->
-          <form class="property_input">
-            <select id="asset_state_dropdown" name="salary_occurence">
-              <option value="">State</option>
-              <option value="AL">AL</option>
-              <option value="AK">AK</option>
-              <option value="AZ">AZ</option>
-              <option value="AR">AR</option>
-              <option value="CA">CA</option>
-              <option value="CO">CO</option>
-              <option value="CT">CT</option>
-              <option value="DE">DE</option>
-              <option value="FL">FL</option>
-              <option value="GA">GA</option>
-              <option value="HI">HI</option>
-              <option value="ID">ID</option>
-              <option value="IL">IL</option>
-              <option value="IN">IN</option>
-              <option value="IA">IA</option>
-              <option value="KS">KS</option>
-              <option value="KY">KY</option>
-              <option value="LA">LA</option>
-              <option value="ME">ME</option>
-              <option value="MD">MD</option>
-              <option value="MA">MA</option>
-              <option value="MI">MI</option>
-              <option value="MN">MN</option>
-              <option value="MS">MS</option>
-              <option value="MO">MO</option>
-              <option value="MT">MT</option>
-              <option value="NE">NE</option>
-              <option value="NV">NV</option>
-              <option value="NH">NH</option>
-              <option value="NJ">NJ</option>
-              <option value="NM">NM</option>
-              <option value="NY">NY</option>
-              <option value="NC">NC</option>
-              <option value="ND">ND</option>
-              <option value="OH">OH</option>
-              <option value="OK">OK</option>
-              <option value="OR">OR</option>
-              <option value="PA">PA</option>
-              <option value="RI">RI</option>
-              <option value="SC">SC</option>
-              <option value="SD">SD</option>
-              <option value="TN">TN</option>
-              <option value="TX">TX</option>
-              <option value="UT">UT</option>
-              <option value="VT">VT</option>
-              <option value="VA">VA</option>
-              <option value="WA">WA</option>
-              <option value="WV">WV</option>
-              <option value="WI">WI</option>
-              <option value="WY">WY</option>
-            </select>
-          </form>
-          <div class="clearfix"/>
-          <center>
+        <input id="asset_property_name" class="property_input" type="text" placeholder="Name" required>
+        </input>
+        <input id="asset_address" class="property_input" type="text" placeholder="Address" required>
+        </input>
+        <input id="asset_city" class="property_input" type="text" placeholder="City" required>
+        </input>
+        <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip" required>
+        </input>
+        <form class="property_input">
+          <select id="asset_state_dropdown" name="salary_occurence">
+            <option value="">State</option>
+            <option value="AL">AL</option>
+            <option value="AK">AK</option>
+            <option value="AZ">AZ</option>
+            <option value="AR">AR</option>
+            <option value="CA">CA</option>
+            <option value="CO">CO</option>
+            <option value="CT">CT</option>
+            <option value="DE">DE</option>
+            <option value="FL">FL</option>
+            <option value="GA">GA</option>
+            <option value="HI">HI</option>
+            <option value="ID">ID</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="IA">IA</option>
+            <option value="KS">KS</option>
+            <option value="KY">KY</option>
+            <option value="LA">LA</option>
+            <option value="ME">ME</option>
+            <option value="MD">MD</option>
+            <option value="MA">MA</option>
+            <option value="MI">MI</option>
+            <option value="MN">MN</option>
+            <option value="MS">MS</option>
+            <option value="MO">MO</option>
+            <option value="MT">MT</option>
+            <option value="NE">NE</option>
+            <option value="NV">NV</option>
+            <option value="NH">NH</option>
+            <option value="NJ">NJ</option>
+            <option value="NM">NM</option>
+            <option value="NY">NY</option>
+            <option value="NC">NC</option>
+            <option value="ND">ND</option>
+            <option value="OH">OH</option>
+            <option value="OK">OK</option>
+            <option value="OR">OR</option>
+            <option value="PA">PA</option>
+            <option value="RI">RI</option>
+            <option value="SC">SC</option>
+            <option value="SD">SD</option>
+            <option value="TN">TN</option>
+            <option value="TX">TX</option>
+            <option value="UT">UT</option>
+            <option value="VT">VT</option>
+            <option value="VA">VA</option>
+            <option value="WA">WA</option>
+            <option value="WV">WV</option>
+            <option value="WI">WI</option>
+            <option value="WY">WY</option>
+          </select>
+        </form>
+        <div class="clearfix"/>
+        <center>
           <button onclick="save_property()" class="property_input" id = "save_property_button" class="submit_button">
             <div id="signup_button_text">
               Save
             </div>
           </button>
         </center>
-
-
 
 <!-- Salary-->
         <center>
@@ -315,25 +318,26 @@
           </p>
         </center>
         <div id="property_info" class="tooltip salary_input">
-            <img src="../Images/Info.png">
-            <span class="tooltip_text">Salaries using Occurrences of "Hourly", "Daily", "Weekly" are calculated using a standard 8 hour workday and 50 weeks per year</span>
-            </img>
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">Salaries using Occurrences of "Hourly", "Daily", "Weekly" are calculated using a standard 8 hour workday and 50 weeks per year
+            </span>
+          </img>
         </div>
-          <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required>
-          </input>
-          <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required>
-          </input>
-          <form class="salary_input">
-            <select id="salary_dropdown" name="salary_occurence">
-              <option value="">Occurrence</option>
-              <option value="2000">Hourly</option>
-              <option value="250">Daily</option>
-              <option value="50">Weekly</option>
-              <option value="12">Monthly</option>
-              <option value="1">Yearly</option>
-            </select>
-          </form>
-           <center>
+        <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required>
+        </input>
+        <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required>
+        </input>
+        <form class="salary_input">
+          <select id="salary_dropdown" name="salary_occurence">
+            <option value="">Occurrence</option>
+            <option value="2000">Hourly</option>
+            <option value="250">Daily</option>
+            <option value="50">Weekly</option>
+            <option value="12">Monthly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </form>
+        <center>
           <button onclick="save_salary()" class="salary_input" id = "save_salary_button" class="submit_button">
             <div id="signup_button_text">
               Save
@@ -350,7 +354,8 @@
         </center>
         <div id="property_info" class="tooltip stock_input">
           <img src="../Images/Info.png">
-          <span class="tooltip_text">Add members of your stock portfolio</span>
+            <span class="tooltip_text">Add members of your stock portfolio
+            </span>
           </img>
         </div>
         <input id="other_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Name of Company" required>
@@ -372,9 +377,10 @@
           </p>
         </center>
         <div id="property_info" class="tooltip others_input">
-            <img src="../Images/Info.png">
-            <span class="tooltip_text">Add an asset that occurs once (eg. Art painting) or occurs periodically (eg. Monthly income)</span>
-            </img>
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">Add an asset that occurs once (eg. Art painting) or occurs periodically (eg. Monthly income)
+            </span>
+          </img>
         </div>
         <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name of Asset" required>
         </input>
@@ -385,7 +391,7 @@
             <option value="">Occurrence</option>
             <option value="reoccurring">Reoccurring</option>
             <option value="single">One Time</option>
-            </select>
+          </select>
         </form>
         <center>
           <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
@@ -394,7 +400,6 @@
             </div>
           </button>
         </center>
-
       </div>
     </div>
 

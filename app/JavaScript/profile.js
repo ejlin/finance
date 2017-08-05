@@ -39,46 +39,44 @@ function setup_profile()
 {
   firebase.auth().onAuthStateChanged(function(user) 
   {
-  if (user) 
-  {
-    curr_user = user;
-    document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
-    var profile_quick_glance_text = document.getElementById('profile_quick_glance_text').innerHTML;
-    //TODO
-    var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
+    if (user) 
+    {
+      curr_user = user;
+      document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
+      var profile_quick_glance_text = document.getElementById('profile_quick_glance_text').innerHTML;
+      //TODO
+      var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
       curr_user_net.on('value', function(snapshot) 
       {
-      net = snapshot.val();
-      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net)); 
-      document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(parseInt(net));      
-    });
-    var curr_user_earning_power = database.ref('users/' + user.uid + '/earning_power');
-    curr_user_earning_power.on('value', function(snapshot)
-    {
-      earning_power = snapshot.val();
-      document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power));            
-    });
-    //post_news("https://newsapi.org/v1/articles?source=financial-times&sortBy=top&apiKey=d7dea837a070469480674f9bec576256");
-    var counter = 0;
-    while ( counter < defaultCompanies.length)
-    {
-      post_news(defaultCompanies[counter++]);
-    }
-    var assets_len = 0;
-    var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
-    curr_user_assets_len.on('value', function(snapshot) 
-    {
-      assetsLen = snapshot.val();
-      if (assetsLen > assetsBullets.length)
+        net = snapshot.val();
+        document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net)); 
+        document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(parseInt(net));      
+      });
+      var curr_user_earning_power = database.ref('users/' + user.uid + '/earning_power');
+      curr_user_earning_power.on('value', function(snapshot)
       {
-        restore_assets();
-      }
-    });   
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
+        earning_power = snapshot.val();
+        document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power));            
+      });
+      var counter = 0;
+ /*   while ( counter < defaultCompanies.length)
+      {
+        post_news(defaultCompanies[counter++]);
+      }*/
+      var assets_len = 0;
+      var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
+      curr_user_assets_len.on('value', function(snapshot) 
+      {
+        assetsLen = snapshot.val();
+        if (assetsLen > assetsBullets.length)
+        {
+          restore_assets();
+        }
+      });   
+    } else {
+      window.location.href = "login.html";
+    }
+  });
 }
 
 /** 
@@ -109,7 +107,6 @@ function truncate_title(title)
 function post_news(company_ticker)
 {
   var https = require("https");
-
   var username = "8de2ab9294eb7387e13bed32e87c5ed2";
   var password = "382da3d89f22a7e554dc1770ec1a055d";
   var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
@@ -126,17 +123,22 @@ function post_news(company_ticker)
     response.on('data', function (chunk) {
         json += chunk;
         
-     });
+    });
     response.on('end', function() {
-        var company = JSON.parse(json);
-        var headline = document.createElement("A");
-        headline.setAttribute("class", "profile_news_bullet");
-        var article = company.data[0];
-        headline.innerHTML = truncate_title(company_ticker + ": " + article.title);
-        headline.href = article.url;
-        headline.title = article.title;
+      var company = JSON.parse(json);
+      console.log(company);
+      var headline = document.createElement("A");
+      headline.setAttribute("class", "profile_news_bullet");
+      try{
+        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title);
+        headline.href = company.data[0].url;
+        headline.title = company.data[0].title;
         headline.target = "_blank";
-        document.getElementById('profile_news_placeholder').appendChild(headline);
+      }
+      catch(err){
+        headline.innerHTML = "No News currently available";    
+      }
+      document.getElementById('profile_news_placeholder').appendChild(headline);
     });
   });
 
@@ -171,7 +173,9 @@ function parse_string(str)
   **/
 
 function restore_assets(){
+
   var counter = 0;
+  
   while (counter < assetsLen)
   {   
     var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name_worth/');
@@ -197,7 +201,7 @@ function restore_assets(){
   **/
 
 function convert_with_commas(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 /** 
@@ -333,30 +337,30 @@ function add_liabilities (name, worth)
 
 function remove_asset()
 {
-    var updates = {};    
-    var element = assetsBullets[assetsBullets.length - 1];
-    var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
-    var type = assetsBulletsType[assetsBulletsType.length - 1];
-    if (type != "sa" && type != "re" && type != "OT" && (net - elementWorth) >= 0)
-    {
-      net -= elementWorth;
-      document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
-      document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
-      updates['/users/' + curr_user.uid + '/net_worth'] = net;          
-    }
-    else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
-    { 
-      earning_power -= elementWorth;
-      document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
-      updates['/users/' + curr_user.uid + '/earning_power'] = earning_power;  
-    }
-    element.parentNode.removeChild(element);
-    assetsBullets.splice(assetsBullets.length - 1, 1);
-    assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
-    assetsBulletsType.splice(assetsBulletsType.length - 1, 1);  
-    database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
-    updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
-    return database.ref().update(updates);
+  var updates = {};    
+  var element = assetsBullets[assetsBullets.length - 1];
+  var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
+  var type = assetsBulletsType[assetsBulletsType.length - 1];
+  if (type != "sa" && type != "re" && type != "OT" && (net - elementWorth) >= 0)
+  {
+    net -= elementWorth;
+    document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+    document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
+    updates['/users/' + curr_user.uid + '/net_worth'] = net;          
+  }
+  else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
+  { 
+    earning_power -= elementWorth;
+    document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
+    updates['/users/' + curr_user.uid + '/earning_power'] = earning_power;  
+  }
+  element.parentNode.removeChild(element);
+  assetsBullets.splice(assetsBullets.length - 1, 1);
+  assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
+  assetsBulletsType.splice(assetsBulletsType.length - 1, 1);  
+  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
+  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
+  return database.ref().update(updates);
 }
 
 /** 
@@ -380,9 +384,9 @@ function remove_liabilities(){
   **/
 
 function open_assets_modal() {
-    var assets_menu = document.getElementById('assets_add_menu');
-    assets_menu.style.display = "block";
-    show_assets_menu();
+  var assets_menu = document.getElementById('assets_add_menu');
+  assets_menu.style.display = "block";
+  show_assets_menu();
 }
 
 /** 
@@ -393,8 +397,8 @@ function open_assets_modal() {
   **/
 
 function close_assets_modal() {
-    var assets_menu = document.getElementById('assets_add_menu');    
-    assets_menu.style.display = "none";
+  var assets_menu = document.getElementById('assets_add_menu');    
+  assets_menu.style.display = "none";
 }
 
 /** 

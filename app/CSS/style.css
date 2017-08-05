@@ -31,7 +31,7 @@ body{
   box-sizing: border-box;
   border: none;
   border-radius: 2px;
-  font-size: 16px;
+  font-size: 18px;
   color: #5c7598;
   background-color: #dadadb;
   padding: 12px 20px 12px 40px;
@@ -39,14 +39,17 @@ body{
   transition: width 0.4s ease-in-out;
   z-index: 1;
   margin-top: 10px;
+  font-family: 'Josefin Sans', sans-serif;  
 }
 
 #login_username{
   margin-top: calc(37.5% - 80px) ;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: white;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 #login_button{
@@ -57,6 +60,7 @@ body{
   border-radius: 2px;
   cursor: pointer;
   margin-top: 10px;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 #login_button:hover{
@@ -64,14 +68,24 @@ body{
 }
 
 #signup_button_text{
-  font-size: 16px;
+  font-size: 18px;
   color: white;
+  font-family: 'Josefin Sans', sans-serif;
+
 }
 
 #login_member_text{
   margin-top: 10px;
   font-family: 'Josefin Sans', sans-serif;
   color: white;
+}
+
+#login_fail{
+  margin-top: 10px;
+  color: red;
+  font-family: 'Josefin Sans', sans-serif;
+  display: none;
+  font-size: 18px;
 }
 
 /***************************SIGNUP.HTMl************************/
@@ -676,4 +690,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 input.formInvalid::-webkit-input-placeholder {
    color: red;
+}
+
+input.formValid::-webkit-input-placeholder {
+  color: #5c7598;
 }
