@@ -60,25 +60,13 @@ function validate_signup_input()
   var confirm_password = document.getElementById('signup_confirm_password').value;
   var name = first_name + " " + last_name;
   
-  if (first_name == "")
+  var signup_input = document.getElementsByClassName('signup_input');
+  for (var i = 0; i < signup_input.length; i++)
   {
-    return;
-  }
-  if (last_name == "")
-  {
-    return;
-  }
-  if (email == "")
-  {
-    return;
-  }
-  if (password == "")
-  {
-    return;
-  }
-  if (confirm_password == "")
-  {
-    return;
+    if (signup_input[i].value == "")
+    {
+      signup_input[i].className += " formInvalid";
+    }
   }
 
   if (password == confirm_password)
@@ -103,11 +91,31 @@ function validate_signup_input()
       {
         //TODO
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
       });
   }
+  else
+  {
+    password_mismatch();
+  }
 }
+
+/** 
+  * Name:         password_mismath()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will take care of the case when the
+  *               user inputs two different passwords
+  **/
+
+function password_mismatch()
+{
+  var password = document.getElementById('signup_password');
+  var confirm_password = document.getElementById('signup_confirm_password');
+  password.value = "";
+  confirm_password.value = "";
+  confirm_password.className += " formInvalid";
+  confirm_password.placeholder = "Passwords don't match!";
+} 
 
 /** 
   * Name:         N/A
