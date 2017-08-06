@@ -19,6 +19,9 @@ body{
     outline: none;
 }
 
+* {
+  font-family: 'Quicksand', sans-serif;
+}
 /***************************SIGNUP.HTMl************************/
 
 #signup_body{
@@ -39,17 +42,14 @@ body{
   transition: width 0.4s ease-in-out;
   z-index: 1;
   margin-top: 10px;
-  font-family: 'Josefin Sans', sans-serif;  
 }
 
 #login_username{
   margin-top: calc(37.5% - 80px) ;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: white;
-  font-family: 'Josefin Sans', sans-serif;
+  color: white;
 }
 
 #login_button{
@@ -60,7 +60,6 @@ body{
   border-radius: 2px;
   cursor: pointer;
   margin-top: 10px;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 #login_button:hover{
@@ -70,20 +69,16 @@ body{
 #signup_button_text{
   font-size: 18px;
   color: white;
-  font-family: 'Josefin Sans', sans-serif;
-
 }
 
 #login_member_text{
   margin-top: 10px;
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
 }
 
 #login_fail{
   margin-top: 10px;
   color: red;
-  font-family: 'Josefin Sans', sans-serif;
   display: none;
   font-size: 18px;
 }
@@ -117,7 +112,6 @@ body{
 }
 
 #loading_text{
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
   font-size: 24px;
   margin-top: calc(37.5% + 107px/2);
@@ -145,7 +139,6 @@ body{
 }
 
 #profile_worth_text{
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 24px;
   float: left;
   margin-top: 5%;
@@ -161,7 +154,6 @@ body{
   color: white;
   float: left;
   margin-left: 10%;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 24px;
   margin-top: 10px;
 }
@@ -170,7 +162,6 @@ body{
   color: white;
   float: right;
   margin-right: 10%;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
   margin-top: 10px;
   cursor: pointer;
@@ -223,25 +214,22 @@ body{
 }
 
 #profile_box_top_text{
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
   font-size: 24px;
-  margin-top: 12.5px;
+  margin-top: 10px;
   margin-left: 8%;
 }
 
 #profile_quick_glance_title{
   font-size: 24px;
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
   margin-left: 5%;
   float: left;
-  margin-top: 12.5px;
+  margin-top: 10px;
 }
 
 #profile_quick_glance_text, #profile_quick_glance_text_net_worth, #profile_quick_glance_text_earning_power{
   margin-top: 15px;
-  font-family: 'Josefin Sans', sans-serif;
   color: #5c7598;
 }
 
@@ -287,7 +275,6 @@ body{
   color: white;
   font-size: 22px;
   margin-top: 50px;
-  font-family: 'Josefin Sans', sans-serif;
   margin-left: 2%;
 }
 
@@ -332,9 +319,8 @@ body{
 
 #profile_assets_title, #profile_liabilities_title{
   color: white;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 24px;
-  margin-top: 12.5px;
+  font-size: 22px;
+  margin-top: 10px;
   float: left;
   margin-left: 10%;
   margin-right: 15%;
@@ -343,7 +329,6 @@ body{
 
 #profile_assets_placeholder, #profile_liabilities_placeholder, #profile_news_placeholder{
   color: white;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 24px;
   margin-left: 5%;
   margin-top: 3%;
@@ -452,7 +437,6 @@ body{
 }
 
 #modal_logo_text{
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
   font-size: 18px;
 }
@@ -480,7 +464,6 @@ body{
   z-index: 3;
   display: none;
   margin-top: 5%;
-  font-family: 'Josefin Sans', sans-serif;
   margin-left: 20%;
 }
 
@@ -501,7 +484,6 @@ body{
   margin-top: 5%;
   margin-left: 3%;
   float: left;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 #asset_city{
@@ -521,7 +503,6 @@ body{
   margin-top: 5%;
   margin-left: 20%;
   float: left;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 .salary_input, .property_input, .rent_input, .others_input{
@@ -539,7 +520,6 @@ body{
   color: #5c7598;
   padding: 12px 20px 12px 40px;
   text-align-last:center;
-  font-family: 'Josefin Sans', sans-serif;
   font-family: 18px;
 }
 
@@ -555,7 +535,6 @@ body{
   padding: 12px 20px 12px 40px;
   text-align-last:center;
   float: left;
-  font-family: 'Josefin Sans', sans-serif;
 }
 
 #save_other_button{
@@ -567,7 +546,6 @@ body{
   cursor: pointer;
   margin-top: 5%;
   display: none;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
 }
 
@@ -580,7 +558,6 @@ body{
   cursor: pointer;
   margin-top: 5%;
   display: none;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
 }
 
@@ -593,21 +570,18 @@ body{
   cursor: pointer;
   margin-top: 20%;
   display: none;
-  font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
 }
 
 #asset_input_title, #asset_stock_input_title{
   color: #5c7598;
   font-size: 18px;
-  font-family: 'Josefin Sans', sans-serif;
   width: 70%;
 }
 
 #asset_property_input_title{
   color: #5c7598;
   font-size: 18px;
-  font-family: 'Josefin Sans', sans-serif;
   width: 70%;
   margin-top: -30px;
 }
@@ -615,7 +589,6 @@ body{
 #asset_others_input_title{
   color: #5c7598;
   font-size: 18px;
-  font-family: 'Josefin Sans', sans-serif;
   width: 70%;
   margin-top: -15px;
 }
@@ -633,21 +606,20 @@ body{
 }
 
 .tooltip .tooltip_text {
-    visibility: hidden;
-    width: 250px;
-    background-color: #abb7c8;
-    border: 2px solid white;
-    color: #5c7598;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 20px;
-    text-align: center;
-    border-radius: 15px;
-    padding: 10px;
-    top: 30px;
-    right: 10px;
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+  visibility: hidden;
+  width: 250px;
+  background-color: #abb7c8;
+  border: 2px solid white;
+  color: #5c7598;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px;
+  top: 30px;
+  right: 10px;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
 }
 
 .tooltip:hover .tooltip_text {

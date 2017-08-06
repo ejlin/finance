@@ -10,6 +10,10 @@ body{
   background-color: grey;
 }
 
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+
 .clearfix{
     clear:both;
 }
@@ -30,7 +34,6 @@ body{
   margin-top: 2%;
   margin-left: 10%;
   float: left;
-  font-family: 'Josefin Sans', sans-serif;  
 }
 
 #signup_first_name{
@@ -63,7 +66,6 @@ body{
 }
 
 #signup_member_text{
-  font-family: 'Josefin Sans', sans-serif;
   color: white;
   margin-left: 10%;
   float: left;
@@ -71,7 +73,6 @@ body{
 }
 
 #signup_slogan_title{
-  font-family: 'Palatino';
   color: #5c7598;
   font-size: 64px;
   float: right;

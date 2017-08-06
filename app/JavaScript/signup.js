@@ -59,14 +59,20 @@ function validate_signup_input()
   var password = document.getElementById('signup_password').value;
   var confirm_password = document.getElementById('signup_confirm_password').value;
   var name = first_name + " " + last_name;
+  var toReturn = false;
   
   var signup_input = document.getElementsByClassName('signup_input');
   for (var i = 0; i < signup_input.length; i++)
   {
     if (signup_input[i].value == "")
     {
+      toReturn = true;
       signup_input[i].className += " formInvalid";
     }
+  }
+  if (toReturn)
+  {
+    return;
   }
 
   if (password == confirm_password)

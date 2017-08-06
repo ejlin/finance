@@ -88,11 +88,11 @@ function setup_profile()
   *               the original string if it is not. 
   **/
 
-function truncate_title(title)
+function truncate_title(title, len)
 {
-  if (title.length > 45)
+  if (title.length > len)
   {
-    return (title.slice(0, 45) + "...");
+    return (title.slice(0, len) + "...");
   }
   return title;
 }
@@ -130,7 +130,7 @@ function post_news(company_ticker)
       var headline = document.createElement("A");
       headline.setAttribute("class", "profile_news_bullet");
       try{
-        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title);
+        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title, 45);
         headline.href = company.data[0].url;
         headline.title = company.data[0].title;
         headline.target = "_blank";
@@ -184,7 +184,7 @@ function restore_assets(){
       var str = snapshot.val();
       var name = parse_string(str);
       var worth = parseInt(str);
-      var type = str.slice(len-2, len);
+      var type = str.slice(str.length-2, str.length);
       restore_asset_bullet(name, worth);
     });
     counter++;
@@ -240,6 +240,36 @@ function add_earning_power(asset)
 }
 
 /** 
+  * Name:         asset_bullet()
+  * Parameters:   name = The name of the bullet
+  *               worth = The worth of the bullet
+  *               type = The type of the bullet
+  *               element = The element type to create
+  *               class_name = The class to attach it to
+  * Return:       None
+  * Description:  This function will create a bullet object for assets 
+  **/
+
+function asset_bullet(name, worth, type, element, class_name)
+{
+  var input = document.createElement(element);
+  input.setAttribute("class", class_name);
+  assetsBullets.push(input);
+  assetsBulletsWorth.push(worth);
+  assetsBulletsType.push(type);
+  input.innerHTML = truncate_title(name, 28);
+  input.onmouseover = function()
+  {
+    input.innerHTML = "$" + convert_with_commas(worth);
+  }
+  input.onmouseout = function()
+  {
+    input.innerHTML = truncate_title(name, 28);
+  }
+  return input;
+}
+
+/** 
   * Name:         restore_asset_bullet()
   * Parameters:   name = The name of the asset
   *               worth = The worth of the asset
@@ -250,24 +280,9 @@ function add_earning_power(asset)
 function restore_asset_bullet(name, worth, type)
 {
   if (assetsLen > assetsBullets.length){
-    var input = document.createElement("P");
-    //input.style.padding = '15px 15px 15px 15px';
-    input.setAttribute("class", "profile_asset_bullet");
-    assetsBullets.push(input);
-    assetsBulletsWorth.push(worth); 
-    assetsBulletsType.push(type);
-    input.innerHTML = name;
-    input.onmouseover = function()
-    {
-      input.innerHTML = "$" + convert_with_commas(worth);
-    }
-    input.onmouseout = function()
-    {
-      input.innerHTML = name;
-    }
     var para = document.getElementById("profile_assets_box");
     var child =  document.getElementById("profile_add_assets_button");
-    document.getElementById('profile_assets_placeholder').appendChild(input); 
+    document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
     para.scrollTop = para.scrollHeight;
   }
 }
@@ -283,22 +298,9 @@ function restore_asset_bullet(name, worth, type)
 
 function add_asset(name, worth, type) 
 { 
-  var input = document.createElement("P");
-  input.style.padding = '15px 15px 15px 15px';
-  input.setAttribute("class", "profile_asset_bullet");
-  assetsBullets.push(input);
-  assetsBulletsWorth.push(worth);
-  assetsBulletsType.push(type);    
-  input.innerHTML = name;
-  input.onmouseover = function(){
-    input.innerHTML = "$" + convert_with_commas(worth);
-  }
-  input.onmouseout = function(){
-    input.innerHTML = name;
-  }
   var para = document.getElementById("profile_assets_box");
   var child =  document.getElementById("profile_add_assets_button");
-  document.getElementById('profile_assets_placeholder').appendChild(input); 
+  document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
   para.scrollTop = para.scrollHeight;
   database.ref('users/' + curr_user.uid + '/assets/' + assetsLen).set({
     name_worth: (worth + name + type),
@@ -726,9 +728,10 @@ function save_other()
 
   var time_id = document.getElementById('others_dropdown');
   var time = time_id.value;
-  
-  if ( name != "" && worth != "" && time != "")
+
+  if ( name_id.value != "" && worth_id.value != "" && time_id.value != "")
   {
+    console.log("here too");
     if (time == "reoccurring")
     {
       add_asset(name, worth, "OT");
