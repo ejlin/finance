@@ -37,6 +37,11 @@ var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL"];
 
 function setup_profile() 
 {
+  var loader = document.getElementById('loader');
+  var background_tint = document.getElementById('background_tint');
+  loader.style.display = "block";
+  background_tint.style.display = "block";
+  
   firebase.auth().onAuthStateChanged(function(user) 
   {
     if (user) 
@@ -72,11 +77,19 @@ function setup_profile()
         {
           restore_assets();
         }
-      });   
+        else if (assetsLen == 0)
+        {
+          loader.style.display = "none";
+          background_tint.style.display = "none";
+        }
+      });  
     } else {
+      loader.style.display = "none";
+      background_tint.style.display = "none";
       window.location.href = "login.html";
     }
   });
+
 }
 
 /** 
@@ -189,6 +202,10 @@ function restore_assets(){
     });
     counter++;
   }
+  var loader = document.getElementById('loader');
+  var background_tint = document.getElementById('background_tint');
+  loader.style.display = "none";
+  background_tint.style.display = "none";
 }
 
 /** 
