@@ -27,6 +27,10 @@
       <img id="menu_icon" src="../Images/settings.png">
       </img>
     </div>
+    <div class = "clearfix"/>
+
+    <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png">
+    </img>
     
     <div id="background_tint">
     </div>
@@ -134,6 +138,29 @@
 
     <div id="profile_liabilities_box">
       <div id="profile_liabilities_placeholder">
+      </div>
+    </div>
+
+    <div class = "clearfix"/>
+
+     <div id="delete_menu" class="modal">
+      <div class="delete_modal_content">
+        <span onclick="close_delete_modal()" class="close">&times;
+        </span>
+
+        <div class="delete_modal" id="delete_modal_text">
+          This will delete any saved data on your account and reset it to a clean slate. Do you wish to continue?
+        </div>
+        <button onclick="close_delete_modal()" class="delete_modal" id = "confirm_delete_button_no" class="submit_button">
+          <div id="signup_button_text">
+            No
+          </div>
+        </button>
+        <button onclick="reset_account()" class="delete_modal" id = "confirm_delete_button_yes" class="submit_button">
+          <div id="signup_button_text">
+            Yes
+          </div>
+        </button>
       </div>
     </div>
 

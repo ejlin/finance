@@ -967,11 +967,63 @@ function signout()
   });
 }
 
-
-function temp_login()
+function open_delete_modal()
 {
-  window.location.href = "login.html";
+  var delete_menu = document.getElementById('delete_menu');
+  delete_menu.style.display = "block";
+  var delete_modal = document.getElementsByClassName('delete_modal');
+  for (var i = 0; i < delete_modal.length; i++)
+  {
+    delete_modal[i].style.display = "block";
+  }
 }
+
+function close_delete_modal()
+{
+  var delete_menu = document.getElementById('delete_menu');
+  delete_menu.style.display = "none";
+}
+
+/** 
+  * Name:         reset_account()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will reset the account of the current user 
+  **/
+
+function reset_account()
+{
+  var updates = {};
+  document.getElementById('profile_worth_text').innerHTML = "$0"; 
+  document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$0";
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$0";            
+  
+  for (var i = 0; i < assetsBullets.length; i++)
+  {
+    assetsBullets[i].parentNode.removeChild(assetsBullets[i]);
+  }
+  while (assetsLen > 0)
+  {
+    database.ref('/users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
+    assetsLen--;
+  }
+  curr_asset_input;
+  name = "";
+  net = 0;
+  earning_power = 0;
+  assetsBullets = new Array();
+  assetsBulletsWorth = new Array();
+  assetsBulletsType = new Array();
+  assetsBulletsData = new Array();
+  liabilitiesBullets = new Array();
+
+  updates['/users/' + curr_user.uid + '/assets_len/'] = 0;
+  updates['/users/' + curr_user.uid + '/earning_power/'] = 0;
+  updates['/users/' + curr_user.uid + '/net_worth/'] = 0;
+  close_delete_modal();
+  return database.ref().update(updates);
+}
+
 //TODO
 // Saving these functions for later to see if they can be of use. 
 

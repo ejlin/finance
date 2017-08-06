@@ -9,6 +9,8 @@ body{
   margin:0;
   background-color:#abb7c8;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .clearfix{
@@ -151,6 +153,19 @@ body{
   height: 7.14%;
   float: left;
   margin-top: 55px ;
+}
+
+#reset_button{
+  position: fixed;
+  margin-top: 73.5%;
+  margin-left: 1%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+#reset_button:hover{
+  opacity: 0.5;
 }
 
 #profile_worth_text{
@@ -371,6 +386,7 @@ body{
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 2px 2px grey;
 }
 
 .grow_profile_asset_bullets{
@@ -379,7 +395,7 @@ body{
   margin-top: 17.5px;
   margin-bottom: 12.5px;
   box-sizing: border-box;
-  border: none;
+  border: 2px solid #5c7598;
   border-radius: 2px;
   font-size: 20px;
   color: white;
@@ -442,6 +458,26 @@ body{
     margin-left: calc(15% - 20px);
 }
 
+#delete_modal_text{
+  font-size: 18px;
+  color:#5c7598; 
+  margin-top: 10%;
+  text-align: center;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+}
+
+.delete_modal_content {
+    background-color: #abb7c8;
+    margin: 30% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 2px;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 30%;
+    position: fixed;
+    margin-left: calc(25% - 20px);
+}
+
 /* The Close Button */
 .close {
     color: white;
@@ -471,7 +507,9 @@ body{
   border-radius: 2px;
 }
 
-#modal_img:hover, #modal_img_other:hover, #save_other_button:hover, #save_property_button:hover{
+#modal_img:hover, #modal_img_other:hover, #save_other_button:hover, 
+#save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover, 
+#confirm_delete_button_no:hover, #confirm_delete_button_yes:hover{
   cursor: pointer;
   opacity: 0.5;
   transition: 0.5s;
@@ -591,7 +629,7 @@ body{
   font-size: 18px;
 }
 
-#save_salary_button, #save_rent_button{
+#save_salary_button, #save_rent_button, #confirm_delete_button_no, #confirm_delete_button_yes{
   width: 15%;
   height: 35px;
   border: none;
@@ -601,6 +639,20 @@ body{
   margin-top: 5%;
   display: none;
   font-size: 18px;
+}
+
+#confirm_delete_button_no, #confirm_delete_button_yes{
+  margin-top: 10%;
+  width: 25%;
+  float: left;
+}
+
+#confirm_delete_button_yes{
+  margin-left: 10%;
+}
+
+#confirm_delete_button_no{
+  margin-left: 20%;
 }
 
 #save_property_button{
