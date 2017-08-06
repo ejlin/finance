@@ -172,7 +172,7 @@ function parse_string(str)
   {
     if (isNaN(parseInt(str.charAt(i))) )
     {
-      return str.slice(i, len - 2);
+      return str.slice(i + 1, len - 3);
     }
   }
 }
@@ -320,7 +320,7 @@ function add_asset(name, worth, type)
   document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
   para.scrollTop = para.scrollHeight;
   database.ref('users/' + curr_user.uid + '/assets/' + assetsLen).set({
-    name_worth: (worth + name + type),
+    name_worth: (worth + "_" + name + ":" + type),
   });
   var updates = {};
   updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen + 1;

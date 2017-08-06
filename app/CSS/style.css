@@ -100,13 +100,13 @@ body{
   border: 16px solid white;
   border-radius: 50%;
   border-top: 16px solid #5c7598;
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   position: absolute;
-  top: calc(50% - 91px);
-  left: calc(50% - 91px);
+  top: calc(50% - 157px/2);
+  left: calc(50% - 157px/2);
   z-index: 3;
   display: none;
 }
@@ -138,6 +138,11 @@ body{
   position: fixed;
   background-color:#5c7598; 
   border-radius: 0px 5px 5px 0px;
+  transition: 0.5s;
+}
+
+#menu:hover{
+  opacity: 0.7;
 }
 
 #menu_icon{
@@ -459,7 +464,8 @@ body{
 
 #asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
 #asset_address, #asset_property_name, #asset_salary_name,
-#asset_salary_worth, #asset_rent_name, #asset_rent_worth{
+#asset_salary_worth, #asset_rent_name, #asset_rent_worth,
+#stock_asset_name, #stock_asset_worth{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -612,7 +618,6 @@ body{
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltip_text {
