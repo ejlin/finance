@@ -22,6 +22,7 @@ var assetsLen;
 var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var assetsBulletsType = new Array();
+var assetsBulletsData = new Array();
 var liabilitiesBullets = new Array();
 var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL"];
 
@@ -49,7 +50,6 @@ function setup_profile()
       curr_user = user;
       document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
       var profile_quick_glance_text = document.getElementById('profile_quick_glance_text').innerHTML;
-      //TODO
       var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
       curr_user_net.on('value', function(snapshot) 
       {
@@ -139,7 +139,6 @@ function post_news(company_ticker)
     });
     response.on('end', function() {
       var company = JSON.parse(json);
-      console.log(company);
       var headline = document.createElement("A");
       headline.setAttribute("class", "profile_news_bullet");
       try{
@@ -174,6 +173,47 @@ function parse_string(str)
     {
       return str.slice(i + 1, len - 3);
     }
+  }
+}
+
+/** 
+  * Name:         show_remove_assets_button()
+  * Parameters:   idx = The index of the element to remove
+  * Return:       None
+  * Description:  This function will show the remove asset button if
+  *               any of the assets bullet is clicked.
+  **/
+
+function show_remove_assets_button(input)
+{
+  var button = document.getElementById('profile_remove_assets_button');
+  button.style.display = "block";
+  button.onclick = function()
+  {
+    remove_asset(input);
+  }
+}
+
+/** 
+  * Name:         hide_remove_assets_button()
+  * Parameters:   None 
+  * Return:       None
+  * Description:  This function will hide the remove asset button if
+  *               clicked away from anything other than another
+  *               asset bullet. 
+  **/
+  
+function hide_remove_assets_button()
+{
+  window.onclick = function(event) {
+    for (var i = 0; i < assetsBullets.length; i++)
+    {
+      if (event.target == assetsBullets[i]) {
+        return;
+      }
+    }
+    var button = document.getElementById('profile_remove_assets_button');
+    button.style.display = "none";
   }
 }
 
@@ -269,12 +309,19 @@ function add_earning_power(asset)
 
 function asset_bullet(name, worth, type, element, class_name)
 {
+  var idx = assetsBullets.length;
   var input = document.createElement(element);
   input.setAttribute("class", class_name);
   assetsBullets.push(input);
   assetsBulletsWorth.push(worth);
   assetsBulletsType.push(type);
+  assetsBulletsData.push(worth + "_" + name + ":" + type);  
   input.innerHTML = truncate_title(name, 28);
+  input.draggable = "true";
+  input.onclick = function()
+  {
+    show_remove_assets_button(input);    
+  }
   input.onmouseover = function()
   {
     input.innerHTML = "$" + convert_with_commas(worth);
@@ -283,6 +330,7 @@ function asset_bullet(name, worth, type, element, class_name)
   {
     input.innerHTML = truncate_title(name, 28);
   }
+  hide_remove_assets_button();
   return input;
 }
 
@@ -349,37 +397,66 @@ function add_liabilities (name, worth)
 
 /** 
   * Name:         remove_asset()
-  * Parameters:   None
+  * Parameters:   idx = The index of the asset to remove
   * Return:       None
   * Description:  This function will remove the last added asset
   **/
 
-function remove_asset()
+function remove_asset(input)
 {
-  var updates = {};    
-  var element = assetsBullets[assetsBullets.length - 1];
-  var elementWorth = assetsBulletsWorth[assetsBulletsWorth.length - 1];
-  var type = assetsBulletsType[assetsBulletsType.length - 1];
+  var idx = 0;
+  for (var i = 0; i < assetsBullets.length; i++)
+  {
+    if (assetsBullets[i] == input)
+    {
+      idx = i;
+    }
+  }
+  var updates = {};        
+  var element = assetsBullets[idx];
+  var elementWorth = assetsBulletsWorth[idx];
+  var type = assetsBulletsType[idx];
   if (type != "sa" && type != "re" && type != "OT" && (net - elementWorth) >= 0)
   {
     net -= elementWorth;
     document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
-    updates['/users/' + curr_user.uid + '/net_worth'] = net;          
+    updates['/users/' + curr_user.uid + '/net_worth/'] = net;          
   }
   else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
   { 
     earning_power -= elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
-    updates['/users/' + curr_user.uid + '/earning_power'] = earning_power;  
+    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;  
   }
-  element.parentNode.removeChild(element);
+  element.parentNode.removeChild(element);        
+  for (var i = idx; i < assetsBullets.length - 1; i++)
+  {
+    assetsBullets[i] = assetsBullets[i + 1];
+    assetsBullets[i].setAttribute ("onclick", null);
+    assetsBullets[i].onclick = function()   
+    {
+      show_remove_assets_button(assetsBullets[i]);
+    }
+    assetsBulletsWorth[i] = assetsBulletsWorth[i + 1];
+    assetsBulletsType[i] = assetsBulletsType[i + 1];
+    console.log(assetsBulletsData[i + 1]);
+    updates['/users/' + curr_user.uid + '/assets/' + i + '/name_worth/'] = assetsBulletsData[i + 1];       
+  }
+  for (var i = idx; i < assetsBulletsData.length - 1; i++)
+  {
+    assetsBulletsData[i] = assetsBulletsData[i+1];
+  }
   assetsBullets.splice(assetsBullets.length - 1, 1);
   assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
-  assetsBulletsType.splice(assetsBulletsType.length - 1, 1);  
-  database.ref('users/' + curr_user.uid + '/assets/' + (assetsLen - 1)).remove();
-  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen - 1;
-  return database.ref().update(updates);
+  assetsBulletsType.splice(assetsBulletsType.length - 1, 1);
+  assetsBulletsType.splice(assetsBulletsData.length - 1, 1);
+  
+  assetsLen--;
+  database.ref('/users/' + curr_user.uid + '/assets/' + (assetsLen)).remove();
+  updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen;
+
+  return database.ref().update(updates);   
 }
 
 /** 
@@ -574,7 +651,6 @@ function read_address_xml(xml)
   var i;
   var xmlDoc = xml.responseXML;
   var x = xmlDoc.getElementsByTagName("street");
-  console.log(x);  
 }
 
 /** 
@@ -748,7 +824,6 @@ function save_other()
 
   if ( name_id.value != "" && worth_id.value != "" && time_id.value != "")
   {
-    console.log("here too");
     if (time == "reoccurring")
     {
       add_asset(name, worth, "OT");

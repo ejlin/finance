@@ -259,7 +259,6 @@ body{
 }
 
 #profile_add_assets_button, #profile_add_liabilities_button,
-#profile_save_assets_button,#profile_save_liabilities_button,
 #profile_remove_assets_button, #profile_remove_liabilities_button{
   width: 25px;
   height: 25px;
@@ -268,8 +267,11 @@ body{
   margin-bottom: 25px;
 }
 
+#profile_remove_assets_button, #profile_remove_liabilities_button{
+  display: none;
+}
+
 #profile_add_assets_button:hover, #profile_add_liabilities_button:hover,
-#profile_save_assets_button:hover,#profile_save_liabilities_button:hover,
 #profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover{
   background-color: #dadadb;
   transition: 0.5s;
@@ -367,6 +369,7 @@ body{
   margin-left: calc(10% - 12px);
   overflow-x: scroll;
   text-align: center;
+  cursor: pointer;
 }
 
 .profile_news_bullet
