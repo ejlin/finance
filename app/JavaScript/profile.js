@@ -15,6 +15,7 @@
 /******************************************************************************/
 
 var curr_user;
+var curr_asset_input;
 var name = "";
 var net;
 var earning_power;
@@ -38,11 +39,7 @@ var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL"];
 
 function setup_profile() 
 {
-  var loader = document.getElementById('loader');
-  var background_tint = document.getElementById('background_tint');
-  loader.style.display = "block";
-  background_tint.style.display = "block";
-  
+  start_load();  
   firebase.auth().onAuthStateChanged(function(user) 
   {
     if (user) 
@@ -79,17 +76,46 @@ function setup_profile()
         }
         else if (assetsLen == 0)
         {
-          loader.style.display = "none";
-          background_tint.style.display = "none";
+          end_load();
         }
       });  
     } else {
-      loader.style.display = "none";
-      background_tint.style.display = "none";
+      end_load();
       window.location.href = "login.html";
     }
   });
 
+}
+
+/** 
+  * Name:         end_load()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will start the loading screen
+  **/
+
+function start_load()
+{
+  var loader = document.getElementById('loader');
+  var background_tint = document.getElementById('background_tint');
+  loader.style.display = "block";
+  background_tint.style.display = "block";
+
+}
+
+/** 
+  * Name:         end_load()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will delete the loading screen
+  **/
+
+function end_load()
+{
+  var loader = document.getElementById('loader');
+  var background_tint = document.getElementById('background_tint');
+  loader.style.display = "none";
+  background_tint.style.display = "none";
 }
 
 /** 
@@ -172,6 +198,44 @@ function parse_string(str)
     if (isNaN(parseInt(str.charAt(i))) )
     {
       return str.slice(i + 1, len - 3);
+    }
+  }
+}
+
+/** 
+  * Name:         grow()
+  * Parameters:   input = The element to shrink
+  * Return:       None
+  * Description:  This function will grow the passed in element
+  **/
+
+function grow(input)
+{
+  input.setAttribute("class", "grow_profile_asset_bullets");
+  curr_asset_input = input;
+  shrink(input);  
+}
+
+/** 
+  * Name:         shrink()
+  * Parameters:   input = The element to shrink
+  * Return:       None
+  * Description:  This function will shrink the passed in element
+  **/
+
+function shrink(input)
+{
+  window.onclick = function(event) {
+    if (event.target != input) {
+      input.setAttribute("class", "profile_asset_bullet");
+      for (var i = 0; i < assetsBullets.length; i++)
+      {
+        if (event.target == assetsBullets[i]) {
+          return;
+        }
+      }
+      var button = document.getElementById('profile_remove_assets_button');
+      button.style.display = "none";
     }
   }
 }
@@ -320,6 +384,11 @@ function asset_bullet(name, worth, type, element, class_name)
   input.draggable = "true";
   input.onclick = function()
   {
+    if (curr_asset_input)
+    {
+      curr_asset_input.setAttribute("class", class_name);
+    }
+    grow(input);
     show_remove_assets_button(input);    
   }
   input.onmouseover = function()
