@@ -16,6 +16,7 @@
 
 var curr_user;
 var curr_asset_input;
+var curr_stock_input;
 var name = "";
 var net;
 var earning_power;
@@ -220,6 +221,13 @@ function post_stock_cards(company_ticker)
         stock_card_price.innerHTML = "$" + current_close; //company_ticker;
         stock_card.appendChild(stock_card_price);
         document.getElementById('profile_news_placeholder').appendChild(stock_card);
+        stock_card.onclick = function()
+        {
+       //   if (curr_asset_input)
+       //   {
+       //   }
+          grow_stock_card(stock_card);
+        }
       }
       catch(err){
         stock_card.innerHTML = "No News currently available";    
@@ -265,6 +273,17 @@ function grow(input)
   shrink(input);  
 }
 
+function grow_stock_card(input)
+{
+  if (curr_stock_input)
+  {
+    curr_stock_input.setAttribute("class", "profile_news_bullet");     
+  }
+  input.setAttribute("class", "grow_stock_card");
+  curr_stock_input = input;
+  shrink_stock_card(input);
+}
+
 /** 
   * Name:         shrink()
   * Parameters:   input = The element to shrink
@@ -288,6 +307,24 @@ function shrink(input)
     }
   }
 }
+
+function shrink_stock_card(input)
+{
+  window.onclick = function(event) {
+    if (event.target != input) {
+      input.setAttribute("class", "profile_news_bullet");
+      for (var i = 0; i < assetsBullets.length; i++)
+      {
+        if (event.target == assetsBullets[i]) {
+          return;
+        }
+      }
+ //     var button = document.getElementById('profile_remove_assets_button');
+ //     button.style.display = "none";
+    }
+  }
+}
+
 
 /** 
   * Name:         show_remove_assets_button()

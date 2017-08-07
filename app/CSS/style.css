@@ -440,7 +440,31 @@ body{
   float: left;
   text-decoration: none;
   text-align: center;
+  cursor: pointer;
+  box-shadow: 2px 2px grey;
 }
+
+.grow_stock_card{
+  width: 110px;
+  height: 150px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: white;
+  background-color: #abb7c8;
+  padding: 12px 12px 12px 12px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1;
+  margin-left: 10px;
+  float: left;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #5c7598;
+}
+
 
 .modal {
     display: none; /* Hidden by default */
