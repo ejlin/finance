@@ -283,7 +283,8 @@ body{
 }
 
 #profile_add_assets_button, #profile_add_liabilities_button,
-#profile_remove_assets_button, #profile_remove_liabilities_button{
+#profile_remove_assets_button, #profile_remove_liabilities_button,
+#profile_edit_assets_button{
   width: 25px;
   height: 25px;
   margin-top: 10px;
@@ -291,12 +292,14 @@ body{
   margin-bottom: 25px;
 }
 
-#profile_remove_assets_button, #profile_remove_liabilities_button{
+#profile_remove_assets_button, #profile_remove_liabilities_button,
+#profile_edit_assets_button{
   display: none;
 }
 
 #profile_add_assets_button:hover, #profile_add_liabilities_button:hover,
-#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover{
+#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover,
+#profile_edit_assets_button:hover{
   background-color: #dadadb;
   transition: 0.5s;
 }
@@ -311,6 +314,10 @@ body{
   margin-right: 5%;
 }
 
+#profile_edit_assets_button{
+  float: right;
+  margin-right: 5%;
+}
 
 #profile_assets_text{
   color: white;
@@ -557,6 +564,12 @@ body{
   cursor: pointer;
   display: none;
   float: left;
+}
+
+.stock_card_hover:hover{
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.3s;
 }
 
 #asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
