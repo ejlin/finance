@@ -164,7 +164,16 @@ body{
   cursor: pointer;
 }
 
-#reset_button:hover{
+#report_bug_button{
+  position: fixed;
+  margin-top: 73.5%;
+  margin-left: calc(98% - 30px);
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+#reset_button:hover, #report_bug_button:hover{
   opacity: 0.5;
 }
 
@@ -204,7 +213,7 @@ body{
   margin-left: 8%;
   float: left;
   border-radius: 0px 0px 2px 2px;
-  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 #profile_quick_glance_info{
@@ -413,9 +422,9 @@ body{
 
 .profile_news_bullet
 {
-  width: 90%;
-  height: 50px;
-  margin-top: 10px;
+  width: 110px;
+  height: 150px;
+  margin-top: 5px;
   margin-bottom: 15px;
   box-sizing: border-box;
   border: none;
@@ -427,10 +436,10 @@ body{
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
   z-index: 1;
-  margin-left: calc(5% - 12px);
-  margin-right: calc(5% - 12px);
+  margin-left: 10px;
   float: left;
   text-decoration: none;
+  text-align: center;
 }
 
 .modal {
@@ -473,7 +482,7 @@ body{
     padding: 20px;
     border-radius: 2px;
     width: 50%; /* Could be more or less, depending on screen size */
-    height: 30%;
+    height: 27.5%;
     position: fixed;
     margin-left: calc(25% - 20px);
 }
@@ -498,7 +507,7 @@ body{
   float: left;
   width: 20%;
   margin-left: 10%;
-  margin-top: 10%;
+  margin-top: 9%;
 }
 
 #modal_img, #modal_img_other{
@@ -706,7 +715,7 @@ body{
   color: #5c7598;
   font-size: 16px;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 5px;
   padding: 10px;
   top: 30px;
   right: 10px;

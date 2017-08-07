@@ -31,6 +31,9 @@
 
     <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png">
     </img>
+    <img  id = "report_bug_button" src = "../Images/bug.png">
+    </img>
+
     
     <div id="background_tint">
     </div>
@@ -57,12 +60,12 @@
 
     <div id="profile_quick_glance_top">
       <div id="profile_quick_glance_title">
-        Today's Quick Glance
+        Quick Glance
       </div>
 
       <div id="profile_quick_glance_info" class="tooltip">
         <img src="../Images/Info.png">
-          <span class="tooltip_text">Find relevant news in the financial world. All in one easily accessible feed.</span>
+          <span class="tooltip_text">Find relevant stock prices. All in one easily accessible feed.</span>
         </img>
       </div>
     </div>
@@ -390,7 +393,7 @@
             </span>
           </img>
         </div>
-        <input id="stock_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Name of Company" required>
+        <input id="stock_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Company ticker symbol" required>
         </input>
         <input id="stock_asset_worth" class="stock_input" type="number" name="signup_username" placeholder="Number of Shares" required>
         </input>

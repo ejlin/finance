@@ -25,7 +25,8 @@ var assetsBulletsWorth = new Array();
 var assetsBulletsType = new Array();
 var assetsBulletsData = new Array();
 var liabilitiesBullets = new Array();
-var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL"];
+var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
+var defaultCompaniesPrice = new Array();
 
 /** 
   * Name:         setup_profile()
@@ -58,13 +59,15 @@ function setup_profile()
       curr_user_earning_power.on('value', function(snapshot)
       {
         earning_power = snapshot.val();
-        document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power));            
+        document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power)) + "/yr";            
       });
       var counter = 0;
- /*   while ( counter < defaultCompanies.length)
+      while ( counter < defaultCompanies.length)
       {
-        post_news(defaultCompanies[counter++]);
-      }*/
+        post_stock_cards(defaultCompanies[counter++]);
+        //post_news(defaultCompanies[counter++]);
+      }
+      
       var assets_len = 0;
       var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
       curr_user_assets_len.on('value', function(snapshot) 
@@ -182,6 +185,52 @@ function post_news(company_ticker)
 
   request.end();
 }
+
+/** 
+  * Name:         post_stock_cards()
+  * Parameters:   company_ticker = The ticker for the company to post news of
+  * Return:       None
+  * Description:  This function will post current stock prices from the company mentioned
+  **/
+
+function post_stock_cards(company_ticker)
+{
+  var https = require("https");
+  var current_close = 0;  
+  var request = https.request({
+    method: "GET",
+    host: "www.alphavantage.co",
+    path: "/query?function=TIME_SERIES_INTRADAY&symbol=" + company_ticker + "&interval=1min&apikey=3D451BF2VJIU2EVD"
+  }, function(response) {
+    var json = "";
+    response.on('data', function (chunk) {
+        json += chunk;
+        
+    });
+    response.on('end', function() {
+      var company = JSON.parse(json);
+      var stock_card = document.createElement("P");
+      stock_card.setAttribute("class", "profile_news_bullet");
+      var last_log = company["Meta Data"]["3. Last Refreshed"];
+      try{       
+        stock_card.innerHTML = company_ticker;
+        var stock_card_price = document.createElement("P"); 
+        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
+        defaultCompaniesPrice.push(current_close);
+        stock_card_price.innerHTML = "$" + current_close; //company_ticker;
+        stock_card.appendChild(stock_card_price);
+        document.getElementById('profile_news_placeholder').appendChild(stock_card);
+      }
+      catch(err){
+        stock_card.innerHTML = "No News currently available";    
+      }
+      document.getElementById('profile_news_placeholder').appendChild(stock_card);
+    });
+  });
+
+  request.end();
+}
+
 
 /** 
   * Name:         parse_string()
@@ -354,7 +403,7 @@ function add_net(asset)
 function add_earning_power(asset)
 {
   earning_power += parseFloat(asset);
-  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
   var updates = {};
   updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
   return database.ref().update(updates);  
@@ -495,7 +544,7 @@ function remove_asset(input)
   else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
   { 
     earning_power -= elementWorth;
-    document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power);
+    document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
     updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;  
   }
   element.parentNode.removeChild(element);        
@@ -967,6 +1016,13 @@ function signout()
   });
 }
 
+/** 
+  * Name:         open_delete_modal()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will open the delete modal 
+  **/
+
 function open_delete_modal()
 {
   var delete_menu = document.getElementById('delete_menu');
@@ -977,6 +1033,13 @@ function open_delete_modal()
     delete_modal[i].style.display = "block";
   }
 }
+
+/** 
+  * Name:         close_delete_modal()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will close the delete modal 
+  **/
 
 function close_delete_modal()
 {
@@ -996,7 +1059,7 @@ function reset_account()
   var updates = {};
   document.getElementById('profile_worth_text').innerHTML = "$0"; 
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$0";
-  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$0";            
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$0/yr";            
   
   for (var i = 0; i < assetsBullets.length; i++)
   {
