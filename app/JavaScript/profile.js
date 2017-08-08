@@ -41,7 +41,7 @@ var defaultCompaniesPrice = new Array();
 
 function setup_profile() 
 {
-  start_load();  
+  start_load('loader');  
   firebase.auth().onAuthStateChanged(function(user) 
   {
     if (user) 
@@ -82,7 +82,7 @@ function setup_profile()
         }
       });  
     } else {
-      end_load();
+      end_load('loader');
       window.location.href = "login.html";
     }
   });
@@ -96,9 +96,9 @@ function setup_profile()
   * Description:  This function will start the loading screen
   **/
 
-function start_load()
+function start_load(loader)
 {
-  var loader = document.getElementById('loader');
+  var loader = document.getElementById(loader);
   var background_tint = document.getElementById('background_tint');
   loader.style.display = "block";
   background_tint.style.display = "block";
@@ -111,9 +111,9 @@ function start_load()
   * Description:  This function will delete the loading screen
   **/
 
-function end_load()
+function end_load(loader)
 {
-  var loader = document.getElementById('loader');
+  var loader = document.getElementById(loader);
   var background_tint = document.getElementById('background_tint');
   loader.style.display = "none";
   background_tint.style.display = "none";
@@ -182,6 +182,20 @@ function post_news(company_ticker)
   });
 
   request.end();
+}
+
+function renew_stock_cards()
+{
+  var node = document.getElementById('profile_news_placeholder');
+  while (node.hasChildNodes())
+  {
+    node.removeChild(node.firstChild);   
+  }
+  var counter = 0;
+  while ( counter < defaultCompanies.length)
+  {
+    post_stock_cards(defaultCompanies[counter++]);
+  }
 }
 
 /** 
