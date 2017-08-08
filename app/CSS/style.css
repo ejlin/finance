@@ -68,7 +68,7 @@ body{
   opacity: 0.7;
 }
 
-#signup_button_text{
+#signup_button_text, #submit_bug_text{
   font-size: 18px;
   color: white;
 }
@@ -298,9 +298,14 @@ body{
 }
 
 #profile_add_assets_button:hover, #profile_add_liabilities_button:hover,
-#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover,
-#profile_edit_assets_button:hover{
+#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover
+{
   background-color: #dadadb;
+  transition: 0.5s;
+}
+
+#profile_edit_assets_button:hover{
+  opacity: 0.5;
   transition: 0.5s;
 }
 
@@ -498,7 +503,7 @@ body{
     margin-left: calc(15% - 20px);
 }
 
-#delete_modal_text{
+#delete_modal_text, #bug_report_text{
   font-size: 18px;
   color:#5c7598; 
   margin-top: 10%;
@@ -514,6 +519,17 @@ body{
     border-radius: 2px;
     width: 50%; /* Could be more or less, depending on screen size */
     height: 27.5%;
+    position: fixed;
+    margin-left: calc(25% - 20px);
+}
+
+.report_bug_modal {
+    background-color: #abb7c8;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 2px;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 70%;
     position: fixed;
     margin-left: calc(25% - 20px);
 }
@@ -549,7 +565,7 @@ body{
 
 #modal_img:hover, #modal_img_other:hover, #save_other_button:hover, 
 #save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover, 
-#confirm_delete_button_no:hover, #confirm_delete_button_yes:hover{
+#confirm_delete_button_no:hover, #confirm_delete_button_yes:hover, #submit_bug_report:hover{
   cursor: pointer;
   opacity: 0.5;
   transition: 0.5s;
@@ -575,7 +591,7 @@ body{
 #asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
 #asset_address, #asset_property_name, #asset_salary_name,
 #asset_salary_worth, #asset_rent_name, #asset_rent_worth,
-#stock_asset_name, #stock_asset_worth{
+#stock_asset_name, #stock_asset_worth, #stock_asset_company{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -591,6 +607,42 @@ body{
   display: none;
   margin-top: 5%;
   margin-left: 20%;
+}
+
+#report_bug_title{
+  width: 85%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  color: #5c7598;
+  background-color:  #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 5%;
+  margin-left: 7.5%;
+}
+
+#report_bug_summary{
+  width: 85%;
+  height: 250px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  color: #5c7598;
+  background-color:  #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 5%;
+  margin-left: 7.5%;
 }
 
 #asset_zip{
@@ -675,7 +727,7 @@ body{
   font-size: 18px;
 }
 
-#save_salary_button, #save_rent_button, #confirm_delete_button_no, #confirm_delete_button_yes{
+#save_salary_button, #save_rent_button, #confirm_delete_button_no, #confirm_delete_button_yes, #submit_bug_report{
   width: 15%;
   height: 35px;
   border: none;
@@ -713,13 +765,13 @@ body{
   font-size: 18px;
 }
 
-#asset_input_title, #asset_stock_input_title{
+#asset_input_title{
   color: #5c7598;
   font-size: 18px;
   width: 70%;
 }
 
-#asset_property_input_title{
+#asset_property_input_title, #asset_stock_input_title{
   color: #5c7598;
   font-size: 18px;
   width: 70%;
@@ -734,6 +786,12 @@ body{
 }
 
 #property_info{
+  float: right;
+  margin-right: 10%;
+  margin-top: -40px;
+}
+
+#stock_info{
   float: right;
   margin-right: 10%;
   margin-top: -40px;

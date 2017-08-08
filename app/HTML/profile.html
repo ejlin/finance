@@ -11,6 +11,12 @@
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
     </link>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+      emailjs.init("user_doZkELH9pICZ3YGA3qccx");
+    })();
+    </script>
   </head>
 
   <body onload="setup_profile()">
@@ -31,7 +37,7 @@
 
     <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png">
     </img>
-    <img  id = "report_bug_button" src = "../Images/bug.png">
+    <img  onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png">
     </img>
 
     
@@ -173,6 +179,32 @@
 
     <div class = "clearfix"/>
 
+    <div id="bug_report_menu" class="modal">
+      <div class="report_bug_modal">
+        <span onclick="close_bug_modal()" class="close">&times;
+        </span>
+
+        <div class="report_bug_content" id="bug_report_text">
+          Thanks for taking the time to report a bug. Please provide as accurate of a description of the bug as possible with any steps necessary to recreate it. 
+        </div>
+        <form method="POST" action="http://formspree.io/tgih1999@gmail.com">
+      
+        <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title" required name="email">
+        </input>
+        <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary" required name="message"></textarea>
+        <center>
+          <button type="submit" onclick="submit_bug()" class="report_bug_content" id = "submit_bug_report">
+            <div id="submit_bug_text">
+              Submit
+            </div>
+          </button>
+        </center>
+    </form>
+      </div>
+    </div>
+
+    <div class = "clearfix"/>
+
     <div id="assets_add_menu" class="modal">
       <div class="modal-content">
         <img onclick="show_assets_menu()" id="assets_modal_back" src="../Images/back.png">
@@ -230,6 +262,14 @@
             <p id="modal_logo_text"> Other 
             </p>
           </div>
+        </center>
+
+<!-- Account -->
+
+        <center>
+          <p id="asset_others_input_title" class="account_input">
+            This feature is coming soon!
+          </p>
         </center>
 
 <!-- Rent -->
@@ -391,13 +431,15 @@
             Add members of your stock portfolio
           </p>
         </center>
-        <div id="property_info" class="tooltip stock_input">
+        <div id="stock_info" class="tooltip stock_input">
           <img src="../Images/Info.png">
             <span class="tooltip_text">Add members of your stock portfolio
             </span>
           </img>
         </div>
-        <input id="stock_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Company ticker symbol" required>
+        <input id="stock_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Name of Asset" required>
+        </input>
+        <input id="stock_asset_company" class="stock_input" type="text" name="signup_username" placeholder="Company ticker symbol" required>
         </input>
         <input id="stock_asset_worth" class="stock_input" type="number" name="signup_username" placeholder="Number of Shares" required>
         </input>
@@ -448,5 +490,5 @@
     <script src = "../JavaScript/signup.js"></script>
     <script src = "../JavaScript/profile.js"></script>
   </body>
-
+  
 </html>

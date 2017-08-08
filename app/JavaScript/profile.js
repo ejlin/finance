@@ -66,8 +66,7 @@ function setup_profile()
       while ( counter < defaultCompanies.length)
       {
         post_stock_cards(defaultCompanies[counter++]);
-      }
-      
+      }      
       var assets_len = 0;
       var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
       curr_user_assets_len.on('value', function(snapshot) 
@@ -210,14 +209,14 @@ function post_stock_cards(company_ticker)
       var placeholder = document.getElementById('profile_news_placeholder');
       var company = JSON.parse(json);
       var stock_card = document.createElement("P");
-      stock_card.setAttribute("class", "profile_news_bullet");
-      var last_log = company["Meta Data"]["3. Last Refreshed"];
-      try{       
+      stock_card.setAttribute("class", "profile_news_bullet");      
+      try
+      {
         stock_card.innerHTML = company_ticker;
         var stock_card_price = document.createElement("P"); 
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         defaultCompaniesPrice.push(current_close);
-        stock_card_price.innerHTML = "$" + current_close; //company_ticker;
+        stock_card_price.innerHTML = "$" + current_close; 
         stock_card.appendChild(stock_card_price);
         placeholder.appendChild(stock_card);
         stock_card.onclick = function()
@@ -232,7 +231,7 @@ function post_stock_cards(company_ticker)
         }
         yahoo_link.src = "../Images/exit.png";
         yahoo_link.target = "_blank";
-        stock_card.appendChild(yahoo_link);      
+        stock_card.appendChild(yahoo_link);          
       }
       catch(err){
         stock_card.innerHTML = "No News currently available";    
@@ -240,10 +239,20 @@ function post_stock_cards(company_ticker)
       placeholder.appendChild(stock_card);
     });
   });
-
   request.end();
 }
 
+/** 
+  * Name:         is_letter()
+  * Parameters:   str = The character to check
+  * Return:       None
+  * Description:  This function will return true or false depending on 
+  *               whether the char is a letter ([a-z] || [A-Z])
+  **/
+
+function is_letter(str) {
+  return str.length === 1 && (str.match(/[a-z]/i) || str.match(/[A-Z]/i));
+}
 
 /** 
   * Name:         parse_string()
@@ -257,9 +266,9 @@ function parse_string(str)
   var len = str.length;
   for (var i = 0; i < len; i++)
   {
-    if (isNaN(parseInt(str.charAt(i))) )
+    if (is_letter(str.charAt(i))) 
     {
-      return str.slice(i + 1, len - 3);
+      return str.slice(i, len - 3);
     }
   }
 }
@@ -316,6 +325,8 @@ function shrink(input)
       }
       var button = document.getElementById('profile_remove_assets_button');
       button.style.display = "none";
+      var edit_button = document.getElementById('profile_edit_assets_button');
+      edit_button.style.display = "none";
     }
   }
 }
@@ -362,31 +373,6 @@ function show_assets_button(input)
     remove_asset(input);
   }
 
-}
-
-/** 
-  * Name:         hide_remove_assets_button()
-  * Parameters:   None 
-  * Return:       None
-  * Description:  This function will hide the remove asset button if
-  *               clicked away from anything other than another
-  *               asset bullet. 
-  **/
-  
-function hide_remove_assets_button()
-{
-  window.onclick = function(event) {
-    for (var i = 0; i < assetsBullets.length; i++)
-    {
-      if (event.target == assetsBullets[i]) {
-        return;
-      }
-    }
-    var button = document.getElementById('profile_remove_assets_button');
-    button.style.display = "none";
-    var edit_button = document.getElementById('profile_edit_assets_button');
-    edit_button.style.display = "none";
-  }
 }
 
 /** 
@@ -481,7 +467,6 @@ function add_earning_power(asset)
 
 function asset_bullet(name, worth, type, element, class_name)
 {
-  var idx = assetsBullets.length;
   var input = document.createElement(element);
   input.setAttribute("class", class_name);
   assetsBullets.push(input);
@@ -507,7 +492,6 @@ function asset_bullet(name, worth, type, element, class_name)
   {
     input.innerHTML = truncate_title(name, 25);
   }
-  hide_remove_assets_button();
   return input;
 }
 
@@ -525,7 +509,7 @@ function restore_asset_bullet(name, worth, type)
     var para = document.getElementById("profile_assets_box");
     var child =  document.getElementById("profile_add_assets_button");
     document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
-    para.scrollTop = para.scrollHeight;
+    para.scrollTop = 0;
   }
 }
 
@@ -574,7 +558,7 @@ function add_liabilities (name, worth)
 
 /** 
   * Name:         remove_asset()
-  * Parameters:   idx = The index of the asset to remove
+  * Parameters:   input = The input to remove 
   * Return:       None
   * Description:  This function will remove the last added asset
   **/
@@ -600,7 +584,7 @@ function remove_asset(input)
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
     updates['/users/' + curr_user.uid + '/net_worth/'] = net;          
   }
-  else if (type != "pr" && type != "ot" && (earning_power - elementWorth) >= 0)
+  else if (type != "pr" && type != "ot" && type != "st" && (earning_power - elementWorth) >= 0)
   { 
     earning_power -= elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
@@ -627,7 +611,7 @@ function remove_asset(input)
   assetsBullets.splice(assetsBullets.length - 1, 1);
   assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
   assetsBulletsType.splice(assetsBulletsType.length - 1, 1);
-  assetsBulletsType.splice(assetsBulletsData.length - 1, 1);
+  assetsBulletsData.splice(assetsBulletsData.length - 1, 1);
   
   assetsLen--;
   database.ref('/users/' + curr_user.uid + '/assets/' + (assetsLen)).remove();
@@ -690,7 +674,7 @@ function hide_assets_menu() {
 }
 
 
-function show_assets_menu_helper(asset_type)
+function hide_assets_menu_helper(asset_type)
 {
   var others_input = document.getElementsByClassName(asset_type);
   for (var i = 0; i < others_input.length; i++){
@@ -707,11 +691,12 @@ function show_assets_menu_helper(asset_type)
   **/
 
 function show_assets_menu() {
-  show_assets_menu_helper('property_input');
-  show_assets_menu_helper('rent_input');
-  show_assets_menu_helper('salary_input');
-  show_assets_menu_helper('stock_input');
-  show_assets_menu_helper('others_input');
+  hide_assets_menu_helper('account_input');
+  hide_assets_menu_helper('property_input');
+  hide_assets_menu_helper('rent_input');
+  hide_assets_menu_helper('salary_input');
+  hide_assets_menu_helper('stock_input');
+  hide_assets_menu_helper('others_input');
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -730,6 +715,11 @@ function open_account()
 {
   hide_assets_menu();
   show('assets_modal_back');
+  var others_input = document.getElementsByClassName('account_input');
+  for (var i = 0; i < others_input.length; i++)
+  {
+    others_input[i].style.display = "block";
+  }
 }
 
 /** 
@@ -978,8 +968,60 @@ function save_salary()
   **/
 
 function save_stock()
-{
+{ 
+  var num_shares_id = document.getElementById('stock_asset_worth');
+  var num_shares = num_shares_id.value;
 
+  var company_name_id = document.getElementById('stock_asset_company');
+  var company_ticker = company_name_id.value;
+
+  var name_id = document.getElementById('stock_asset_name');
+  var name = name_id.value;
+
+  if (company_ticker == "")
+  {
+    num_shares_id.className += " formInvalid";
+  }
+  if (num_shares == "")
+  {
+    num_shares = 0;
+  }
+  if (name == "")
+  {
+    name_id.className += " formInvalid";
+  }
+
+  var https = require("https");
+  var current_close = 0;  
+  var request = https.request({
+    method: "GET",
+    host: "www.alphavantage.co",
+    path: "/query?function=TIME_SERIES_INTRADAY&symbol=" + company_ticker + "&interval=1min&apikey=3D451BF2VJIU2EVD"
+  }, function(response) {
+    var json = "";
+    response.on('data', function (chunk) {
+        json += chunk;
+        
+    });
+    response.on('end', function() {
+      var company = JSON.parse(json); 
+      try
+      {
+        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
+        defaultCompanies.push(company_ticker);
+        defaultCompaniesPrice.push(current_close);
+        var worth = current_close * num_shares;
+        add_asset(name, worth, "st");
+        add_net(worth);
+        close_assets_modal();        
+      }
+      catch(err){
+        company_name_id.value = "";
+        company_name_id.placeholder = "Invalid symbol";
+      }
+    });
+  });
+  request.end();
 }
 
 /** 
@@ -1107,6 +1149,37 @@ function close_delete_modal()
 }
 
 /** 
+  * Name:         open_bug_modal()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will open the bug modal 
+  **/
+
+function open_bug_modal()
+{
+  var bug_menu = document.getElementById('bug_report_menu');
+  bug_menu.style.display = "block";
+  var bug_modal = document.getElementsByClassName('report_bug_content');
+  for (var i = 0; i < bug_modal.length; i++)
+  {
+    bug_modal[i].style.display = "block";
+  }
+}
+
+/** 
+  * Name:         close_bug_modal()
+  * Parameters:   None
+  * Return:       None
+  * Description:  This function will close the bug modal 
+  **/
+
+function close_bug_modal()
+{
+  var bug_menu = document.getElementById('bug_report_menu');
+  bug_menu.style.display = "none";
+}
+
+/** 
   * Name:         reset_account()
   * Parameters:   None
   * Return:       None
@@ -1144,6 +1217,11 @@ function reset_account()
   updates['/users/' + curr_user.uid + '/net_worth/'] = 0;
   close_delete_modal();
   return database.ref().update(updates);
+}
+
+function submit_bug()
+{
+  emailjs.send("<YOUR SERVICE ID>","financr",{name: "Financr", notes: "Check this out!"});  
 }
 
 //TODO
