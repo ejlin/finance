@@ -41,82 +41,84 @@ var defaultCompaniesPrice = new Array();
 
 function setup_profile() 
 {
-  start_load('loader');  
+  loader('start', 'loader');  
   firebase.auth().onAuthStateChanged(function(user) 
   {
     if (user) 
     {
-      curr_user = user;
-      document.getElementById('profile_name').innerHTML = "Welcome " + user.displayName + ","; 
-      var profile_quick_glance_text = document.getElementById('profile_quick_glance_text').innerHTML;
-      var curr_user_net = database.ref('users/' + user.uid + '/net_worth');
-      curr_user_net.on('value', function(snapshot) 
-      {
-        net = snapshot.val();
-        document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(parseInt(net)); 
-        document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(parseInt(net));      
-      });
-      var curr_user_earning_power = database.ref('users/' + user.uid + '/earning_power');
-      curr_user_earning_power.on('value', function(snapshot)
-      {
-        earning_power = snapshot.val();
-        document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(parseInt(earning_power)) + "/yr";            
-      });
+      var profile_name;
+      var curr_user_net;
       var counter = 0;
-      while ( counter < defaultCompanies.length)
+      var curr_user_assets_len;
+      var profile_worth_text;
+      var profile_quick_glance_text_net_worth;
+      var profile_quick_glance_text_earning_power;
+      var user_earning_power_path = 'users/' + user.uid + '/earning_power';
+      var user_net_worth_path = 'users/' + user.uid + '/net_worth';
+      var user_assets_len_path = 'users/' + user.uid + '/assets_len';
+      
+      curr_user = user;
+
+      profile_name = document.getElementById('profile_name');
+      profile_worth_text = document.getElementById('profile_worth_text');
+      profile_quick_glance_text_net_worth = document.getElementById('profile_quick_glance_text_net_worth');
+      profile_quick_glance_text_earning_power = document.getElementById('profile_quick_glance_text_earning_power');
+      
+      profile_name.innerHTML = "Welcome " + user.displayName + ","; 
+
+      database.ref(user_net_worth_path).on('value', function(snapshot) 
       {
-        post_stock_cards(defaultCompanies[counter++]);
-      }      
-      var assets_len = 0;
-      var curr_user_assets_len = database.ref('users/' + user.uid + '/assets_len');
-      curr_user_assets_len.on('value', function(snapshot) 
+        net = convert_with_commas(snapshot.val());
+        profile_worth_text.innerHTML = "$" + net; 
+        profile_quick_glance_text_net_worth.innerHTML = "$" + net;      
+      });
+
+      database.ref(user_earning_power_path).on('value', function(snapshot)
+      {
+        earning_power = convert_with_commas(snapshot.val());
+        profile_quick_glance_text_earning_power.innerHTML = "$" + earning_power + "/yr";            
+      });   
+
+      database.ref(user_assets_len_path).on('value', function(snapshot) 
       {
         assetsLen = snapshot.val();
         if (assetsLen > assetsBullets.length)
-        {
           restore_assets();
-        }
-        else if (assetsLen == 0)
-        {
-          end_load();
-        }
+        else
+          loader('end', 'loader');
       });  
+      while ( counter < defaultCompanies.length)
+        post_stock_cards(defaultCompanies[counter++]);  
     } else {
-      end_load('loader');
+      loader('end', 'loader');
       window.location.href = "login.html";
     }
   });
-
 }
 
 /** 
-  * Name:         end_load()
-  * Parameters:   None
+  * Name:         loader()
+  * Parameters:   action = The action to take. Either start or end the loader
+  *               loader = The loader to display
   * Return:       None
-  * Description:  This function will start the loading screen
+  * Description:  This function will determine the loading screen action
   **/
 
-function start_load(loader)
+function loader(action, loader)
 {
   var loader = document.getElementById(loader);
   var background_tint = document.getElementById('background_tint');
-  loader.style.display = "block";
-  background_tint.style.display = "block";
-}
-
-/** 
-  * Name:         end_load()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will delete the loading screen
-  **/
-
-function end_load(loader)
-{
-  var loader = document.getElementById(loader);
-  var background_tint = document.getElementById('background_tint');
-  loader.style.display = "none";
-  background_tint.style.display = "none";
+  if (action == "start")
+  {
+    loader.style.display = "block";
+    background_tint.style.display = "block";
+  }
+  else if (action == "end")
+  {
+    loader.style.display = "none";
+    background_tint.style.display = "none";
+  }
+  return;
 }
 
 /** 
@@ -131,71 +133,34 @@ function end_load(loader)
 function truncate_title(title, len)
 {
   if (title.length > len)
-  {
     return (title.slice(0, len) + "...");
-  }
   return title;
 }
 
 /** 
-  * Name:         post_news()
-  * Parameters:   company_ticker = The ticker for the company to post news of
-  * Return:       None
-  * Description:  This function will post worthy news from the company mentioned
+  * Name:         renew_stock_cards()
+  * Parameters:   None
+  * Return:       Post the stock cards in our defaultCompanies array
+  * Description:  This function will post our stock cards in our stock section 
   **/
-
-function post_news(company_ticker)
-{
-  var https = require("https");
-  var username = "8de2ab9294eb7387e13bed32e87c5ed2";
-  var password = "382da3d89f22a7e554dc1770ec1a055d";
-  var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
-
-  var request = https.request({
-    method: "GET",
-    host: "api.intrinio.com",
-    path: "/news?identifier=" + company_ticker,
-    headers: {
-        "Authorization": auth
-    }
-  }, function(response) {
-    var json = "";
-    response.on('data', function (chunk) {
-        json += chunk;
-        
-    });
-    response.on('end', function() {
-      var company = JSON.parse(json);
-      var headline = document.createElement("A");
-      headline.setAttribute("class", "profile_news_bullet");
-      try{
-        headline.innerHTML = truncate_title(company_ticker + ": " + company.data[0].title, 45);
-        headline.href = company.data[0].url;
-        headline.title = company.data[0].title;
-        headline.target = "_blank";
-      }
-      catch(err){
-        headline.innerHTML = "No News currently available";    
-      }
-      document.getElementById('profile_news_placeholder').appendChild(headline);
-    });
-  });
-
-  request.end();
-}
 
 function renew_stock_cards()
 {
-  var node = document.getElementById('profile_news_placeholder');
+  var node;
+  var counter = 0;
+  
+  node = document.getElementById('profile_news_placeholder');
+  
   while (node.hasChildNodes())
   {
     node.removeChild(node.firstChild);   
   }
-  var counter = 0;
+  
   while ( counter < defaultCompanies.length)
   {
     post_stock_cards(defaultCompanies[counter++]);
   }
+  return;
 }
 
 /** 
@@ -259,7 +224,7 @@ function post_stock_cards(company_ticker)
 /** 
   * Name:         is_letter()
   * Parameters:   str = The character to check
-  * Return:       None
+  * Return:       bool = True or False
   * Description:  This function will return true or false depending on 
   *               whether the char is a letter ([a-z] || [A-Z])
   **/
@@ -285,6 +250,7 @@ function parse_string(str)
       return str.slice(i, len - 3);
     }
   }
+  return str;
 }
 
 /** 
@@ -299,6 +265,7 @@ function grow(input)
   input.setAttribute("class", "grow_profile_asset_bullets");
   curr_asset_input = input;
   shrink(input);  
+  return;
 }
 
 /** 
@@ -367,7 +334,6 @@ function shrink_stock_card(input)
   }
 }
 
-
 /** 
   * Name:         show_assets_button()
   * Parameters:   idx = The index of the element to remove
@@ -386,7 +352,6 @@ function show_assets_button(input)
   {
     remove_asset(input);
   }
-
 }
 
 /** 
@@ -444,7 +409,7 @@ function convert_with_commas(num) {
 function add_net(asset)
 {
   net += parseFloat(asset);
-  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net.toString());
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
@@ -520,10 +485,17 @@ function asset_bullet(name, worth, type, element, class_name)
 function restore_asset_bullet(name, worth, type)
 {
   if (assetsLen > assetsBullets.length){
-    var para = document.getElementById("profile_assets_box");
-    var child =  document.getElementById("profile_add_assets_button");
-    document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
-    para.scrollTop = 0;
+
+    var parentNode;
+    var profile_assets_placeholder;
+    var element;
+
+    parentNode = document.getElementById("profile_assets_box");
+    profile_assets_placeholder = document.getElementById('profile_assets_placeholder');
+    element = asset_bullet(name, worth, type, "P", "profile_asset_bullet");
+
+    profile_assets_placeholder.appendChild(element); 
+    parentNode.scrollTop = 0;
   }
 }
 
@@ -538,11 +510,13 @@ function restore_asset_bullet(name, worth, type)
 
 function add_asset(name, worth, type) 
 { 
+  var asset_url = 'users/' + curr_user.uid + '/assets/' + assetsLen;
+
   var para = document.getElementById("profile_assets_box");
   var child =  document.getElementById("profile_add_assets_button");
   document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
   para.scrollTop = para.scrollHeight;
-  database.ref('users/' + curr_user.uid + '/assets/' + assetsLen).set({
+  database.ref(asset_url).set({
     name_worth: (worth + "_" + name + ":" + type),
   });
   var updates = {};
