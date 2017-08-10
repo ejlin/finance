@@ -25,7 +25,11 @@ var assetsBullets = new Array();
 var assetsBulletsWorth = new Array();
 var assetsBulletsType = new Array();
 var assetsBulletsData = new Array();
+
 var liabilitiesBullets = new Array();
+var liabilitiesBulletsWorth = new Array();
+var liabilitiesBulletsType = new Array();
+
 var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
 var defaultCompaniesPrice = new Array();
 
@@ -352,6 +356,11 @@ function show_assets_button(input)
   {
     remove_asset(input);
   }
+  edit_button.onclick = function()
+  {
+    console.log("here");
+    open_edit_assets_modal(input);
+  }
 }
 
 /** 
@@ -375,7 +384,7 @@ function restore_assets(){
       var name = parse_string(str);
       var worth = parseInt(str);
       var type = str.slice(str.length-2, str.length);
-      restore_asset_bullet(name, worth);
+      restore_asset_bullet(name, worth, type);
     });
     counter++;
   }
@@ -589,7 +598,6 @@ function remove_asset(input)
     }
     assetsBulletsWorth[i] = assetsBulletsWorth[i + 1];
     assetsBulletsType[i] = assetsBulletsType[i + 1];
-    console.log(assetsBulletsData[i + 1]);
     updates['/users/' + curr_user.uid + '/assets/' + i + '/name_worth/'] = assetsBulletsData[i + 1];       
   }
   for (var i = idx; i < assetsBulletsData.length - 1; i++)
@@ -615,7 +623,8 @@ function remove_asset(input)
   * Description:  This function will remove the last added liability
   **/
 
-function remove_liabilities(){
+function remove_liabilities()
+{
   var element = liabilitiesBullets[liabilitiesBullets.length - 1];
   element.parentNode.removeChild(element);
   liabilitiesBullets.splice(liabilitiesBullets.length - 1, 1);
@@ -628,10 +637,18 @@ function remove_liabilities(){
   * Description:  This function will open the assets modal
   **/
 
-function open_assets_modal() {
+function open_assets_modal() 
+{
   var assets_menu = document.getElementById('assets_add_menu');
   assets_menu.style.display = "block";
   show_assets_menu();
+}
+
+function open_edit_assets_modal(input)
+{
+  var edit_assets_menu = document.getElementById('edit_asset_menu');
+  edit_assets_menu.style.display = "block";
+  show_edit_assets(input);
 }
 
 /** 
@@ -641,9 +658,53 @@ function open_assets_modal() {
   * Description:  This function will close the assets modal
   **/
 
-function close_assets_modal() {
+function close_assets_modal() 
+{
   var assets_menu = document.getElementById('assets_add_menu');    
   assets_menu.style.display = "none";
+}
+
+
+function close_edit_asset_modal()
+{
+  var edit_assets_menu = document.getElementById('edit_asset_menu');    
+  edit_assets_menu.style.display = "none";
+}
+
+function save_edit_asset()
+{
+  var updates = {};          
+  var edit_asset_input = document.getElementById('edit_asset_name');
+  var edit_asset_input_val = edit_asset_input.value;
+  var idx;
+
+  for ( var i = 0; i < assetsBullets.length; i++)
+  { 
+    if (assetsBullets[i] == curr_asset_input)
+    {
+      idx = i;
+    }
+  }
+
+  var worth = assetsBulletsWorth[idx];
+  var type = assetsBulletsType[idx];
+  assetsBulletsData[idx] = "" + worth + "_" + edit_asset_input_val + ":" + type;
+  
+  if (edit_asset_input.value != "")
+  {
+    curr_asset_input.innerHTML = edit_asset_input_val;
+    curr_asset_input.onmouseout = function()
+    {
+      curr_asset_input.innerHTML = truncate_title(edit_asset_input_val, 25);
+    }
+    updates['/users/' + curr_user.uid + '/assets/' + idx + '/name_worth/'] = assetsBulletsData[idx];              
+    close_edit_asset_modal();
+  }
+  else
+  {
+    edit_asset_input.className += " formInvalid";
+  }
+  return database.ref().update(updates);     
 }
 
 /** 
@@ -654,7 +715,8 @@ function close_assets_modal() {
   *               the assets modal
   **/
 
-function hide_assets_menu() {
+function hide_assets_menu() 
+{
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "none";
@@ -690,6 +752,18 @@ function show_assets_menu() {
     logos[i].style.display = "block";
   }
   hide('assets_modal_back');
+}
+
+function show_edit_assets(input)
+{
+  curr_asset_input = input;
+  var edit_assets_modal = document.getElementsByClassName('edit_asset_modal_input');
+  for (var i = 0; i < edit_assets_modal.length; i++)
+  {
+    edit_assets_modal[i].style.display = "block";
+  }
+  var edit_input = document.getElementById('edit_asset_name');
+  edit_input.placeholder = input.innerHTML;
 }
 
 /** 
@@ -1210,6 +1284,11 @@ function reset_account()
 function submit_bug()
 {
   emailjs.send("<YOUR SERVICE ID>","financr",{name: "Financr", notes: "Check this out!"});  
+}
+
+function temp_login()
+{
+  window.location.href = "login.html";
 }
 
 //TODO

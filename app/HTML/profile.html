@@ -188,18 +188,35 @@
           Thanks for taking the time to report a bug. Please provide as accurate of a description of the bug as possible with any steps necessary to recreate it. 
         </div>
         <form method="POST" action="http://formspree.io/tgih1999@gmail.com">
-      
-        <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title" required name="email">
+          <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title" required name="email">
+          </input>
+          <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary" required name="message"></textarea>
+          <center>
+            <button type="submit" onclick="submit_bug()" class="report_bug_content" id = "submit_bug_report">
+              <div id="submit_bug_text">
+                Submit
+              </div>
+            </button>
+          </center>
+        </form>
+      </div>
+    </div>
+
+    <div class="clearfix"/>
+    
+    <div id="edit_asset_menu" class="modal">
+      <div class="edit_asset_modal">
+        <span onclick="close_edit_asset_modal()" class="close">&times;
+        </span>
+        <input id="edit_asset_name" class="edit_asset_modal_input" type="text">
         </input>
-        <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary" required name="message"></textarea>
         <center>
-          <button type="submit" onclick="submit_bug()" class="report_bug_content" id = "submit_bug_report">
-            <div id="submit_bug_text">
-              Submit
+          <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id = "submit_bug_report">
+            <div id="submit_edit_text">
+              save
             </div>
           </button>
         </center>
-    </form>
       </div>
     </div>
 

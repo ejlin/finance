@@ -68,7 +68,7 @@ body{
   opacity: 0.7;
 }
 
-#signup_button_text, #submit_bug_text{
+#signup_button_text, #submit_bug_text, #submit_edit_text{
   font-size: 18px;
   color: white;
 }
@@ -536,6 +536,17 @@ body{
     margin-left: calc(25% - 20px);
 }
 
+.edit_asset_modal{
+    background-color: #abb7c8;
+    margin: 30% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 2px;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 27.5%;
+    position: fixed;
+    margin-left: calc(25% - 20px);
+}
+
 .report_bug_modal {
     background-color: #abb7c8;
     margin: 10% auto; /* 15% from the top and centered */
@@ -604,7 +615,8 @@ body{
 #asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
 #asset_address, #asset_property_name, #asset_salary_name,
 #asset_salary_worth, #asset_rent_name, #asset_rent_worth,
-#stock_asset_name, #stock_asset_worth, #stock_asset_company{
+#stock_asset_name, #stock_asset_worth, #stock_asset_company
+{
   width: 60%;
   height: 50px;
   box-sizing: border-box;
@@ -620,6 +632,24 @@ body{
   display: none;
   margin-top: 5%;
   margin-left: 20%;
+}
+
+#edit_asset_name{
+  width: 70%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  color: #5c7598;
+  background-color: #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 15%;
+  margin-left: 15%;
 }
 
 #report_bug_title{
