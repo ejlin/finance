@@ -439,7 +439,7 @@ body{
   transition: width 0.4s ease-in-out;
   z-index: 1;
   margin-left: calc(15%/2 - 12px);
-  overflow-x: scroll;
+  overflow: none;
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
@@ -467,6 +467,7 @@ body{
   text-align: center;
   cursor: pointer;
   box-shadow: 2px 2px grey;
+  overflow: none;
 }
 
 .grow_stock_card{
@@ -488,6 +489,7 @@ body{
   text-align: center;
   cursor: pointer;
   border: 2px solid #5c7598;
+  overflow: none;
 }
 
 

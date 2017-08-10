@@ -72,9 +72,9 @@ function setup_profile()
 
       database.ref(user_net_worth_path).on('value', function(snapshot) 
       {
-        net = convert_with_commas(snapshot.val());
-        profile_worth_text.innerHTML = "$" + net; 
-        profile_quick_glance_text_net_worth.innerHTML = "$" + net;      
+        net = snapshot.val();
+        profile_worth_text.innerHTML = "$" + convert_with_commas(net); 
+        profile_quick_glance_text_net_worth.innerHTML = "$" + convert_with_commas(net);      
       });
 
       database.ref(user_earning_power_path).on('value', function(snapshot)
@@ -418,7 +418,7 @@ function convert_with_commas(num) {
 function add_net(asset)
 {
   net += parseFloat(asset);
-  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net.toString());
+  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
@@ -470,7 +470,7 @@ function asset_bullet(name, worth, type, element, class_name)
       curr_asset_input.setAttribute("class", class_name);
     }
     grow(input);
-    show_assets_button(input);    
+    show_assets_button(curr_asset_input);    
   }
   input.onmouseover = function()
   {
