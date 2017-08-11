@@ -132,11 +132,11 @@
       <div id="profile_liabilities_title">
          Liabilities:
       </div>
-      <a onclick="add_liabilities()">
+      <a onclick="open_liabilities_modal()">
         <img id="profile_add_liabilities_button" src="../Images/add.png">
         </img>
       </a>
-      <a onclick="remove_liabilities()">
+      <a>
         <img id="profile_remove_liabilities_button" src="../Images/minus.png">
         </img>
       </a>
@@ -202,6 +202,72 @@
       </div>
     </div>
 
+        <!-- LIABILITIES MODAL-->
+
+    <div class = "clearfix"/>
+
+    <div id="liabilities_add_menu" class="modal">
+      <div class="liabilities_modal-content">
+        <img onclick="show_liabilities_menu()" id="liabilities_modal_back" src="../Images/back.png">
+        </img>
+        <span onclick="close_liabilities_modal()" class="close">&times;
+        </span>
+        
+        <center>
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img onclick="open_bill()" id="modal_img" src="../Images/bill.png">
+            </img>
+            <p id="modal_logo_text"> Bills
+            </p> 
+          </div>
+
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img onclick="open_taxes()" id="modal_img" src="../Images/taxes.png">
+            </img>
+            <p id="modal_logo_text"> Taxes   
+            </p>
+          </div>
+
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img onclick="open_rent()" id="modal_img" src="../Images/rent.png">
+            </img>
+            <p id="modal_logo_text"> Rent 
+            </p>
+          </div>
+        </center>
+    
+        <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="liabilities_modal_logo">
+        </hr>
+        <br>
+        </br>
+    
+        <center>
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img onclick="open_debt()" id="modal_img" src="../Images/debt.png">
+            </img>
+            <p id="modal_logo_text"> Debt 
+            </p>
+          </div>
+
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img onclick="open_loans()" id="modal_img" src="../Images/loans.png">
+            </img>
+            <p id="modal_logo_text"> Loans 
+            </p>
+          </div>
+
+          <div id="liabilities_modal_logo" class="liabilities_modal_logo">
+            <img id="modal_img_other" onclick="open_others_liabilities()" src="../Images/other.png">
+            </img>
+            <p id="modal_logo_text"> Other 
+            </p>
+          </div>
+        </center>
+      </div>
+    </div>
+
+<!-- LIABILITIES -->
+
     <div class="clearfix"/>
     
     <div id="edit_asset_menu" class="modal">
@@ -213,7 +279,7 @@
         <center>
           <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id = "submit_bug_report">
             <div id="submit_edit_text">
-              save
+              Save
             </div>
           </button>
         </center>
@@ -501,7 +567,7 @@
         </center>
       </div>
     </div>
-
+    
     <script src = "../../main.js"></script>
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>

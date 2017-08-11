@@ -79,8 +79,8 @@ function setup_profile()
 
       database.ref(user_earning_power_path).on('value', function(snapshot)
       {
-        earning_power = convert_with_commas(snapshot.val());
-        profile_quick_glance_text_earning_power.innerHTML = "$" + earning_power + "/yr";            
+        earning_power = snapshot.val();
+        profile_quick_glance_text_earning_power.innerHTML = "$" + convert_with_commas(earning_power) + "/yr";            
       });   
 
       database.ref(user_assets_len_path).on('value', function(snapshot) 
@@ -404,7 +404,7 @@ function restore_assets(){
   **/
 
 function convert_with_commas(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return (num.toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 /** 
@@ -644,6 +644,15 @@ function open_assets_modal()
   show_assets_menu();
 }
 
+function open_liabilities_modal()
+{
+  console.log("here");
+
+  var liabilities_menu = document.getElementById('liabilities_add_menu');
+  liabilities_menu.style.display = "block";
+  show_liabilities_menu();
+}
+
 function open_edit_assets_modal(input)
 {
   var edit_assets_menu = document.getElementById('edit_asset_menu');
@@ -662,6 +671,12 @@ function close_assets_modal()
 {
   var assets_menu = document.getElementById('assets_add_menu');    
   assets_menu.style.display = "none";
+}
+
+function close_liabilities_modal()
+{
+  var liabilities_menu = document.getElementById('liabilities_add_menu');
+  liabilities_menu.style.display = "none";
 }
 
 
@@ -740,7 +755,8 @@ function hide_assets_menu_helper(asset_type)
   * Description:  This function will display the menu of the assets modal
   **/
 
-function show_assets_menu() {
+function show_assets_menu() 
+{
   hide_assets_menu_helper('account_input');
   hide_assets_menu_helper('property_input');
   hide_assets_menu_helper('rent_input');
@@ -752,6 +768,16 @@ function show_assets_menu() {
     logos[i].style.display = "block";
   }
   hide('assets_modal_back');
+}
+
+function show_liabilities_menu()
+{
+  //hide_liabilities_menu_helper('account_input');
+  var logos = document.getElementsByClassName('liabilities_modal_logo');
+  for (var i = 0; i < logos.length; i++){
+    logos[i].style.display = "block";
+  }
+  hide('liabilities_modal_back');
 }
 
 function show_edit_assets(input)

@@ -507,7 +507,7 @@ body{
 }
 
 /* Modal Content/Box */
-.modal-content {
+.modal-content, .liabilities_modal-content {
     background-color: #abb7c8;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -576,7 +576,7 @@ body{
     cursor: pointer;
 }
 
-#modal_logo{
+#modal_logo, #liabilities_modal_logo{
   float: left;
   width: 20%;
   margin-left: 10%;
@@ -584,9 +584,10 @@ body{
 }
 
 #modal_img, #modal_img_other{
-  width: 40%;
+  width: calc(40% - 6px);
   background-color:#5c7598;
   border-radius: 2px;
+  padding: 3px;
 }
 
 #modal_img:hover, #modal_img_other:hover, #save_other_button:hover, 
@@ -602,7 +603,7 @@ body{
   font-size: 18px;
 }
 
-#assets_modal_back{
+#assets_modal_back, #liabilities_modal_back{
   cursor: pointer;
   display: none;
   float: left;
