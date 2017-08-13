@@ -199,7 +199,7 @@ function post_stock_cards(company_ticker)
         var stock_card_price = document.createElement("P"); 
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         defaultCompaniesPrice.push(current_close);
-        stock_card_price.innerHTML = "$" + current_close; 
+        stock_card_price.innerHTML = "$" + current_close.toFixed(2); 
         stock_card.appendChild(stock_card_price);
         placeholder.appendChild(stock_card);
         stock_card.onclick = function()
@@ -518,7 +518,7 @@ function restore_asset_bullet(name, worth, type)
   **/
 
 function add_asset(name, worth, type) 
-{ 
+{
   var asset_url = 'users/' + curr_user.uid + '/assets/' + assetsLen;
 
   var para = document.getElementById("profile_assets_box");
@@ -646,8 +646,6 @@ function open_assets_modal()
 
 function open_liabilities_modal()
 {
-  console.log("here");
-
   var liabilities_menu = document.getElementById('liabilities_add_menu');
   liabilities_menu.style.display = "block";
   show_liabilities_menu();
@@ -660,6 +658,13 @@ function open_edit_assets_modal(input)
   show_edit_assets(input);
 }
 
+function open_modal(type, element)
+{
+  var menu = document.getElementById(type);
+  menu.style.display = "block";
+  show_helper_menu(element);
+}
+
 /** 
   * Name:         close_assets_modal()
   * Parameters:   None
@@ -667,24 +672,19 @@ function open_edit_assets_modal(input)
   * Description:  This function will close the assets modal
   **/
 
-function close_assets_modal() 
+function close_modal(type)
 {
-  var assets_menu = document.getElementById('assets_add_menu');    
-  assets_menu.style.display = "none";
+  var menu = document.getElementById(type);
+  menu.style.display = "none";
 }
 
+/*
 function close_liabilities_modal()
 {
   var liabilities_menu = document.getElementById('liabilities_add_menu');
   liabilities_menu.style.display = "none";
 }
-
-
-function close_edit_asset_modal()
-{
-  var edit_assets_menu = document.getElementById('edit_asset_menu');    
-  edit_assets_menu.style.display = "none";
-}
+*/
 
 function save_edit_asset()
 {
@@ -713,7 +713,7 @@ function save_edit_asset()
       curr_asset_input.innerHTML = truncate_title(edit_asset_input_val, 25);
     }
     updates['/users/' + curr_user.uid + '/assets/' + idx + '/name_worth/'] = assetsBulletsData[idx];              
-    close_edit_asset_modal();
+    close_modal('edit_asset_menu');
   }
   else
   {
@@ -733,7 +733,17 @@ function save_edit_asset()
 function hide_assets_menu() 
 {
   var logos = document.getElementsByClassName('modal_logo');
-  for (var i = 0; i < logos.length; i++){
+  for (var i = 0; i < logos.length; i++)
+  {
+    logos[i].style.display = "none";
+  }
+}
+
+function hide_liabilities_menu()
+{
+  var logos = document.getElementsByClassName('liabilities_modal_logo');
+  for (var i = 0; i < logos.length; i++)
+  {
     logos[i].style.display = "none";
   }
 }
@@ -746,7 +756,16 @@ function hide_assets_menu_helper(asset_type)
     others_input[i].style.display = "none";
     others_input[i].value = "";
   }
-} 
+}
+
+function hide_liabilities_menu_helper(asset_type)
+{
+  var others_input = document.getElementsByClassName(asset_type);
+  for (var i = 0; i < others_input.length; i++){
+    others_input[i].style.display = "none";
+    others_input[i].value = "";
+  }
+}
 
 /** 
   * Name:         show_assets_menu()
@@ -772,7 +791,7 @@ function show_assets_menu()
 
 function show_liabilities_menu()
 {
-  //hide_liabilities_menu_helper('account_input');
+  hide_liabilities_menu_helper('taxes_liabilities_input');
   var logos = document.getElementsByClassName('liabilities_modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -793,119 +812,54 @@ function show_edit_assets(input)
 }
 
 /** 
-  * Name:         open_account()
-  * Parameters:   None
+  * Name:         open_asset()
+  * Parameters:   type = The type of asset to open in our modal
   * Return:       None
-  * Description:  This function will open the 'account' tab of the assets modal.
+  * Description:  This function will open the tab in the assets modal of 'type'
   **/
 
-function open_account()
+function open_asset(type)
 {
   hide_assets_menu();
   show('assets_modal_back');
-  var others_input = document.getElementsByClassName('account_input');
-  for (var i = 0; i < others_input.length; i++)
+  var asset_input = document.getElementsByClassName(type);
+  for (var i = 0; i < asset_input.length; i++)
   {
-    others_input[i].style.display = "block";
+    asset_input[i].style.display = "block";
   }
+  return;
 }
 
 /** 
-  * Name:         open_property()
-  * Parameters:   None
+  * Name:         open_liabilities()
+  * Parameters:   type = The type of liabilities to open in our modal
   * Return:       None
-  * Description:  This function will open the 'property' tab of the assets modal.
+  * Description:  This function will open the tab in the liabilities modal of 'type'
   **/
 
-function open_property()
+function open_liabilities(type)
 {
-  hide_assets_menu();
-  show('assets_modal_back');
-  var others_input = document.getElementsByClassName('property_input');
-  for (var i = 0; i < others_input.length; i++)
+  hide_liabilities_menu();
+  show('liabilities_modal_back');
+  var liabilities_input = document.getElementsByClassName(type);
+  for (var i = 0; i < liabilities_input.length; i++)
   {
-    others_input[i].style.display = "block";
+    liabilities_input[i].style.display = "block";
   }
+  return;
 }
 
 /** 
-  * Name:         open_rent()
-  * Parameters:   None
+  * Name:         read_address_xml()
+  * Parameters:   xml = The xml to read
   * Return:       None
-  * Description:  This function will open the 'rent' tab of the assets modal.
+  * Description:  This function will read addresses of the xml of tag name type
   **/
 
-function open_rent()
+function read_address_xml(xml, type)
 {
-  hide_assets_menu();
-  show('assets_modal_back');
-  var others_input = document.getElementsByClassName('rent_input');
-  for (var i = 0; i < others_input.length; i++)
-  {
-    others_input[i].style.display = "block";
-  }
-}
-
-/** 
-  * Name:         open_stocks()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will open the 'stocks' tab of the assets modal.
-  **/
-
-function open_stocks()
-{
-  hide_assets_menu();
-  show('assets_modal_back');
-  var others_input = document.getElementsByClassName('stock_input');
-  for (var i = 0; i < others_input.length; i++)
-  {
-    others_input[i].style.display = "block";
-  }
-}
-
-/** 
-  * Name:         open_salary()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will open the 'salary' tab of the assets modal.
-  **/
-
-
-function open_salary()
-{
-  hide_assets_menu();
-  show('assets_modal_back');
-  var others_input = document.getElementsByClassName('salary_input');
-  for (var i = 0; i < others_input.length; i++)
-  {
-    others_input[i].style.display = "block";
-  }
-}
-
-/** 
-  * Name:         open_others()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will open the 'others' tab of the assets modal.
-  **/
-
-function open_others()
-{
-  hide_assets_menu();
-  show('assets_modal_back');
-  var others_input = document.getElementsByClassName('others_input');
-  for (var i = 0; i < others_input.length; i++)
-  {
-    others_input[i].style.display = "block";
-  }
-}
-
-function read_address_xml(xml)
-{
-  var i;
   var xmlDoc = xml.responseXML;
-  var x = xmlDoc.getElementsByTagName("street");
+  var x = xmlDoc.getElementsByTagName(type);
 }
 
 /** 
@@ -952,7 +906,7 @@ function save_property()
     var worth = x[0].childNodes[0].nodeValue; 
     add_asset(property_name, worth, "pr");
     add_net(worth);
-    close_assets_modal();
+    close_modal('assets_add_menu');
   }
   else{
     if (property_name == "")
@@ -995,7 +949,7 @@ function save_rent()
   {
     add_asset(name.value, worth, "re");
     add_earning_power(worth);
-    close_assets_modal();
+    close_modal('assets_add_menu');
   }
   if (name.value == "")
   {
@@ -1032,7 +986,7 @@ function save_salary()
     }
     add_asset(name.value, worth, "sa");
     add_earning_power(worth);
-    close_assets_modal();
+    close_modal('assets_add_menu');
   }
   if (name.value == "")
   {
@@ -1101,7 +1055,7 @@ function save_stock()
         var worth = current_close * num_shares;
         add_asset(name, worth, "st");
         add_net(worth);
-        close_assets_modal();        
+        close_modal('assets_add_menu');        
       }
       catch(err){
         company_name_id.value = "";
@@ -1141,7 +1095,7 @@ function save_other()
       add_asset(name, worth, "ot");
       add_net(worth);
     }
-    close_assets_modal();
+    close_modal('assets_add_menu');
   }
   else
   {
@@ -1214,26 +1168,12 @@ function signout()
 
 function open_delete_modal()
 {
-  var delete_menu = document.getElementById('delete_menu');
-  delete_menu.style.display = "block";
+  show('delete_menu');
   var delete_modal = document.getElementsByClassName('delete_modal');
   for (var i = 0; i < delete_modal.length; i++)
   {
     delete_modal[i].style.display = "block";
   }
-}
-
-/** 
-  * Name:         close_delete_modal()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will close the delete modal 
-  **/
-
-function close_delete_modal()
-{
-  var delete_menu = document.getElementById('delete_menu');
-  delete_menu.style.display = "none";
 }
 
 /** 
@@ -1245,26 +1185,12 @@ function close_delete_modal()
 
 function open_bug_modal()
 {
-  var bug_menu = document.getElementById('bug_report_menu');
-  bug_menu.style.display = "block";
+  show('report_bug_menu');
   var bug_modal = document.getElementsByClassName('report_bug_content');
   for (var i = 0; i < bug_modal.length; i++)
   {
     bug_modal[i].style.display = "block";
   }
-}
-
-/** 
-  * Name:         close_bug_modal()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will close the bug modal 
-  **/
-
-function close_bug_modal()
-{
-  var bug_menu = document.getElementById('bug_report_menu');
-  bug_menu.style.display = "none";
 }
 
 /** 
@@ -1303,7 +1229,7 @@ function reset_account()
   updates['/users/' + curr_user.uid + '/assets_len/'] = 0;
   updates['/users/' + curr_user.uid + '/earning_power/'] = 0;
   updates['/users/' + curr_user.uid + '/net_worth/'] = 0;
-  close_delete_modal();
+  hide('delete_menu');
   return database.ref().update(updates);
 }
 

@@ -618,7 +618,8 @@ body{
 #asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
 #asset_address, #asset_property_name, #asset_salary_name,
 #asset_salary_worth, #asset_rent_name, #asset_rent_worth,
-#stock_asset_name, #stock_asset_worth, #stock_asset_company
+#stock_asset_name, #stock_asset_worth, #stock_asset_company,
+#tax_asset_name, #tax_asset_company
 {
   width: 60%;
   height: 50px;
@@ -733,7 +734,8 @@ body{
   display: none;
 }
 
-#salary_dropdown, #rent_dropdown, #others_dropdown{
+#salary_dropdown, #rent_dropdown, #others_dropdown, #taxes_dropdown
+{
   width: 60%;
   border: none;
   height: 50px;
@@ -829,6 +831,13 @@ body{
   font-size: 18px;
   width: 70%;
   margin-top: -15px;
+}
+
+#liabilities_tax_input_title{
+  color: #5c7598;
+  font-size: 18px;
+  width: 70%;
+  margin-top: 25px;
 }
 
 #property_info{
