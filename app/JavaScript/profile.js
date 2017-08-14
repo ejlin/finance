@@ -16,6 +16,7 @@
 
 var curr_user;
 var curr_asset_input;
+var curr_liability_input;
 var curr_stock_input;
 var name = "";
 var net;
@@ -111,6 +112,20 @@ function setup_profile()
       loader('end', 'loader');
       window.location.href = "login.html";
     }
+    var updates = {};
+    var d = new Date();
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    
+    var year = d.getFullYear();
+    var day = days[d.getDay()];
+    var date = d.getDate();
+    var month = d.getMonth() + 1;
+    var hour = d.getHours(); 
+    var minute = d.getMinutes();
+    var seconds = d.getSeconds();
+    updates['/users/' + curr_user.uid + '/last_active/'] = 
+      "(MM/DD/YYYY) = " + month + "/" + date + "/" + year + " : (" + hour + ":" + minute + ":" + seconds + ") : " + day;
+    return database.ref().update(updates);
   });
 }
 
@@ -286,6 +301,15 @@ function grow(input)
   return;
 }
 
+function grow_liability(input)
+{
+  input.setAttribute("class", "grow_profile_liabilities_bullets");
+  curr_liability_input = input;
+  shrink_liability(input);  
+  return;
+
+}
+
 /** 
   * Name:         grow_stock_card()
   * Parameters:   input = The element to grow
@@ -330,6 +354,24 @@ function shrink(input)
   }
 }
 
+function shrink_liability(input)
+{
+  window.onclick = function(event) {
+    if (event.target != input) {
+      input.setAttribute("class", "profile_liabilities_bullet");
+      for (var i = 0; i < liabilitiesBullets.length; i++)
+      {
+        if (event.target == liabilitiesBullets[i]) {
+          return;
+        }
+      }
+      var button = document.getElementById('profile_remove_liabilities_button');
+      button.style.display = "none";
+      var edit_button = document.getElementById('profile_edit_liabilities_button');
+      edit_button.style.display = "none";
+    }
+  }
+}
 /** 
   * Name:         shrink()
   * Parameters:   input = The element to shrink
@@ -377,6 +419,22 @@ function show_assets_button(input)
   }
 }
 
+function show_liability_button(input)
+{
+  var minus_button = document.getElementById('profile_remove_liabilities_button');
+  var edit_button = document.getElementById('profile_edit_liabilities_button');
+  edit_button.style.display = "block";
+  minus_button.style.display = "block";
+  minus_button.onclick = function()
+  {
+    remove_liability(input);
+  }
+  edit_button.onclick = function()
+  {
+    open_edit_liabilities_modal(input);
+  }
+}
+
 /** 
   * Name:         restore_assets()
   * Parameters:   assets_len = The length of the user's assets
@@ -396,7 +454,7 @@ function restore_assets()
     {
       var str = snapshot.val();
       var name = parse_string(str);
-      var worth = parseInt(str);
+      var worth = parseFloat(str);
       var type = str.slice(str.length-2, str.length);
       restore_asset_bullet(name, worth, type);
     });
@@ -419,7 +477,7 @@ function restore_liabilities()
     {
       var str = snapshot.val();
       var name = parse_string(str);
-      var worth = parseInt(str);
+      var worth = parseFloat(str);
       var type = str.slice(str.length-2, str.length);
       restore_liabilities_bullet(name, worth, type);
     });
@@ -551,15 +609,15 @@ function liability_bullet(name, worth, type, element, class_name)
   liabilitiesBulletsData.push(worth + "_" + name + ":" + type);  
   input.innerHTML = truncate_title(name, 25);
   input.draggable = "true";
- /* input.onclick = function()
+  input.onclick = function()
   {
-    if (curr_asset_input)
+    if (curr_liability_input)
     {
-      curr_asset_input.setAttribute("class", class_name);
+      curr_liability_input.setAttribute("class", class_name);
     }
-    grow(input);
-    show_assets_button(curr_asset_input);    
-  }*/
+    grow_liability(input);
+    show_liability_button(curr_liability_input);    
+  }
   input.onmouseover = function()
   {
     input.innerHTML = "($" + convert_with_commas(worth) + ")";
@@ -729,6 +787,63 @@ function remove_asset(input)
   return database.ref().update(updates);   
 }
 
+
+function remove_liability(input)
+{
+  var idx = 0;
+  for (var i = 0; i < liabilitiesBullets.length; i++)
+  {
+    if (liabilitiesBullets[i] == input)
+    {
+      idx = i;
+    }
+  }
+  var updates = {};        
+  var element = liabilitiesBullets[idx];
+  var elementWorth = parseFloat(liabilitiesBulletsWorth[idx]);
+  var type = liabilitiesBulletsType[idx];
+  if (type == "lo")
+  {
+    net += elementWorth;
+    document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+    document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
+    updates['/users/' + curr_user.uid + '/net_worth/'] = net;          
+  }
+  else if (type == "ta")
+  { 
+    earning_power += elementWorth;
+    document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
+    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;  
+  }
+  element.parentNode.removeChild(element);        
+  for (var i = idx; i < liabilitiesBullets.length - 1; i++)
+  {
+    liabilitiesBullets[i] = liabilitiesBullets[i + 1];
+    liabilitiesBullets[i].setAttribute ("onclick", null);
+    liabilitiesBullets[i].onclick = function()   
+    {
+      show_liabilities_button(liabilitiesBullets[i]);
+    }
+    liabilitiesBulletsWorth[i] = liabilitiesBulletsWorth[i + 1];
+    liabilitiesBulletsType[i] = liabilitiesBulletsType[i + 1];
+    updates['/users/' + curr_user.uid + '/liabilities/' + i + '/name_worth/'] = liabilitiesBulletsData[i + 1];       
+  }
+  for (var i = idx; i < liabilitiesBulletsData.length - 1; i++)
+  {
+    liabilitiesBulletsData[i] = liabilitiesBulletsData[i+1];
+  }
+  liabilitiesBullets.splice(liabilitiesBullets.length - 1, 1);
+  liabilitiesBulletsWorth.splice(liabilitiesBulletsWorth.length - 1, 1);
+  liabilitiesBulletsType.splice(liabilitiesBulletsType.length - 1, 1);
+  liabilitiesBulletsData.splice(liabilitiesBulletsData.length - 1, 1);
+  
+  liabilitiesLen--;
+  database.ref('/users/' + curr_user.uid + '/liabilities/' + (liabilitiesLen)).remove();
+  updates['/users/' + curr_user.uid + '/liabilities_len/'] = liabilitiesLen;
+
+  return database.ref().update(updates);   
+}
+
 /** 
   * Name:         remove_liabilities()
   * Parameters:   None
@@ -769,6 +884,13 @@ function open_edit_assets_modal(input)
   var edit_assets_menu = document.getElementById('edit_asset_menu');
   edit_assets_menu.style.display = "block";
   show_edit_assets(input);
+}
+
+function open_edit_liabilities_modal(input)
+{
+  var edit_liabilities_menu = document.getElementById('edit_liability_menu');
+  edit_liabilities_menu.style.display = "block";
+  show_edit_liabilities(input);
 }
 
 function open_modal(type, element)
@@ -831,6 +953,42 @@ function save_edit_asset()
   else
   {
     edit_asset_input.className += " formInvalid";
+  }
+  return database.ref().update(updates);     
+}
+
+function save_edit_liability()
+{
+  var updates = {};          
+  var edit_liability_input = document.getElementById('edit_liability_name');
+  var edit_liability_input_val = edit_liability_input.value;
+  var idx;
+
+  for ( var i = 0; i < liabilitiesBullets.length; i++)
+  { 
+    if (liabilitiesBullets[i] == curr_liability_input)
+    {
+      idx = i;
+    }
+  }
+
+  var worth = liabilitiesBulletsWorth[idx];
+  var type = liabilitiesBulletsType[idx];
+  liabilitiesBulletsData[idx] = "" + worth + "_" + edit_liability_input_val + ":" + type;
+  
+  if (edit_liability_input.value != "")
+  {
+    curr_liability_input.innerHTML = edit_liability_input_val;
+    curr_liability_input.onmouseout = function()
+    {
+      curr_liability_input.innerHTML = truncate_title(edit_liability_input_val, 25);
+    }
+    updates['/users/' + curr_user.uid + '/liabilities/' + idx + '/name_worth/'] = liabilitiesBulletsData[idx];              
+    close_modal('edit_liability_menu');
+  }
+  else
+  {
+    edit_liability_input.className += " formInvalid";
   }
   return database.ref().update(updates);     
 }
@@ -904,6 +1062,7 @@ function show_assets_menu()
 
 function show_liabilities_menu()
 {
+  hide_liabilities_menu_helper('bill_input');
   hide_liabilities_menu_helper('taxes_liabilities_input');
   var logos = document.getElementsByClassName('liabilities_modal_logo');
   for (var i = 0; i < logos.length; i++){
@@ -921,6 +1080,18 @@ function show_edit_assets(input)
     edit_assets_modal[i].style.display = "block";
   }
   var edit_input = document.getElementById('edit_asset_name');
+  edit_input.placeholder = input.innerHTML;
+}
+
+function show_edit_liabilities(input)
+{
+  curr_liability_input = input;
+  var edit_liabilities_modal = document.getElementsByClassName('edit_liability_modal_input');
+  for (var i = 0; i < edit_liabilities_modal.length; i++)
+  {
+    edit_liabilities_modal[i].style.display = "block";
+  }
+  var edit_input = document.getElementById('edit_liability_name');
   edit_input.placeholder = input.innerHTML;
 }
 
@@ -1109,7 +1280,7 @@ function save_salary()
   var name = document.getElementById('asset_salary_name')
   var salary = document.getElementById('asset_salary_worth');
   var time = document.getElementById('salary_dropdown');
-  var worth = salary.value * parseInt(time.value);
+  var worth = salary.value * parseFloat(time.value);
   if (name.value != "" && salary.value != "" && time.value != "")
   {
     if ( time.value == "12")
@@ -1281,6 +1452,25 @@ function save_tax_liabilities()
   close_modal('liabilities_add_menu');
 }
 
+function save_bill_liabilities()
+{
+  var name_id = document.getElementById('liability_bill_name');
+  var worth_id = document.getElementById('liability_bill_worth');
+  var time_id = document.getElementById('bill_dropdown');
+
+  var name = name_id.value;
+  var worth = worth_id.value;
+  var time = time_id.value;
+
+  worth = parseFloat(worth);
+  time = parseFloat(time);
+  worth = worth * time;
+  
+  add_liabilities(name, worth, "bi");
+  subtract_earning_power(worth);
+  close_modal('liabilities_add_menu');
+}
+
 /** 
   * Name:         show()
   * Parameters:   id = The HTML id of the element to show 
@@ -1352,7 +1542,7 @@ function open_delete_modal()
 
 function open_bug_modal()
 {
-  show('report_bug_menu');
+  show('bug_report_menu');
   var bug_modal = document.getElementsByClassName('report_bug_content');
   for (var i = 0; i < bug_modal.length; i++)
   {

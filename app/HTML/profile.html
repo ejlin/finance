@@ -112,6 +112,7 @@
       </div>
         <img onclick="open_liabilities_modal()" id="profile_add_liabilities_button" src="../Images/add.png"></img>
         <img id="profile_remove_liabilities_button" src="../Images/minus.png"></img>
+        <img id="profile_edit_liabilities_button" src="../Images/edit.png"></img>        
     </div>
 
     <div class = "clearfix"/>
@@ -182,7 +183,7 @@
         
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_bill()" id="modal_img" src="../Images/bill.png"></img>
+            <img onclick="open_liabilities('bill_input')" id="modal_img" src="../Images/bill.png"></img>
             <p id="modal_logo_text"> 
               Bills
             </p> 
@@ -227,6 +228,36 @@
           </div>
         </center>
 
+        <!-- Liabilities: Bills-->
+        <center>
+          <p id="asset_input_title" class="bill_input" style="margin-top: 20px;">
+            Add bills to pay throughout the year based on their occurrence
+          </p>
+        </center>
+        <div id="property_info" class="tooltip bill_input" style="margin-top: -70px;">
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">
+              Add bills to pay throughout the year based on their occurrence
+            </span>
+          </img>
+        </div>
+        <input id="liability_bill_name" class="bill_input" type="text" placeholder="Name" required></input>
+        <input id="liability_bill_worth" class="bill_input" type="number" placeholder="Bill Amount" required></input>
+        <form class="bill_input">
+          <select id="bill_dropdown">
+            <option value="50">Weekly</option>
+            <option value="25">Bi-Weekly</option>            
+            <option value="12">Monthly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </form>
+        <center>
+          <button onclick="save_bill_liabilities()" class="bill_input" id = "save_bill_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
         <!-- Liabilities: Tax -->
 
         <center>
@@ -237,7 +268,7 @@
         <div id="stock_info" class="tooltip taxes_liabilities_input">
           <img src="../Images/Info.png">
             <span class="tooltip_text">
-              Add your estimated tax rate as a percentage
+              Add your estimated tax rate as a percentage. Leave your percentage as a number without '%'.
             </span>
           </img>
         </div>
@@ -265,6 +296,22 @@
         <input id="edit_asset_name" class="edit_asset_modal_input" type="text"></input>
         <center>
           <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id = "submit_bug_report">
+            <div id="submit_edit_text">
+              Save
+            </div>
+          </button>
+        </center>
+      </div>
+    </div>
+
+    <div class="clearfix"/>
+    
+    <div id="edit_liability_menu" class="modal">
+      <div class="edit_liability_modal">
+        <span onclick="close_modal('edit_liability_menu')" class="close">&times;</span>
+        <input id="edit_liability_name" class="edit_liability_modal_input" type="text"></input>
+        <center>
+          <button type="submit" onclick="save_edit_liability()" class="edit_liability_modal_input" id = "submit_bug_report">
             <div id="submit_edit_text">
               Save
             </div>

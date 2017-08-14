@@ -87,6 +87,7 @@ function validate_signup_input()
         
       }).then(function() 
               {
+                save_date_signup();
                 window.location.href = "profile.html";
               }).catch(function(error) 
               {
@@ -103,6 +104,21 @@ function validate_signup_input()
   {
     password_mismatch();
   }
+}
+
+function save_date_signup()
+{
+  var updates = {};
+  var d = new Date();
+  var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    
+  var year = d.getFullYear();
+  var day = days[d.getDay()];
+  var date = d.getDate();
+  var month = d.getMonth();
+  month++;
+  updates['/users/' + curr_user.uid + '/signup_day/'] = "(MM/DD/YYYY) = " + month + "/" + date + "/" + year + " : " + day;
+  return database.ref().update(updates);
 }
 
 /** 
