@@ -245,11 +245,10 @@
         <input id="tax_asset_company" class="taxes_liabilities_input" type="text" placeholder="Tax bracket %:"></input>
         <form class="taxes_liabilities_input">
           <select id="taxes_dropdown">
-            <option value="">Salary</option>
           </select>
         </form>
         <center>
-          <button onclick="save_rent_liabilities()" class="taxes_liabilities_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_tax_liabilities()" class="taxes_liabilities_input" id = "save_other_button" class="submit_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -262,7 +261,7 @@
     
     <div id="edit_asset_menu" class="modal">
       <div class="edit_asset_modal">
-        <span onclick="close_edit_asset_modal()" class="close">&times;</span>
+        <span onclick="close_modal('edit_asset_menu')" class="close">&times;</span>
         <input id="edit_asset_name" class="edit_asset_modal_input" type="text"></input>
         <center>
           <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id = "submit_bug_report">

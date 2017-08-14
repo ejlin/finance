@@ -26,9 +26,11 @@ var assetsBulletsWorth = new Array();
 var assetsBulletsType = new Array();
 var assetsBulletsData = new Array();
 
+var liabiltiiesLen;
 var liabilitiesBullets = new Array();
 var liabilitiesBulletsWorth = new Array();
 var liabilitiesBulletsType = new Array();
+var liabilitiesBulletsData = new Array();
 
 var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
 var defaultCompaniesPrice = new Array();
@@ -54,12 +56,14 @@ function setup_profile()
       var curr_user_net;
       var counter = 0;
       var curr_user_assets_len;
+      var curr_user_liabilities_len;
       var profile_worth_text;
       var profile_quick_glance_text_net_worth;
       var profile_quick_glance_text_earning_power;
       var user_earning_power_path = 'users/' + user.uid + '/earning_power';
       var user_net_worth_path = 'users/' + user.uid + '/net_worth';
       var user_assets_len_path = 'users/' + user.uid + '/assets_len';
+      var user_liabilities_len_path = 'users/' + user.uid + '/liabilities_len';
       
       curr_user = user;
 
@@ -90,7 +94,17 @@ function setup_profile()
           restore_assets();
         else
           loader('end', 'loader');
+      }); 
+
+      database.ref(user_liabilities_len_path).on('value', function(snapshot) 
+      {
+        liabilitiesLen = snapshot.val();
+        if (liabilitiesLen > liabilitiesBullets.length)
+          restore_liabilities();
+        else
+          loader('end', 'loader');
       });  
+
       while ( counter < defaultCompanies.length)
         post_stock_cards(defaultCompanies[counter++]);  
     } else {
@@ -371,8 +385,8 @@ function show_assets_button(input)
   *               user according to the asset length passed in. 
   **/
 
-function restore_assets(){
-
+function restore_assets()
+{
   var counter = 0;
   
   while (counter < assetsLen)
@@ -394,6 +408,30 @@ function restore_assets(){
   background_tint.style.display = "none";
 }
 
+function restore_liabilities()
+{
+  var counter = 0;
+  
+  while (counter < liabilitiesLen)
+  {   
+    var curr_user_liabilities_name = database.ref('users/' + curr_user.uid + '/liabilities/' + counter + '/name_worth/');
+    curr_user_liabilities_name.once('value', function(snapshot) 
+    {
+      var str = snapshot.val();
+      var name = parse_string(str);
+      var worth = parseInt(str);
+      var type = str.slice(str.length-2, str.length);
+      restore_liabilities_bullet(name, worth, type);
+    });
+    counter++;
+  }
+  var loader = document.getElementById('loader');
+  var background_tint = document.getElementById('background_tint');
+  loader.style.display = "none";
+  background_tint.style.display = "none";
+}
+
+
 /** 
   * Name:         convert_with_commas()
   * Parameters:   num = The number to convert
@@ -404,7 +442,7 @@ function restore_assets(){
   **/
 
 function convert_with_commas(num) {
-  return (num.toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return (parseFloat(num).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 /** 
@@ -418,6 +456,16 @@ function convert_with_commas(num) {
 function add_net(asset)
 {
   net += parseFloat(asset);
+  document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
+  document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/net_worth/'] = net;
+  return database.ref().update(updates);  
+}
+
+function subtract_net(asset)
+{
+  net -= parseFloat(asset);
   document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
@@ -441,6 +489,16 @@ function add_earning_power(asset)
   updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
   return database.ref().update(updates);  
 }
+
+function subtract_earning_power(asset)
+{
+  earning_power -= parseFloat(asset);
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
+  return database.ref().update(updates);  
+}
+
 
 /** 
   * Name:         asset_bullet()
@@ -483,6 +541,37 @@ function asset_bullet(name, worth, type, element, class_name)
   return input;
 }
 
+function liability_bullet(name, worth, type, element, class_name)
+{
+  var input = document.createElement(element);
+  input.setAttribute("class", class_name);
+  liabilitiesBullets.push(input);
+  liabilitiesBulletsWorth.push(worth);
+  liabilitiesBulletsType.push(type);
+  liabilitiesBulletsData.push(worth + "_" + name + ":" + type);  
+  input.innerHTML = truncate_title(name, 25);
+  input.draggable = "true";
+ /* input.onclick = function()
+  {
+    if (curr_asset_input)
+    {
+      curr_asset_input.setAttribute("class", class_name);
+    }
+    grow(input);
+    show_assets_button(curr_asset_input);    
+  }*/
+  input.onmouseover = function()
+  {
+    input.innerHTML = "($" + convert_with_commas(worth) + ")";
+  }
+  input.onmouseout = function()
+  {
+    input.innerHTML = truncate_title(name, 25);
+  }
+  return input;
+}
+
+
 /** 
   * Name:         restore_asset_bullet()
   * Parameters:   name = The name of the asset
@@ -507,6 +596,24 @@ function restore_asset_bullet(name, worth, type)
     parentNode.scrollTop = 0;
   }
 }
+
+function restore_liabilities_bullet(name, worth, type)
+{
+  if (liabilitiesLen > liabilitiesBullets.length){
+
+    var parentNode;
+    var profile_liabilities_placeholder;
+    var element;
+
+    parentNode = document.getElementById("profile_liabilities_box");
+    profile_liabilities_placeholder = document.getElementById('profile_liabilities_placeholder');
+    element = liability_bullet(name, worth, type, "P", "profile_liabilities_bullet");
+
+    profile_liabilities_placeholder.appendChild(element); 
+    parentNode.scrollTop = 0;
+  }
+}
+
 
 /** 
   * Name:         add_asset()
@@ -537,20 +644,26 @@ function add_asset(name, worth, type)
   * Name:         add_liabilities()
   * Parameters:   name = The name of the liability to be added
   *               worth = The worth of the liability to be added
+  *               type = The type of liability to be added
   * Return:       None
   * Description:  This function will update the current liabilities of the user
   *               in the liabilities box
   **/
 
-function add_liabilities (name, worth) 
+function add_liabilities (name, worth, type) 
 {
-  var input = document.createElement("INPUT");
-  input.setAttribute("class", "profile_liabilities_bullet");
-  liabilitiesBullets.push(input);
+  var liability_url = 'users/' + curr_user.uid + '/liabilities/' + liabilitiesLen;
+
   var para = document.getElementById("profile_liabilities_box");
   var child =  document.getElementById("profile_add_liabilities_button");
-  document.getElementById('profile_liabilities_placeholder').appendChild(input);
-  para.scrollTop = para.scrollHeight;    
+  document.getElementById('profile_liabilities_placeholder').appendChild(liability_bullet(name, worth, type, "P", "profile_liabilities_bullet")); 
+  para.scrollTop = para.scrollHeight;
+  database.ref(liability_url).set({
+    name_worth: (worth + "_" + name + ":" + type),
+  });
+  var updates = {};
+  updates['/users/' + curr_user.uid + '/liabilities_len/'] = liabilitiesLen + 1;
+  return database.ref().update(updates);  
 }
 
 /** 
@@ -841,6 +954,23 @@ function open_liabilities(type)
 {
   hide_liabilities_menu();
   show('liabilities_modal_back');
+  if (type == 'taxes_liabilities_input')
+  {
+    var dropdown = document.getElementById('taxes_dropdown');    
+    while (dropdown.length > 1)
+    {
+      dropdown.remove(dropdown.length - 1);
+    }
+    for ( var i = 0; i < assetsBulletsData.length; i++)
+    {
+      var option = document.createElement("option");
+      var name = parse_string(assetsBulletsData[i]);
+      var worth = parseInt(assetsBulletsData[i]);
+      option.text = "" + name + " : $" + worth;
+      option.value = assetsBulletsData[i];
+      dropdown.add(option);
+    }
+  }
   var liabilities_input = document.getElementsByClassName(type);
   for (var i = 0; i < liabilities_input.length; i++)
   {
@@ -848,6 +978,8 @@ function open_liabilities(type)
   }
   return;
 }
+
+
 
 /** 
   * Name:         read_address_xml()
@@ -1112,6 +1244,41 @@ function save_other()
       time_id.className += " formInvalid";
     }
   }
+}
+
+
+function save_tax_liabilities()
+{
+  var name_id = document.getElementById('tax_asset_name');
+  var percentage_id = document.getElementById('tax_asset_company');
+  var salary_id = document.getElementById('taxes_dropdown');
+
+  var name = name_id.value;
+  var percentage = percentage_id.value;
+  var salary = salary_id.value;
+
+  var type = salary.slice(salary.length-2, salary.length);
+  
+  if ( isNaN(parseFloat(percentage)))
+  {
+    percentage_id.className += " formInvalid";
+    percentage_id.value = "";
+    percentage_id.placeholder = "Must be a number";
+    return;
+  } 
+
+  if ( salary == "")
+  { 
+    salary_id.className += " formInvalid";
+  }
+
+  var worth = parseFloat(salary);
+  worth = (parseFloat(percentage)/100.0) * worth;
+  console.log(worth);
+
+  add_liabilities(name, worth, "ta");
+  subtract_earning_power(worth);
+  close_modal('liabilities_add_menu');
 }
 
 /** 
