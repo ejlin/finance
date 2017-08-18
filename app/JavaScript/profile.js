@@ -809,7 +809,7 @@ function remove_liability(input)
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
     updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   }
-  else if (type == "ta" || type == "RE")
+  else if (type == "ta" || type == "RE" || type == "bi")
   {
     earning_power += elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
