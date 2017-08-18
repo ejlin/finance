@@ -36,22 +36,22 @@ var liabilitiesBulletsData = new Array();
 var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
 var defaultCompaniesPrice = new Array();
 
-/** 
+/**
   * Name:         setup_profile()
   * Parameters:   name =  The name of the user
-  *               worth = The current net worth of the user. Default is 0 for 
+  *               worth = The current net worth of the user. Default is 0 for
   *                       new users
   * Return:       None
   * Description:  This function will set up the current user's profile such as
-  *               name, net worth, etc. 
+  *               name, net worth, etc.
   **/
 
-function setup_profile() 
+function setup_profile()
 {
-  loader('start', 'loader');  
-  firebase.auth().onAuthStateChanged(function(user) 
+  loader('start', 'loader');
+  firebase.auth().onAuthStateChanged(function(user)
   {
-    if (user) 
+    if (user)
     {
       var profile_name;
       var curr_user_net;
@@ -65,49 +65,49 @@ function setup_profile()
       var user_net_worth_path = 'users/' + user.uid + '/net_worth';
       var user_assets_len_path = 'users/' + user.uid + '/assets_len';
       var user_liabilities_len_path = 'users/' + user.uid + '/liabilities_len';
-      
+
       curr_user = user;
 
       profile_name = document.getElementById('profile_name');
       profile_worth_text = document.getElementById('profile_worth_text');
       profile_quick_glance_text_net_worth = document.getElementById('profile_quick_glance_text_net_worth');
       profile_quick_glance_text_earning_power = document.getElementById('profile_quick_glance_text_earning_power');
-      
-      profile_name.innerHTML = "Welcome " + user.displayName + ","; 
 
-      database.ref(user_net_worth_path).on('value', function(snapshot) 
+      profile_name.innerHTML = "Welcome " + user.displayName + ",";
+
+      database.ref(user_net_worth_path).on('value', function(snapshot)
       {
         net = snapshot.val();
-        profile_worth_text.innerHTML = "$" + convert_with_commas(net); 
-        profile_quick_glance_text_net_worth.innerHTML = "$" + convert_with_commas(net);      
+        profile_worth_text.innerHTML = "$" + convert_with_commas(net);
+        profile_quick_glance_text_net_worth.innerHTML = "$" + convert_with_commas(net);
       });
 
       database.ref(user_earning_power_path).on('value', function(snapshot)
       {
         earning_power = snapshot.val();
-        profile_quick_glance_text_earning_power.innerHTML = "$" + convert_with_commas(earning_power) + "/yr";            
-      });   
+        profile_quick_glance_text_earning_power.innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
+      });
 
-      database.ref(user_assets_len_path).on('value', function(snapshot) 
+      database.ref(user_assets_len_path).on('value', function(snapshot)
       {
         assetsLen = snapshot.val();
         if (assetsLen > assetsBullets.length)
           restore_assets();
         else
           loader('end', 'loader');
-      }); 
+      });
 
-      database.ref(user_liabilities_len_path).on('value', function(snapshot) 
+      database.ref(user_liabilities_len_path).on('value', function(snapshot)
       {
         liabilitiesLen = snapshot.val();
         if (liabilitiesLen > liabilitiesBullets.length)
           restore_liabilities();
         else
           loader('end', 'loader');
-      });  
+      });
 
       while ( counter < defaultCompanies.length)
-        post_stock_cards(defaultCompanies[counter++]);  
+        post_stock_cards(defaultCompanies[counter++]);
     } else {
       loader('end', 'loader');
       window.location.href = "login.html";
@@ -115,21 +115,21 @@ function setup_profile()
     var updates = {};
     var d = new Date();
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    
+
     var year = d.getFullYear();
     var day = days[d.getDay()];
     var date = d.getDate();
     var month = d.getMonth() + 1;
-    var hour = d.getHours(); 
+    var hour = d.getHours();
     var minute = d.getMinutes();
     var seconds = d.getSeconds();
-    updates['/users/' + curr_user.uid + '/last_active/'] = 
+    updates['/users/' + curr_user.uid + '/last_active/'] =
       "(MM/DD/YYYY) = " + month + "/" + date + "/" + year + " : (" + hour + ":" + minute + ":" + seconds + ") : " + day;
     return database.ref().update(updates);
   });
 }
 
-/** 
+/**
   * Name:         loader()
   * Parameters:   action = The action to take. Either start or end the loader
   *               loader = The loader to display
@@ -154,13 +154,13 @@ function loader(action, loader)
   return;
 }
 
-/** 
+/**
   * Name:         truncate_title()
   * Parameters:   title = The string to truncate
   * Return:       A truncated version of the string or the original string if
   *               there is no need to truncate it
   * Description:  This function will truncate a string if it is too long or return
-  *               the original string if it is not. 
+  *               the original string if it is not.
   **/
 
 function truncate_title(title, len)
@@ -170,25 +170,25 @@ function truncate_title(title, len)
   return title;
 }
 
-/** 
+/**
   * Name:         renew_stock_cards()
   * Parameters:   None
   * Return:       Post the stock cards in our defaultCompanies array
-  * Description:  This function will post our stock cards in our stock section 
+  * Description:  This function will post our stock cards in our stock section
   **/
 
 function renew_stock_cards()
 {
   var node;
   var counter = 0;
-  
+
   node = document.getElementById('profile_news_placeholder');
-  
+
   while (node.hasChildNodes())
   {
-    node.removeChild(node.firstChild);   
+    node.removeChild(node.firstChild);
   }
-  
+
   while ( counter < defaultCompanies.length)
   {
     post_stock_cards(defaultCompanies[counter++]);
@@ -196,7 +196,7 @@ function renew_stock_cards()
   return;
 }
 
-/** 
+/**
   * Name:         post_stock_cards()
   * Parameters:   company_ticker = The ticker for the company to post news of
   * Return:       None
@@ -206,7 +206,7 @@ function renew_stock_cards()
 function post_stock_cards(company_ticker)
 {
   var https = require("https");
-  var current_close = 0;  
+  var current_close = 0;
   var request = https.request({
     method: "GET",
     host: "www.alphavantage.co",
@@ -215,20 +215,20 @@ function post_stock_cards(company_ticker)
     var json = "";
     response.on('data', function (chunk) {
         json += chunk;
-        
+
     });
     response.on('end', function() {
       var placeholder = document.getElementById('profile_news_placeholder');
       var company = JSON.parse(json);
       var stock_card = document.createElement("P");
-      stock_card.setAttribute("class", "profile_news_bullet");      
+      stock_card.setAttribute("class", "profile_news_bullet");
       try
       {
         stock_card.innerHTML = company_ticker;
-        var stock_card_price = document.createElement("P"); 
+        var stock_card_price = document.createElement("P");
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         defaultCompaniesPrice.push(current_close);
-        stock_card_price.innerHTML = "$" + current_close.toFixed(2); 
+        stock_card_price.innerHTML = "$" + current_close.toFixed(2);
         stock_card.appendChild(stock_card_price);
         placeholder.appendChild(stock_card);
         stock_card.onclick = function()
@@ -243,10 +243,10 @@ function post_stock_cards(company_ticker)
         }
         yahoo_link.src = "../Images/exit.png";
         yahoo_link.target = "_blank";
-        stock_card.appendChild(yahoo_link);          
+        stock_card.appendChild(yahoo_link);
       }
       catch(err){
-        stock_card.innerHTML = "No News currently available";    
+        stock_card.innerHTML = "No News currently available";
       }
       placeholder.appendChild(stock_card);
     });
@@ -254,11 +254,11 @@ function post_stock_cards(company_ticker)
   request.end();
 }
 
-/** 
+/**
   * Name:         is_letter()
   * Parameters:   str = The character to check
   * Return:       bool = True or False
-  * Description:  This function will return true or false depending on 
+  * Description:  This function will return true or false depending on
   *               whether the char is a letter ([a-z] || [A-Z])
   **/
 
@@ -266,7 +266,7 @@ function is_letter(str) {
   return str.length === 1 && (str.match(/[a-z]/i) || str.match(/[A-Z]/i));
 }
 
-/** 
+/**
   * Name:         parse_string()
   * Parameters:   str = The string to convert
   * Return:       None
@@ -278,7 +278,7 @@ function parse_string(str)
   var len = str.length;
   for (var i = 0; i < len; i++)
   {
-    if (is_letter(str.charAt(i))) 
+    if (is_letter(str.charAt(i)))
     {
       return str.slice(i, len - 3);
     }
@@ -286,7 +286,7 @@ function parse_string(str)
   return str;
 }
 
-/** 
+/**
   * Name:         grow()
   * Parameters:   input = The element to grow
   * Return:       None
@@ -297,7 +297,7 @@ function grow(input)
 {
   input.setAttribute("class", "grow_profile_asset_bullets");
   curr_asset_input = input;
-  shrink(input);  
+  shrink(input);
   return;
 }
 
@@ -305,12 +305,12 @@ function grow_liability(input)
 {
   input.setAttribute("class", "grow_profile_liabilities_bullets");
   curr_liability_input = input;
-  shrink_liability(input);  
+  shrink_liability(input);
   return;
 
 }
 
-/** 
+/**
   * Name:         grow_stock_card()
   * Parameters:   input = The element to grow
   * Return:       None
@@ -321,14 +321,14 @@ function grow_stock_card(input)
 {
   if (curr_stock_input)
   {
-    curr_stock_input.setAttribute("class", "profile_news_bullet");     
+    curr_stock_input.setAttribute("class", "profile_news_bullet");
   }
   input.setAttribute("class", "grow_stock_card");
   curr_stock_input = input;
   shrink_stock_card(input);
 }
 
-/** 
+/**
   * Name:         shrink()
   * Parameters:   input = The element to shrink
   * Return:       None
@@ -372,7 +372,7 @@ function shrink_liability(input)
     }
   }
 }
-/** 
+/**
   * Name:         shrink()
   * Parameters:   input = The element to shrink
   * Return:       None
@@ -394,7 +394,7 @@ function shrink_stock_card(input)
   }
 }
 
-/** 
+/**
   * Name:         show_assets_button()
   * Parameters:   idx = The index of the element to remove
   * Return:       None
@@ -435,22 +435,22 @@ function show_liability_button(input)
   }
 }
 
-/** 
+/**
   * Name:         restore_assets()
   * Parameters:   assets_len = The length of the user's assets
   * Return:       None
   * Description:  This function will update the current assets of the
-  *               user according to the asset length passed in. 
+  *               user according to the asset length passed in.
   **/
 
 function restore_assets()
 {
   var counter = 0;
-  
+
   while (counter < assetsLen)
-  {   
+  {
     var curr_user_assets_name = database.ref('users/' + curr_user.uid + '/assets/' + counter + '/name_worth/');
-    curr_user_assets_name.once('value', function(snapshot) 
+    curr_user_assets_name.once('value', function(snapshot)
     {
       var str = snapshot.val();
       var name = parse_string(str);
@@ -469,11 +469,11 @@ function restore_assets()
 function restore_liabilities()
 {
   var counter = 0;
-  
+
   while (counter < liabilitiesLen)
-  {   
+  {
     var curr_user_liabilities_name = database.ref('users/' + curr_user.uid + '/liabilities/' + counter + '/name_worth/');
-    curr_user_liabilities_name.once('value', function(snapshot) 
+    curr_user_liabilities_name.once('value', function(snapshot)
     {
       var str = snapshot.val();
       var name = parse_string(str);
@@ -490,12 +490,12 @@ function restore_liabilities()
 }
 
 
-/** 
+/**
   * Name:         convert_with_commas()
   * Parameters:   num = The number to convert
   * Return:       Returns the number with commas every thousand.
   * Description:  This function will place appropriate commas to resemble actual money
-  * Source (Optional): Found at: 
+  * Source (Optional): Found at:
   * "https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript"
   **/
 
@@ -503,12 +503,12 @@ function convert_with_commas(num) {
   return (parseFloat(num).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/** 
+/**
   * Name:         add_net()
   * Parameters:   asset = The new asset to add to the current net worth
   * Return:       Returns the update to Firebase
   * Description:  This function will update the current net worth of the
-  *               user according to the new asset passed in. 
+  *               user according to the new asset passed in.
   **/
 
 function add_net(asset)
@@ -518,7 +518,7 @@ function add_net(asset)
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
-  return database.ref().update(updates);  
+  return database.ref().update(updates);
 }
 
 function subtract_net(asset)
@@ -528,15 +528,15 @@ function subtract_net(asset)
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
   var updates = {};
   updates['/users/' + curr_user.uid + '/net_worth/'] = net;
-  return database.ref().update(updates);  
+  return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         add_earning_power()
   * Parameters:   asset = The new asset to add to the current earning power
   * Return:       Returns the update to Firebase
   * Description:  This function will update the current earning power of the
-  *               user according to the new asset passed in. 
+  *               user according to the new asset passed in.
   **/
 
 function add_earning_power(asset)
@@ -545,7 +545,7 @@ function add_earning_power(asset)
   document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
   var updates = {};
   updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
-  return database.ref().update(updates);  
+  return database.ref().update(updates);
 }
 
 function subtract_earning_power(asset)
@@ -554,11 +554,11 @@ function subtract_earning_power(asset)
   document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
   var updates = {};
   updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
-  return database.ref().update(updates);  
+  return database.ref().update(updates);
 }
 
 
-/** 
+/**
   * Name:         asset_bullet()
   * Parameters:   name = The name of the bullet
   *               worth = The worth of the bullet
@@ -566,7 +566,7 @@ function subtract_earning_power(asset)
   *               element = The element type to create
   *               class_name = The class to attach it to
   * Return:       None
-  * Description:  This function will create a bullet object for assets 
+  * Description:  This function will create a bullet object for assets
   **/
 
 function asset_bullet(name, worth, type, element, class_name)
@@ -576,7 +576,7 @@ function asset_bullet(name, worth, type, element, class_name)
   assetsBullets.push(input);
   assetsBulletsWorth.push(worth);
   assetsBulletsType.push(type);
-  assetsBulletsData.push(worth + "_" + name + ":" + type);  
+  assetsBulletsData.push(worth + "_" + name + ":" + type);
   input.innerHTML = truncate_title(name, 25);
   input.draggable = "true";
   input.onclick = function()
@@ -586,7 +586,7 @@ function asset_bullet(name, worth, type, element, class_name)
       curr_asset_input.setAttribute("class", class_name);
     }
     grow(input);
-    show_assets_button(curr_asset_input);    
+    show_assets_button(curr_asset_input);
   }
   input.onmouseover = function()
   {
@@ -606,7 +606,7 @@ function liability_bullet(name, worth, type, element, class_name)
   liabilitiesBullets.push(input);
   liabilitiesBulletsWorth.push(worth);
   liabilitiesBulletsType.push(type);
-  liabilitiesBulletsData.push(worth + "_" + name + ":" + type);  
+  liabilitiesBulletsData.push(worth + "_" + name + ":" + type);
   input.innerHTML = truncate_title(name, 25);
   input.draggable = "true";
   input.onclick = function()
@@ -616,7 +616,7 @@ function liability_bullet(name, worth, type, element, class_name)
       curr_liability_input.setAttribute("class", class_name);
     }
     grow_liability(input);
-    show_liability_button(curr_liability_input);    
+    show_liability_button(curr_liability_input);
   }
   input.onmouseover = function()
   {
@@ -630,12 +630,12 @@ function liability_bullet(name, worth, type, element, class_name)
 }
 
 
-/** 
+/**
   * Name:         restore_asset_bullet()
   * Parameters:   name = The name of the asset
   *               worth = The worth of the asset
   * Return:       None
-  * Description:  This function will restore existing assets for returning users 
+  * Description:  This function will restore existing assets for returning users
   **/
 
 function restore_asset_bullet(name, worth, type)
@@ -650,7 +650,7 @@ function restore_asset_bullet(name, worth, type)
     profile_assets_placeholder = document.getElementById('profile_assets_placeholder');
     element = asset_bullet(name, worth, type, "P", "profile_asset_bullet");
 
-    profile_assets_placeholder.appendChild(element); 
+    profile_assets_placeholder.appendChild(element);
     parentNode.scrollTop = 0;
   }
 }
@@ -667,13 +667,13 @@ function restore_liabilities_bullet(name, worth, type)
     profile_liabilities_placeholder = document.getElementById('profile_liabilities_placeholder');
     element = liability_bullet(name, worth, type, "P", "profile_liabilities_bullet");
 
-    profile_liabilities_placeholder.appendChild(element); 
+    profile_liabilities_placeholder.appendChild(element);
     parentNode.scrollTop = 0;
   }
 }
 
 
-/** 
+/**
   * Name:         add_asset()
   * Parameters:   name = The name of the asset to be added
   *               worth = The worth of the asset to be added
@@ -682,13 +682,13 @@ function restore_liabilities_bullet(name, worth, type)
   *               in the assets box
   **/
 
-function add_asset(name, worth, type) 
+function add_asset(name, worth, type)
 {
   var asset_url = 'users/' + curr_user.uid + '/assets/' + assetsLen;
 
   var para = document.getElementById("profile_assets_box");
   var child =  document.getElementById("profile_add_assets_button");
-  document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet")); 
+  document.getElementById('profile_assets_placeholder').appendChild(asset_bullet(name, worth, type, "P", "profile_asset_bullet"));
   para.scrollTop = para.scrollHeight;
   database.ref(asset_url).set({
     name_worth: (worth + "_" + name + ":" + type),
@@ -698,7 +698,7 @@ function add_asset(name, worth, type)
   return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         add_liabilities()
   * Parameters:   name = The name of the liability to be added
   *               worth = The worth of the liability to be added
@@ -708,25 +708,25 @@ function add_asset(name, worth, type)
   *               in the liabilities box
   **/
 
-function add_liabilities (name, worth, type) 
+function add_liabilities (name, worth, type)
 {
   var liability_url = 'users/' + curr_user.uid + '/liabilities/' + liabilitiesLen;
 
   var para = document.getElementById("profile_liabilities_box");
   var child =  document.getElementById("profile_add_liabilities_button");
-  document.getElementById('profile_liabilities_placeholder').appendChild(liability_bullet(name, worth, type, "P", "profile_liabilities_bullet")); 
+  document.getElementById('profile_liabilities_placeholder').appendChild(liability_bullet(name, worth, type, "P", "profile_liabilities_bullet"));
   para.scrollTop = para.scrollHeight;
   database.ref(liability_url).set({
     name_worth: (worth + "_" + name + ":" + type),
   });
   var updates = {};
   updates['/users/' + curr_user.uid + '/liabilities_len/'] = liabilitiesLen + 1;
-  return database.ref().update(updates);  
+  return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         remove_asset()
-  * Parameters:   input = The input to remove 
+  * Parameters:   input = The input to remove
   * Return:       None
   * Description:  This function will remove the last added asset
   **/
@@ -741,7 +741,7 @@ function remove_asset(input)
       idx = i;
     }
   }
-  var updates = {};        
+  var updates = {};
   var element = assetsBullets[idx];
   var elementWorth = assetsBulletsWorth[idx];
   var type = assetsBulletsType[idx];
@@ -750,26 +750,26 @@ function remove_asset(input)
     net -= elementWorth;
     document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
-    updates['/users/' + curr_user.uid + '/net_worth/'] = net;          
+    updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   }
   else if (type != "pr" && type != "ot" && type != "st" && (earning_power - elementWorth) >= 0)
-  { 
+  {
     earning_power -= elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
-    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;  
+    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
   }
-  element.parentNode.removeChild(element);        
+  element.parentNode.removeChild(element);
   for (var i = idx; i < assetsBullets.length - 1; i++)
   {
     assetsBullets[i] = assetsBullets[i + 1];
     assetsBullets[i].setAttribute ("onclick", null);
-    assetsBullets[i].onclick = function()   
+    assetsBullets[i].onclick = function()
     {
       show_assets_button(assetsBullets[i]);
     }
     assetsBulletsWorth[i] = assetsBulletsWorth[i + 1];
     assetsBulletsType[i] = assetsBulletsType[i + 1];
-    updates['/users/' + curr_user.uid + '/assets/' + i + '/name_worth/'] = assetsBulletsData[i + 1];       
+    updates['/users/' + curr_user.uid + '/assets/' + i + '/name_worth/'] = assetsBulletsData[i + 1];
   }
   for (var i = idx; i < assetsBulletsData.length - 1; i++)
   {
@@ -779,12 +779,12 @@ function remove_asset(input)
   assetsBulletsWorth.splice(assetsBulletsWorth.length - 1, 1);
   assetsBulletsType.splice(assetsBulletsType.length - 1, 1);
   assetsBulletsData.splice(assetsBulletsData.length - 1, 1);
-  
+
   assetsLen--;
   database.ref('/users/' + curr_user.uid + '/assets/' + (assetsLen)).remove();
   updates['/users/' + curr_user.uid + '/assets_len/'] = assetsLen;
 
-  return database.ref().update(updates);   
+  return database.ref().update(updates);
 }
 
 
@@ -798,7 +798,7 @@ function remove_liability(input)
       idx = i;
     }
   }
-  var updates = {};        
+  var updates = {};
   var element = liabilitiesBullets[idx];
   var elementWorth = parseFloat(liabilitiesBulletsWorth[idx]);
   var type = liabilitiesBulletsType[idx];
@@ -807,26 +807,26 @@ function remove_liability(input)
     net += elementWorth;
     document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
-    updates['/users/' + curr_user.uid + '/net_worth/'] = net;          
+    updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   }
-  else if (type == "ta")
-  { 
+  else if (type == "ta" || type == "RE")
+  {
     earning_power += elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
-    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;  
+    updates['/users/' + curr_user.uid + '/earning_power/'] = earning_power;
   }
-  element.parentNode.removeChild(element);        
+  element.parentNode.removeChild(element);
   for (var i = idx; i < liabilitiesBullets.length - 1; i++)
   {
     liabilitiesBullets[i] = liabilitiesBullets[i + 1];
     liabilitiesBullets[i].setAttribute ("onclick", null);
-    liabilitiesBullets[i].onclick = function()   
+    liabilitiesBullets[i].onclick = function()
     {
       show_liabilities_button(liabilitiesBullets[i]);
     }
     liabilitiesBulletsWorth[i] = liabilitiesBulletsWorth[i + 1];
     liabilitiesBulletsType[i] = liabilitiesBulletsType[i + 1];
-    updates['/users/' + curr_user.uid + '/liabilities/' + i + '/name_worth/'] = liabilitiesBulletsData[i + 1];       
+    updates['/users/' + curr_user.uid + '/liabilities/' + i + '/name_worth/'] = liabilitiesBulletsData[i + 1];
   }
   for (var i = idx; i < liabilitiesBulletsData.length - 1; i++)
   {
@@ -836,15 +836,15 @@ function remove_liability(input)
   liabilitiesBulletsWorth.splice(liabilitiesBulletsWorth.length - 1, 1);
   liabilitiesBulletsType.splice(liabilitiesBulletsType.length - 1, 1);
   liabilitiesBulletsData.splice(liabilitiesBulletsData.length - 1, 1);
-  
+
   liabilitiesLen--;
   database.ref('/users/' + curr_user.uid + '/liabilities/' + (liabilitiesLen)).remove();
   updates['/users/' + curr_user.uid + '/liabilities_len/'] = liabilitiesLen;
 
-  return database.ref().update(updates);   
+  return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         remove_liabilities()
   * Parameters:   None
   * Return:       None
@@ -858,14 +858,14 @@ function remove_liabilities()
   liabilitiesBullets.splice(liabilitiesBullets.length - 1, 1);
 }
 
-/** 
+/**
   * Name:         open_assets_modal()
   * Parameters:   None
   * Return:       None
   * Description:  This function will open the assets modal
   **/
 
-function open_assets_modal() 
+function open_assets_modal()
 {
   var assets_menu = document.getElementById('assets_add_menu');
   assets_menu.style.display = "block";
@@ -900,7 +900,7 @@ function open_modal(type, element)
   show_helper_menu(element);
 }
 
-/** 
+/**
   * Name:         close_assets_modal()
   * Parameters:   None
   * Return:       None
@@ -923,13 +923,13 @@ function close_liabilities_modal()
 
 function save_edit_asset()
 {
-  var updates = {};          
+  var updates = {};
   var edit_asset_input = document.getElementById('edit_asset_name');
   var edit_asset_input_val = edit_asset_input.value;
   var idx;
 
   for ( var i = 0; i < assetsBullets.length; i++)
-  { 
+  {
     if (assetsBullets[i] == curr_asset_input)
     {
       idx = i;
@@ -939,7 +939,7 @@ function save_edit_asset()
   var worth = assetsBulletsWorth[idx];
   var type = assetsBulletsType[idx];
   assetsBulletsData[idx] = "" + worth + "_" + edit_asset_input_val + ":" + type;
-  
+
   if (edit_asset_input.value != "")
   {
     curr_asset_input.innerHTML = edit_asset_input_val;
@@ -947,25 +947,25 @@ function save_edit_asset()
     {
       curr_asset_input.innerHTML = truncate_title(edit_asset_input_val, 25);
     }
-    updates['/users/' + curr_user.uid + '/assets/' + idx + '/name_worth/'] = assetsBulletsData[idx];              
+    updates['/users/' + curr_user.uid + '/assets/' + idx + '/name_worth/'] = assetsBulletsData[idx];
     close_modal('edit_asset_menu');
   }
   else
   {
     edit_asset_input.className += " formInvalid";
   }
-  return database.ref().update(updates);     
+  return database.ref().update(updates);
 }
 
 function save_edit_liability()
 {
-  var updates = {};          
+  var updates = {};
   var edit_liability_input = document.getElementById('edit_liability_name');
   var edit_liability_input_val = edit_liability_input.value;
   var idx;
 
   for ( var i = 0; i < liabilitiesBullets.length; i++)
-  { 
+  {
     if (liabilitiesBullets[i] == curr_liability_input)
     {
       idx = i;
@@ -975,7 +975,7 @@ function save_edit_liability()
   var worth = liabilitiesBulletsWorth[idx];
   var type = liabilitiesBulletsType[idx];
   liabilitiesBulletsData[idx] = "" + worth + "_" + edit_liability_input_val + ":" + type;
-  
+
   if (edit_liability_input.value != "")
   {
     curr_liability_input.innerHTML = edit_liability_input_val;
@@ -983,17 +983,17 @@ function save_edit_liability()
     {
       curr_liability_input.innerHTML = truncate_title(edit_liability_input_val, 25);
     }
-    updates['/users/' + curr_user.uid + '/liabilities/' + idx + '/name_worth/'] = liabilitiesBulletsData[idx];              
+    updates['/users/' + curr_user.uid + '/liabilities/' + idx + '/name_worth/'] = liabilitiesBulletsData[idx];
     close_modal('edit_liability_menu');
   }
   else
   {
     edit_liability_input.className += " formInvalid";
   }
-  return database.ref().update(updates);     
+  return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         hide_assets_menu()
   * Parameters:   None
   * Return:       None
@@ -1001,7 +1001,7 @@ function save_edit_liability()
   *               the assets modal
   **/
 
-function hide_assets_menu() 
+function hide_assets_menu()
 {
   var logos = document.getElementsByClassName('modal_logo');
   for (var i = 0; i < logos.length; i++)
@@ -1038,14 +1038,14 @@ function hide_liabilities_menu_helper(asset_type)
   }
 }
 
-/** 
+/**
   * Name:         show_assets_menu()
   * Parameters:   None
   * Return:       None
   * Description:  This function will display the menu of the assets modal
   **/
 
-function show_assets_menu() 
+function show_assets_menu()
 {
   hide_assets_menu_helper('account_input');
   hide_assets_menu_helper('property_input');
@@ -1064,6 +1064,7 @@ function show_liabilities_menu()
 {
   hide_liabilities_menu_helper('bill_input');
   hide_liabilities_menu_helper('taxes_liabilities_input');
+  hide_liabilities_menu_helper('rent_liabilities_input');
   var logos = document.getElementsByClassName('liabilities_modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -1095,7 +1096,7 @@ function show_edit_liabilities(input)
   edit_input.placeholder = input.innerHTML;
 }
 
-/** 
+/**
   * Name:         open_asset()
   * Parameters:   type = The type of asset to open in our modal
   * Return:       None
@@ -1114,7 +1115,7 @@ function open_asset(type)
   return;
 }
 
-/** 
+/**
   * Name:         open_liabilities()
   * Parameters:   type = The type of liabilities to open in our modal
   * Return:       None
@@ -1127,7 +1128,7 @@ function open_liabilities(type)
   show('liabilities_modal_back');
   if (type == 'taxes_liabilities_input')
   {
-    var dropdown = document.getElementById('taxes_dropdown');    
+    var dropdown = document.getElementById('taxes_dropdown');
     while (dropdown.length > 1)
     {
       dropdown.remove(dropdown.length - 1);
@@ -1150,9 +1151,7 @@ function open_liabilities(type)
   return;
 }
 
-
-
-/** 
+/**
   * Name:         read_address_xml()
   * Parameters:   xml = The xml to read
   * Return:       None
@@ -1165,7 +1164,7 @@ function read_address_xml(xml, type)
   var x = xmlDoc.getElementsByTagName(type);
 }
 
-/** 
+/**
   * Name:         save_property()
   * Parameters:   None
   * Return:       None
@@ -1191,13 +1190,13 @@ function save_property()
 
   var zip_id = document.getElementById('asset_zip');
   var zip = zip_id.value;
-  
+
   var state_id = document.getElementById('asset_state_dropdown');
   var state = state_id.value;
-  
-  address = address.trim().replace(/[' ']/g, '-');  
+
+  address = address.trim().replace(/[' ']/g, '-');
   city = city.trim().replace(/[' ']/g, '-');
-  var zillowGET = zillowHTML + zillowID + zillowAddress + address + zillowCityStateZip + city + delim + state + delim + zip;  
+  var zillowGET = zillowHTML + zillowID + zillowAddress + address + zillowCityStateZip + city + delim + state + delim + zip;
   if ( property_name != "" && address != "" && city != "" && zip != "" && state != "")
   {
     var myXML = ""
@@ -1206,7 +1205,7 @@ function save_property()
     request.send();
     myXML = request.responseXML;
     var x = myXML.getElementsByTagName("amount");
-    var worth = x[0].childNodes[0].nodeValue; 
+    var worth = x[0].childNodes[0].nodeValue;
     add_asset(property_name, worth, "pr");
     add_net(worth);
     close_modal('assets_add_menu');
@@ -1235,7 +1234,7 @@ function save_property()
   }
 }
 
-/** 
+/**
   * Name:         save_rent()
   * Parameters:   None
   * Return:       None
@@ -1268,7 +1267,7 @@ function save_rent()
   }
 }
 
-/** 
+/**
   * Name:         save_salary()
   * Parameters:   None
   * Return:       None
@@ -1305,7 +1304,7 @@ function save_salary()
   }
 }
 
-/** 
+/**
   * Name:         save_stock()
   * Parameters:   None
   * Return:       None
@@ -1313,7 +1312,7 @@ function save_salary()
   **/
 
 function save_stock()
-{ 
+{
   var num_shares_id = document.getElementById('stock_asset_worth');
   var num_shares = num_shares_id.value;
 
@@ -1337,7 +1336,7 @@ function save_stock()
   }
 
   var https = require("https");
-  var current_close = 0;  
+  var current_close = 0;
   var request = https.request({
     method: "GET",
     host: "www.alphavantage.co",
@@ -1346,10 +1345,10 @@ function save_stock()
     var json = "";
     response.on('data', function (chunk) {
         json += chunk;
-        
+
     });
     response.on('end', function() {
-      var company = JSON.parse(json); 
+      var company = JSON.parse(json);
       try
       {
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
@@ -1358,7 +1357,7 @@ function save_stock()
         var worth = current_close * num_shares;
         add_asset(name, worth, "st");
         add_net(worth);
-        close_modal('assets_add_menu');        
+        close_modal('assets_add_menu');
       }
       catch(err){
         company_name_id.value = "";
@@ -1369,7 +1368,7 @@ function save_stock()
   request.end();
 }
 
-/** 
+/**
   * Name:         save_other()
   * Parameters:   None
   * Return:       None
@@ -1391,7 +1390,7 @@ function save_other()
     if (time == "reoccurring")
     {
       add_asset(name, worth, "OT");
-      add_earning_power(worth);      
+      add_earning_power(worth);
     }
     else if (time == "single")
     {
@@ -1420,8 +1419,8 @@ function save_other()
 
 function save_tax_liabilities()
 {
-  var name_id = document.getElementById('tax_asset_name');
-  var percentage_id = document.getElementById('tax_asset_company');
+  var name_id = document.getElementById('tax_liability_name');
+  var percentage_id = document.getElementById('tax_liability_company');
   var salary_id = document.getElementById('taxes_dropdown');
 
   var name = name_id.value;
@@ -1429,17 +1428,17 @@ function save_tax_liabilities()
   var salary = salary_id.value;
 
   var type = salary.slice(salary.length-2, salary.length);
-  
+
   if ( isNaN(parseFloat(percentage)))
   {
     percentage_id.className += " formInvalid";
     percentage_id.value = "";
     percentage_id.placeholder = "Must be a number";
     return;
-  } 
+  }
 
   if ( salary == "")
-  { 
+  {
     salary_id.className += " formInvalid";
   }
 
@@ -1448,6 +1447,25 @@ function save_tax_liabilities()
   console.log(worth);
 
   add_liabilities(name, worth, "ta");
+  subtract_earning_power(worth);
+  close_modal('liabilities_add_menu');
+}
+
+function save_rent_liabilities()
+{
+  var name_id = document.getElementById('rent_liability_name');
+  var worth_id = document.getElementById('rent_liability_company');
+  var time_id = document.getElementById('rent_dropdown');
+
+  var name = name_id.value;
+  var worth = worth_id.value;
+  var time = time_id.value;
+
+  worth = parseFloat(worth);
+  time = parseFloat(time);
+  worth = worth * time;
+
+  add_liabilities(name, worth, "RE");
   subtract_earning_power(worth);
   close_modal('liabilities_add_menu');
 }
@@ -1465,15 +1483,15 @@ function save_bill_liabilities()
   worth = parseFloat(worth);
   time = parseFloat(time);
   worth = worth * time;
-  
+
   add_liabilities(name, worth, "bi");
   subtract_earning_power(worth);
   close_modal('liabilities_add_menu');
 }
 
-/** 
+/**
   * Name:         show()
-  * Parameters:   id = The HTML id of the element to show 
+  * Parameters:   id = The HTML id of the element to show
   * Return:       None
   * Description:  This function will show the HTML elements of the passed in id
   **/
@@ -1483,9 +1501,9 @@ function show(id)
   document.getElementById(id).style.display = "block";
 }
 
-/** 
+/**
   * Name:         hide()
-  * Parameters:   id = The HTML id of the element to hide 
+  * Parameters:   id = The HTML id of the element to hide
   * Return:       None
   * Description:  This function will hide the HTML elements of the passed in id
   **/
@@ -1495,32 +1513,32 @@ function hide(id)
   document.getElementById(id).style.display = "none";
 }
 
-/** 
+/**
   * Name:         signout()
   * Parameters:   None
   * Return:       None
   * Description:  This function will sign a user out of their account
   *               and return them to the login page. All data of
-  *               their account should be wiped locally. 
+  *               their account should be wiped locally.
   **/
 
-function signout() 
+function signout()
 {
-  firebase.auth().signOut().then(function() 
+  firebase.auth().signOut().then(function()
   {
-    window.location.href = "login.html";      
-  }).catch(function(error) 
+    window.location.href = "login.html";
+  }).catch(function(error)
   {
     //TODO
     // An error happened.
   });
 }
 
-/** 
+/**
   * Name:         open_delete_modal()
   * Parameters:   None
   * Return:       None
-  * Description:  This function will open the delete modal 
+  * Description:  This function will open the delete modal
   **/
 
 function open_delete_modal()
@@ -1533,11 +1551,11 @@ function open_delete_modal()
   }
 }
 
-/** 
+/**
   * Name:         open_bug_modal()
   * Parameters:   None
   * Return:       None
-  * Description:  This function will open the bug modal 
+  * Description:  This function will open the bug modal
   **/
 
 function open_bug_modal()
@@ -1550,20 +1568,20 @@ function open_bug_modal()
   }
 }
 
-/** 
+/**
   * Name:         reset_account()
   * Parameters:   None
   * Return:       None
-  * Description:  This function will reset the account of the current user 
+  * Description:  This function will reset the account of the current user
   **/
 
 function reset_account()
 {
   var updates = {};
-  document.getElementById('profile_worth_text').innerHTML = "$0"; 
+  document.getElementById('profile_worth_text').innerHTML = "$0";
   document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$0";
-  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$0/yr";            
-  
+  document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$0/yr";
+
   for (var i = 0; i < assetsBullets.length; i++)
   {
     assetsBullets[i].parentNode.removeChild(assetsBullets[i]);
@@ -1592,7 +1610,7 @@ function reset_account()
 
 function submit_bug()
 {
-  emailjs.send("<YOUR SERVICE ID>","financr",{name: "Financr", notes: "Check this out!"});  
+  emailjs.send("<YOUR SERVICE ID>","financr",{name: "Financr", notes: "Check this out!"});
 }
 
 function temp_login()
@@ -1601,13 +1619,13 @@ function temp_login()
 }
 
 //TODO
-// Saving these functions for later to see if they can be of use. 
+// Saving these functions for later to see if they can be of use.
 
 /*
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == assets_menu) {
-        var assets_menu = document.getElementById('assets_add_menu');        
+        var assets_menu = document.getElementById('assets_add_menu');
         assets_menu.style.display = "none";
     }
 }
@@ -1629,11 +1647,10 @@ window.onclick = function(event) {
       //console.log(data.articles[0].title);
       while (data.data[counter] != null)
       {
-        
+
       }
     } else {
       //TODO
     }
   };
   xhr.send(); */
-

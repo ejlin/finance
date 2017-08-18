@@ -27,7 +27,7 @@
     <div class = "clearfix"/>
 
     <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png"></img>
-    <img  onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png"></img>
+    <img onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png"></img>
 
     <div id="background_tint"></div>
     <div id="loader"></div>
@@ -69,13 +69,13 @@
         <img src="../Images/Info.png">
           <span class="tooltip_text">A quick snapshot of your current net worth and your earning power for the year.</span>
         </img>
-      </div>      
+      </div>
       <div id="profile_box_top_text">
         Profile
       </div>
     </div>
-    
-    <div id="profile_quick_glance_profile">
+
+    <div id="profile_quick_glance_box">
       <div id="profile_quick_glance_text">
         Net Worth:
       </div>
@@ -112,7 +112,7 @@
       </div>
         <img onclick="open_liabilities_modal()" id="profile_add_liabilities_button" src="../Images/add.png"></img>
         <img id="profile_remove_liabilities_button" src="../Images/minus.png"></img>
-        <img id="profile_edit_liabilities_button" src="../Images/edit.png"></img>        
+        <img id="profile_edit_liabilities_button" src="../Images/edit.png"></img>
     </div>
 
     <div class = "clearfix"/>
@@ -128,7 +128,7 @@
     <div class = "clearfix"/>
 
     <!-- Delete an asset element -->
-    
+
     <div id="delete_menu" class="modal">
       <div class="delete_modal_content">
         <span onclick="hide('delete_menu')" class="close">&times;</span>
@@ -150,13 +150,13 @@
 
     <div class = "clearfix"/>
 
-    <!-- Reporting a bug modal -->    
+    <!-- Reporting a bug modal -->
 
     <div id="bug_report_menu" class="modal">
       <div class="report_bug_modal">
         <span onclick="hide('bug_report_menu')" class="close">&times;</span>
         <div class="report_bug_content" id="bug_report_text">
-          Thanks for taking the time to report a bug. Please provide as accurate of a description of the bug as possible with any steps necessary to recreate it. 
+          Thanks for taking the time to report a bug. Please provide as accurate of a description of the bug as possible with any steps necessary to recreate it.
         </div>
         <form method="POST" action="http://formspree.io/tgih1999@gmail.com">
           <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title" required name="email"></input>
@@ -174,56 +174,56 @@
 
     <div class = "clearfix"/>
 
-    <!-- LIABILITIES MODAL-->    
+    <!-- LIABILITIES MODAL-->
 
     <div id="liabilities_add_menu" class="modal">
       <div class="liabilities_modal-content">
         <img onclick="show_liabilities_menu()" id="liabilities_modal_back" src="../Images/back.png"></img>
         <span onclick="close_modal('liabilities_add_menu')" class="close">&times;</span>
-        
+
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img onclick="open_liabilities('bill_input')" id="modal_img" src="../Images/bill.png"></img>
-            <p id="modal_logo_text"> 
+            <p id="modal_logo_text">
               Bills
-            </p> 
+            </p>
           </div>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img onclick="open_liabilities('taxes_liabilities_input')" id="modal_img" src="../Images/taxes.png"></img>
-            <p id="modal_logo_text"> 
-              Taxes   
+            <p id="modal_logo_text">
+              Taxes
             </p>
           </div>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img onclick="open_liabilities('rent_liabilities_input')" id="modal_img" src="../Images/rent.png"></img>
-            <p id="modal_logo_text"> 
-              Rent 
+            <p id="modal_logo_text">
+              Rent
             </p>
           </div>
         </center>
-    
+
         <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="liabilities_modal_logo"></hr>
         <br></br>
-    
+
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img onclick="open_debt()" id="modal_img" src="../Images/debt.png"></img>
-            <p id="modal_logo_text"> 
-              Debt 
+            <p id="modal_logo_text">
+              Debt
             </p>
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img onclick="open_loans()" id="modal_img" src="../Images/loans.png"></img>
-            <p id="modal_logo_text"> 
-              Loans 
+            <p id="modal_logo_text">
+              Loans
             </p>
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
             <img id="modal_img_other" onclick="open_others_liabilities()" src="../Images/other.png"></img>
-            <p id="modal_logo_text"> 
-              Other 
+            <p id="modal_logo_text">
+              Other
             </p>
           </div>
         </center>
@@ -246,7 +246,7 @@
         <form class="bill_input">
           <select id="bill_dropdown">
             <option value="50">Weekly</option>
-            <option value="25">Bi-Weekly</option>            
+            <option value="25">Bi-Weekly</option>
             <option value="12">Monthly</option>
             <option value="1">Yearly</option>
           </select>
@@ -258,6 +258,7 @@
             </div>
           </button>
         </center>
+
         <!-- Liabilities: Tax -->
 
         <center>
@@ -272,8 +273,8 @@
             </span>
           </img>
         </div>
-        <input id="tax_asset_name" class="taxes_liabilities_input" type="text" placeholder="Name"></input>
-        <input id="tax_asset_company" class="taxes_liabilities_input" type="text" placeholder="Tax bracket %:"></input>
+        <input id="tax_liability_name" class="taxes_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="tax_liability_company" class="taxes_liabilities_input" type="text" placeholder="Tax bracket %:"></input>
         <form class="taxes_liabilities_input">
           <select id="taxes_dropdown">
           </select>
@@ -285,11 +286,45 @@
             </div>
           </button>
         </center>
+
+        <!-- Liabilities rent -->
+
+        <center>
+          <p id="liabilities_rent_input_title" class="rent_liabilities_input">
+            Add your estimated rent
+          </p>
+        </center>
+        <div id="rent_info" class="tooltip rent_liabilities_input">
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">
+              Add your estimated rent
+            </span>
+          </img>
+        </div>
+        <input id="rent_liability_name" class="rent_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="rent_liability_company" class="rent_liabilities_input" type="text" placeholder="Rent"></input>
+        <form class="rent_liabilities_input">
+          <select id="rent_dropdown">
+            <option value="365">Daily</option>
+            <option value="52">Weekly</option>
+            <option value="25">Bi-Weekly</option>
+            <option value="12">Monthly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </form>
+        <center>
+          <button onclick="save_rent_liabilities()" class="rent_liabilities_input" id = "save_other_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
       </div>
     </div>
 
     <div class="clearfix"/>
-    
+
     <div id="edit_asset_menu" class="modal">
       <div class="edit_asset_modal">
         <span onclick="close_modal('edit_asset_menu')" class="close">&times;</span>
@@ -305,7 +340,7 @@
     </div>
 
     <div class="clearfix"/>
-    
+
     <div id="edit_liability_menu" class="modal">
       <div class="edit_liability_modal">
         <span onclick="close_modal('edit_liability_menu')" class="close">&times;</span>
@@ -326,28 +361,28 @@
       <div class="modal-content">
         <img onclick="show_assets_menu()" id="assets_modal_back" src="../Images/back.png"></img>
         <span onclick="close_modal('assets_add_menu')" class="close">&times;</span>
-        
+
         <center>
           <div id="modal_logo" class="modal_logo">
             <img onclick="open_asset('account_input')" id="modal_img" src="../Images/account.png"></img>
-            <p id="modal_logo_text"> 
+            <p id="modal_logo_text">
               Account
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
             <img onclick="open_asset('property_input')" id="modal_img" src="../Images/house.png"></img>
-            <p id="modal_logo_text"> 
-              Property   
+            <p id="modal_logo_text">
+              Property
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
             <img onclick="open_asset('rent_input')" id="modal_img" src="../Images/rent.png"></img>
-            <p id="modal_logo_text"> 
-              Rent 
+            <p id="modal_logo_text">
+              Rent
             </p>
           </div>
         </center>
-        
+
         <div class = "clearfix"/>
 
         <hr style="width: 80%; margin-top: 10%; float: left; margin-left: 10%;" class="modal_logo"></hr>
@@ -356,20 +391,20 @@
         <center>
           <div id="modal_logo" class="modal_logo">
             <img onclick="open_asset('salary_input')" id="modal_img" src="../Images/salary.png"></img>
-            <p id="modal_logo_text"> 
-              Salary 
+            <p id="modal_logo_text">
+              Salary
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
             <img onclick="open_asset('stock_input')" id="modal_img" src="../Images/stock.png"></img>
-            <p id="modal_logo_text"> 
-              Stocks 
+            <p id="modal_logo_text">
+              Stocks
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
             <img id="modal_img_other" onclick="open_asset('others_input')" src="../Images/other.png"></img>
-            <p id="modal_logo_text"> 
-              Other 
+            <p id="modal_logo_text">
+              Other
             </p>
           </div>
         </center>
@@ -383,7 +418,7 @@
         </center>
 
         <!-- Assets: Rent -->
-        
+
         <center>
           <p id="asset_input_title" class="rent_input" style="margin-top: -20px;">
             Add your estimated rent income
@@ -400,7 +435,6 @@
         <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required></input>
         <form class="rent_input">
           <select id="rent_dropdown" name="salary_occurence">
-            <option value="">Occurrence</option>
             <option value="365">Daily</option>
             <option value="52">Weekly</option>
             <option value="12">Monthly</option>
@@ -422,7 +456,7 @@
             Enter property address
           </p>
         </center>
-        
+
         <div id="property_info" class="tooltip property_input">
           <img src="../Images/Info.png">
             <span class="tooltip_text">
@@ -436,7 +470,6 @@
         <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip" required></input>
         <form class="property_input">
           <select id="asset_state_dropdown" name="salary_occurence">
-            <option value="">State</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>
@@ -515,7 +548,6 @@
         <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required></input>
         <form class="salary_input">
           <select id="salary_dropdown" name="salary_occurence">
-            <option value="">Occurrence</option>
             <option value="2000">Hourly</option>
             <option value="250">Daily</option>
             <option value="50">Weekly</option>
@@ -569,12 +601,11 @@
             </span>
           </img>
         </div>
-        
+
         <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name" required></input>
         <input id="other_asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required></input>
         <form class="others_input">
           <select id="others_dropdown" name="salary_occurence">
-            <option value="">Occurrence</option>
             <option value="reoccurring">Reoccurring</option>
             <option value="single">One Time</option>
           </select>
@@ -590,7 +621,7 @@
     </div>
 
     <!-- Our scripts -->
-    
+
     <script src = "../../main.js"></script>
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>

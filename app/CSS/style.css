@@ -138,7 +138,7 @@ body{
   width: 5%;
   height: 70%;
   position: fixed;
-  background-color:#5c7598; 
+  background-color:#5c7598;
   border-radius: 0px 5px 5px 0px;
   transition: 0.5s;
 }
@@ -246,7 +246,7 @@ body{
   float: left;
 }
 
-#profile_quick_glance_profile{
+#profile_quick_glance_box{
   float: right;
   height: 190px;
   width: 25%;
@@ -520,7 +520,7 @@ body{
 
 #delete_modal_text, #bug_report_text{
   font-size: 18px;
-  color:#5c7598; 
+  color:#5c7598;
   margin-top: 10%;
   text-align: center;
   margin-left: 7.5%;
@@ -590,8 +590,8 @@ body{
   padding: 3px;
 }
 
-#modal_img:hover, #modal_img_other:hover, #save_other_button:hover, 
-#save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover, 
+#modal_img:hover, #modal_img_other:hover, #save_other_button:hover,
+#save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover,
 #confirm_delete_button_no:hover, #confirm_delete_button_yes:hover, #submit_bug_report:hover, #save_bill_button:hover{
   cursor: pointer;
   opacity: 0.5;
@@ -619,8 +619,8 @@ body{
 #asset_address, #asset_property_name, #asset_salary_name,
 #asset_salary_worth, #asset_rent_name, #asset_rent_worth,
 #stock_asset_name, #stock_asset_worth, #stock_asset_company,
-#tax_asset_name, #tax_asset_company, #liability_bill_name,
-#liability_bill_worth
+#tax_liability_name, #tax_liability_company, #rent_liability_name, #rent_liability_company,
+#liability_bill_name, #liability_bill_worth
 {
   width: 60%;
   height: 50px;
@@ -735,7 +735,7 @@ body{
   display: none;
 }
 
-#salary_dropdown, #rent_dropdown, #others_dropdown, #taxes_dropdown, #bill_dropdown
+#salary_dropdown, #rent_dropdown, #others_dropdown, #taxes_dropdown, #bill_dropdown, #rent_dropdown
 {
   width: 60%;
   border: none;
@@ -834,7 +834,7 @@ body{
   margin-top: -15px;
 }
 
-#liabilities_tax_input_title{
+#liabilities_tax_input_title, #liabilities_rent_input_title{
   color: #5c7598;
   font-size: 18px;
   width: 70%;
@@ -847,7 +847,7 @@ body{
   margin-top: -40px;
 }
 
-#stock_info{
+#stock_info, #rent_info{
   float: right;
   margin-right: 10%;
   margin-top: -40px;
