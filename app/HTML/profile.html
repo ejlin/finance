@@ -56,7 +56,7 @@
       </div>
       <div id="profile_quick_glance_info" class="tooltip">
         <img src="../Images/Info.png">
-          <span class="tooltip_text">Find relevant stock prices. All in one easily accessible feed.</span>
+          <span class="tooltip_text">Find relevant stock prices. All in one easily accessible feed. Click on the refresh button to refresh stock prices!</span>
         </img>
       </div>
       <div>
@@ -214,14 +214,14 @@
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_loans()" id="modal_img" src="../Images/loans.png"></img>
+            <img onclick="open_liabilities('loans_liabilities_input')" id="modal_img" src="../Images/loans.png"></img>
             <p id="modal_logo_text">
               Loans
             </p>
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img id="modal_img_other" onclick="open_others_liabilities()" src="../Images/other.png"></img>
+            <img id="modal_img_other" onclick="open_liabilities('liabilities_others_input')" src="../Images/other.png"></img>
             <p id="modal_logo_text">
               Other
             </p>
@@ -320,6 +320,72 @@
             </div>
           </button>
         </center>
+
+        <!-- Liabilities loans -->
+
+        <center>
+          <p id="liabilities_loans_input_title" class="loans_liabilities_input">
+            Add any loans you may have.
+          </p>
+        </center>
+        <div id="loans_info" class="tooltip loans_liabilities_input">
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">
+              Add any loans you may have including the interest at which they are to be paid back along with the occurrence of the interest rate.
+              Amount should be amount you pay in a single year.
+              Interest rates should be (0 - 100).
+            </span>
+          </img>
+        </div>
+        <input id="loans_liability_name" class="loans_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="loans_liability_worth" class="loans_liabilities_input" type="text" placeholder="Amount"></input>
+        <input id="loans_liability_interest" class="loans_liabilities_input" type="text" placeholder="Interest"></input>
+        <form class="loans_liabilities_input">
+          <select id="loans_dropdown">
+            <option value="12">Monthly</option>
+            <option value="4">Quarterly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </form>
+        <center>
+          <button onclick="save_loans_liabilities()" class="loans_liabilities_input" id = "save_loans_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
+        <!-- Liabilities Other -->
+
+        <center>
+          <p id="liabilities_others_input_title" class="liabilities_others_input">
+            Manually add any liability that doesn't fit in any of the other categories
+          </p>
+        </center>
+        <div id="property_info" class="tooltip liabilities_others_input">
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">
+              Add a liability that occurs once or occurs periodically
+            </span>
+          </img>
+        </div>
+
+        <input id="other_liability_name" class="liabilities_others_input" type="text" name="signup_username" placeholder="Name" required></input>
+        <input id="other_liability_worth" class="liabilities_others_input" type="number" name="signup_username" placeholder="Estimated Amount" required></input>
+        <form class="liabilities_others_input">
+          <select id="liability_others_dropdown">
+            <option value="reoccurring">Reoccurring</option>
+            <option value="single">One Time</option>
+          </select>
+        </form>
+        <center>
+          <button onclick="save_other_liabilities()" class="liabilities_others_input" id = "save_other_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
 
       </div>
     </div>

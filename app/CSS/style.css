@@ -590,7 +590,7 @@ body{
   padding: 3px;
 }
 
-#modal_img:hover, #modal_img_other:hover, #save_other_button:hover,
+#modal_img:hover, #modal_img_other:hover, #save_other_button:hover, #save_loans_button:hover,
 #save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover,
 #confirm_delete_button_no:hover, #confirm_delete_button_yes:hover, #submit_bug_report:hover, #save_bill_button:hover{
   cursor: pointer;
@@ -619,8 +619,9 @@ body{
 #asset_address, #asset_property_name, #asset_salary_name,
 #asset_salary_worth, #asset_rent_name, #asset_rent_worth,
 #stock_asset_name, #stock_asset_worth, #stock_asset_company,
-#tax_liability_name, #tax_liability_company, #rent_liability_name, #rent_liability_company,
-#liability_bill_name, #liability_bill_worth
+#tax_liability_name, #tax_liability_company, #rent_liability_name,
+#rent_liability_company, #liability_bill_name, #liability_bill_worth,
+#other_liability_name, #other_liability_worth
 {
   width: 60%;
   height: 50px;
@@ -638,6 +639,28 @@ body{
   margin-top: 5%;
   margin-left: 20%;
 }
+
+#loans_liability_name,
+#loans_liability_worth, #loans_liability_interest{
+  width: 38%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  color: #5c7598;
+  background-color:  #dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  display: none;
+  margin-top: 5%;
+  margin-left: 8%;
+  float: left;
+}
+
+
 
 #edit_asset_name, #edit_liability_name{
   width: 70%;
@@ -735,7 +758,10 @@ body{
   display: none;
 }
 
-#salary_dropdown, #rent_dropdown, #others_dropdown, #taxes_dropdown, #bill_dropdown, #rent_dropdown
+#salary_dropdown, #rent_dropdown,
+#others_dropdown, #taxes_dropdown,
+#bill_dropdown, #rent_dropdown,
+#liability_others_dropdown
 {
   width: 60%;
   border: none;
@@ -748,6 +774,21 @@ body{
   padding: 12px 20px 12px 40px;
   text-align-last:center;
   font-family: 18px;
+}
+
+#loans_dropdown{
+  width: 38%;
+  border: none;
+  height: 50px;
+  font-size: 16px;
+  margin-left: 8%;
+  margin-top: 5%;
+  background-color:  #dadadb;
+  color: #5c7598;
+  padding: 12px 20px 12px 40px;
+  text-align-last:center;
+  font-family: 18px;
+  float: left;
 }
 
 #asset_state_dropdown{
@@ -774,6 +815,20 @@ body{
   margin-top: 5%;
   display: none;
   font-size: 18px;
+}
+
+#save_loans_button{
+  float: left;
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:#5c7598;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 5%;
+  display: none;
+  font-size: 18px;
+  margin-left: calc(85% / 2);
 }
 
 #save_salary_button, #save_rent_button, #confirm_delete_button_no, #confirm_delete_button_yes, #submit_bug_report, #save_bill_button{
@@ -834,11 +889,25 @@ body{
   margin-top: -15px;
 }
 
+ #liabilities_others_input_title{
+   color: #5c7598;
+   font-size: 18px;
+   width: 70%;
+   margin-top: 25px;
+ }
+
 #liabilities_tax_input_title, #liabilities_rent_input_title{
   color: #5c7598;
   font-size: 18px;
   width: 70%;
   margin-top: 25px;
+}
+
+#liabilities_loans_input_title{
+  color: #5c7598;
+  font-size: 18px;
+  width: 70%;
+  margin-top: 65px;
 }
 
 #property_info{
@@ -847,7 +916,7 @@ body{
   margin-top: -40px;
 }
 
-#stock_info, #rent_info{
+#stock_info, #rent_info, #loans_info{
   float: right;
   margin-right: 10%;
   margin-top: -40px;

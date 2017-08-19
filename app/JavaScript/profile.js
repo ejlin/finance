@@ -802,14 +802,14 @@ function remove_liability(input)
   var element = liabilitiesBullets[idx];
   var elementWorth = parseFloat(liabilitiesBulletsWorth[idx]);
   var type = liabilitiesBulletsType[idx];
-  if (type == "lo")
+  if (type == "Ot")
   {
     net += elementWorth;
     document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
     document.getElementById('profile_quick_glance_text_net_worth').innerHTML = "$" + convert_with_commas(net);
     updates['/users/' + curr_user.uid + '/net_worth/'] = net;
   }
-  else if (type == "ta" || type == "RE" || type == "bi")
+  else if (type == "lo" ||  type == "ta" || type == "RE" || type == "bi" || type == "oT")
   {
     earning_power += elementWorth;
     document.getElementById('profile_quick_glance_text_earning_power').innerHTML = "$" + convert_with_commas(earning_power) + "/yr";
@@ -1065,6 +1065,8 @@ function show_liabilities_menu()
   hide_liabilities_menu_helper('bill_input');
   hide_liabilities_menu_helper('taxes_liabilities_input');
   hide_liabilities_menu_helper('rent_liabilities_input');
+  hide_liabilities_menu_helper('loans_liabilities_input');
+  hide_liabilities_menu_helper('liabilities_others_input');
   var logos = document.getElementsByClassName('liabilities_modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -1470,6 +1472,31 @@ function save_rent_liabilities()
   close_modal('liabilities_add_menu');
 }
 
+function save_loans_liabilities()
+{
+  console.log("here");
+  var name_id = document.getElementById('loans_liability_name');
+  var worth_id = document.getElementById('loans_liability_worth');
+  var interest_id = document.getElementById('loans_liability_interest');
+  var time_id = document.getElementById('loans_dropdown');
+
+  var name = name_id.value;
+  var worth = worth_id.value;
+  var interest = interest_id.value;
+  var time = time_id.value;
+
+  interest /= 100.0;
+  interest += 1.0;
+
+  worth *= interest;
+
+  worth *= time;
+
+  add_liabilities(name, worth, "lo");
+  subtract_earning_power(worth);
+  close_modal('liabilities_add_menu');
+}
+
 function save_bill_liabilities()
 {
   var name_id = document.getElementById('liability_bill_name');
@@ -1487,6 +1514,35 @@ function save_bill_liabilities()
   add_liabilities(name, worth, "bi");
   subtract_earning_power(worth);
   close_modal('liabilities_add_menu');
+}
+
+function save_debt_liabilities()
+{
+
+}
+
+function save_other_liabilities()
+{
+  var name_id = document.getElementById('other_liability_name');
+  var worth_id = document.getElementById('other_liability_worth');
+  var time_id = document.getElementById('liability_others_dropdown');
+
+  var name = name_id.value;
+  var worth = worth_id.value;
+  var time = time_id.value;
+
+  if (time == "reoccurring")
+  {
+    add_liabilities(name, worth, "oT");
+    subtract_earning_power(worth);
+  }
+  else if (time == "single")
+  {
+    add_liabilities(name, worth, "Ot");
+    subtract_net(worth);
+  }
+  close_modal('liabilities_add_menu');
+
 }
 
 /**
