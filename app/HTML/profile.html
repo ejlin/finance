@@ -207,7 +207,7 @@
 
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_debt()" id="modal_img" src="../Images/debt.png"></img>
+            <img onclick="open_liabilities('debt_liabilities_input')" id="modal_img" src="../Images/debt.png"></img>
             <p id="modal_logo_text">
               Debt
             </p>
@@ -315,6 +315,29 @@
         </form>
         <center>
           <button onclick="save_rent_liabilities()" class="rent_liabilities_input" id = "save_other_button" class="submit_button">
+            <div id="signup_button_text">
+              Save
+            </div>
+          </button>
+        </center>
+
+        <!-- Liabilities: Debt-->
+        <center>
+          <p id="liability_debt_title" class="debt_liabilities_input" style="margin-top: 60px;">
+            Add any outstanding debt
+          </p>
+        </center>
+        <div id="property_info" class="tooltip debt_liabilities_input" style="margin-top: -45px;">
+          <img src="../Images/Info.png">
+            <span class="tooltip_text">
+              Add any outstanding debt
+            </span>
+          </img>
+        </div>
+        <input id="liability_debt_name" class="debt_liabilities_input" type="text" placeholder="Name" required></input>
+        <input id="liability_debt_worth" class="debt_liabilities_input" type="number" placeholder="Debt Amount" required></input>
+        <center>
+          <button onclick="save_debt_liabilities()" class="debt_liabilities_input" id = "save_bill_button" class="submit_button">
             <div id="signup_button_text">
               Save
             </div>

@@ -621,7 +621,8 @@ body{
 #stock_asset_name, #stock_asset_worth, #stock_asset_company,
 #tax_liability_name, #tax_liability_company, #rent_liability_name,
 #rent_liability_company, #liability_bill_name, #liability_bill_worth,
-#other_liability_name, #other_liability_worth
+#other_liability_name, #other_liability_worth,
+#liability_debt_name, #liability_debt_worth
 {
   width: 60%;
   height: 50px;
@@ -870,6 +871,12 @@ body{
 }
 
 #asset_input_title{
+  color: #5c7598;
+  font-size: 18px;
+  width: 70%;
+}
+
+#liability_debt_title{
   color: #5c7598;
   font-size: 18px;
   width: 70%;

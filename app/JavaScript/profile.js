@@ -802,7 +802,7 @@ function remove_liability(input)
   var element = liabilitiesBullets[idx];
   var elementWorth = parseFloat(liabilitiesBulletsWorth[idx]);
   var type = liabilitiesBulletsType[idx];
-  if (type == "Ot")
+  if (type == "Ot" || type == "de")
   {
     net += elementWorth;
     document.getElementById('profile_worth_text').innerHTML = "$" + convert_with_commas(net);
@@ -842,20 +842,6 @@ function remove_liability(input)
   updates['/users/' + curr_user.uid + '/liabilities_len/'] = liabilitiesLen;
 
   return database.ref().update(updates);
-}
-
-/**
-  * Name:         remove_liabilities()
-  * Parameters:   None
-  * Return:       None
-  * Description:  This function will remove the last added liability
-  **/
-
-function remove_liabilities()
-{
-  var element = liabilitiesBullets[liabilitiesBullets.length - 1];
-  element.parentNode.removeChild(element);
-  liabilitiesBullets.splice(liabilitiesBullets.length - 1, 1);
 }
 
 /**
@@ -1067,6 +1053,7 @@ function show_liabilities_menu()
   hide_liabilities_menu_helper('rent_liabilities_input');
   hide_liabilities_menu_helper('loans_liabilities_input');
   hide_liabilities_menu_helper('liabilities_others_input');
+  hide_liabilities_menu_helper('debt_liabilities_input');
   var logos = document.getElementsByClassName('liabilities_modal_logo');
   for (var i = 0; i < logos.length; i++){
     logos[i].style.display = "block";
@@ -1518,7 +1505,15 @@ function save_bill_liabilities()
 
 function save_debt_liabilities()
 {
+  var name_id = document.getElementById('liability_debt_name');
+  var worth_id = document.getElementById('liability_debt_worth');
 
+  var name = name_id.value;
+  var worth = worth_id.value;
+
+  add_liabilities(name, worth, "de");
+  subtract_net(worth);
+  close_modal('liabilities_add_menu');
 }
 
 function save_other_liabilities()
