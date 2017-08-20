@@ -615,14 +615,7 @@ body{
   transition: 0.3s;
 }
 
-#asset_name, #asset_worth, #other_asset_name, #other_asset_worth,
-#asset_address, #asset_property_name, #asset_salary_name,
-#asset_salary_worth, #asset_rent_name, #asset_rent_worth,
-#stock_asset_name, #stock_asset_worth, #stock_asset_company,
-#tax_liability_name, #tax_liability_company, #rent_liability_name,
-#rent_liability_company, #liability_bill_name, #liability_bill_worth,
-#other_liability_name, #other_liability_worth,
-#liability_debt_name, #liability_debt_worth
+.modal_input
 {
   width: 60%;
   height: 50px;

@@ -135,12 +135,12 @@
         <div class="delete_modal" id="delete_modal_text">
           This will delete any saved data on your account and reset it to a clean slate. Do you wish to continue?
         </div>
-        <button onclick="hide('delete_menu')" class="delete_modal" id = "confirm_delete_button_no" class="submit_button">
+        <button onclick="hide('delete_menu')" class="delete_modal" id = "confirm_delete_button_no">
           <div id="signup_button_text">
             No
           </div>
         </button>
-        <button onclick="reset_account()" class="delete_modal" id = "confirm_delete_button_yes" class="submit_button">
+        <button onclick="reset_account()" class="delete_modal" id = "confirm_delete_button_yes">
           <div id="signup_button_text">
             Yes
           </div>
@@ -159,8 +159,8 @@
           Thanks for taking the time to report a bug. Please provide as accurate of a description of the bug as possible with any steps necessary to recreate it.
         </div>
         <form method="POST" action="http://formspree.io/tgih1999@gmail.com">
-          <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title" required name="email"></input>
-          <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary" required name="message"></textarea>
+          <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title"></input>
+          <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary"></textarea>
           <center>
             <button type="submit" onclick="submit_bug()" class="report_bug_content" id = "submit_bug_report">
               <div id="submit_bug_text">
@@ -241,8 +241,8 @@
             </span>
           </img>
         </div>
-        <input id="liability_bill_name" class="bill_input" type="text" placeholder="Name" required></input>
-        <input id="liability_bill_worth" class="bill_input" type="number" placeholder="Bill Amount" required></input>
+        <input id="liability_bill_name" class="modal_input bill_input" type="text" placeholder="Name"></input>
+        <input id="liability_bill_worth" class="modal_input bill_input" type="number" placeholder="Bill Amount"></input>
         <form class="bill_input">
           <select id="bill_dropdown">
             <option value="365">Daily</option>
@@ -253,7 +253,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_bill_liabilities()" class="bill_input" id = "save_bill_button" class="submit_button">
+          <button onclick="save_bill_liabilities()" class="bill_input" id = "save_bill_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -274,14 +274,14 @@
             </span>
           </img>
         </div>
-        <input id="tax_liability_name" class="taxes_liabilities_input" type="text" placeholder="Name"></input>
-        <input id="tax_liability_company" class="taxes_liabilities_input" type="text" placeholder="Tax bracket %:"></input>
+        <input id="tax_liability_name" class="modal_input taxes_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="tax_liability_company" class="modal_input taxes_liabilities_input" type="text" placeholder="Tax bracket %:"></input>
         <form class="taxes_liabilities_input">
           <select id="taxes_dropdown">
           </select>
         </form>
         <center>
-          <button onclick="save_tax_liabilities()" class="taxes_liabilities_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_tax_liabilities()" class="taxes_liabilities_input" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -302,8 +302,8 @@
             </span>
           </img>
         </div>
-        <input id="rent_liability_name" class="rent_liabilities_input" type="text" placeholder="Name"></input>
-        <input id="rent_liability_company" class="rent_liabilities_input" type="text" placeholder="Rent"></input>
+        <input id="rent_liability_name" class="modal_input rent_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="rent_liability_company" class="modal_input rent_liabilities_input" type="text" placeholder="Rent"></input>
         <form class="rent_liabilities_input">
           <select id="rent_dropdown">
             <option value="365">Daily</option>
@@ -314,7 +314,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_rent_liabilities()" class="rent_liabilities_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_rent_liabilities()" class="rent_liabilities_input" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -334,10 +334,10 @@
             </span>
           </img>
         </div>
-        <input id="liability_debt_name" class="debt_liabilities_input" type="text" placeholder="Name" required></input>
-        <input id="liability_debt_worth" class="debt_liabilities_input" type="number" placeholder="Debt Amount" required></input>
+        <input id="liability_debt_name" class="modal_input debt_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="liability_debt_worth" class="modal_input debt_liabilities_input" type="number" placeholder="Debt Amount"></input>
         <center>
-          <button onclick="save_debt_liabilities()" class="debt_liabilities_input" id = "save_bill_button" class="submit_button">
+          <button onclick="save_debt_liabilities()" class="debt_liabilities_input" id="save_bill_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -360,9 +360,9 @@
             </span>
           </img>
         </div>
-        <input id="loans_liability_name" class="loans_liabilities_input" type="text" placeholder="Name"></input>
-        <input id="loans_liability_worth" class="loans_liabilities_input" type="text" placeholder="Amount"></input>
-        <input id="loans_liability_interest" class="loans_liabilities_input" type="text" placeholder="Interest"></input>
+        <input id="loans_liability_name" class="modal_input loans_liabilities_input" type="text" placeholder="Name"></input>
+        <input id="loans_liability_worth" class="modal_input loans_liabilities_input" type="text" placeholder="Amount"></input>
+        <input id="loans_liability_interest" class="modal_input loans_liabilities_input" type="text" placeholder="Interest"></input>
         <form class="loans_liabilities_input">
           <select id="loans_dropdown">
             <option value="12">Monthly</option>
@@ -371,7 +371,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_loans_liabilities()" class="loans_liabilities_input" id = "save_loans_button" class="submit_button">
+          <button onclick="save_loans_liabilities()" class="loans_liabilities_input" id = "save_loans_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -393,8 +393,8 @@
           </img>
         </div>
 
-        <input id="other_liability_name" class="liabilities_others_input" type="text" name="signup_username" placeholder="Name" required></input>
-        <input id="other_liability_worth" class="liabilities_others_input" type="number" name="signup_username" placeholder="Estimated Amount" required></input>
+        <input id="other_liability_name" class="modal_input liabilities_others_input" type="text" placeholder="Name"></input>
+        <input id="other_liability_worth" class="modal_input liabilities_others_input" type="number" placeholder="Estimated Amount"></input>
         <form class="liabilities_others_input">
           <select id="liability_others_dropdown">
             <option value="reoccurring">Reoccurring</option>
@@ -402,13 +402,12 @@
           </select>
         </form>
         <center>
-          <button onclick="save_other_liabilities()" class="liabilities_others_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_other_liabilities()" class="liabilities_others_input" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
           </button>
         </center>
-
 
       </div>
     </div>
@@ -420,7 +419,7 @@
         <span onclick="close_modal('edit_asset_menu')" class="close">&times;</span>
         <input id="edit_asset_name" class="edit_asset_modal_input" type="text"></input>
         <center>
-          <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id = "submit_bug_report">
+          <button type="submit" onclick="save_edit_asset()" class="edit_asset_modal_input" id="submit_bug_report">
             <div id="submit_edit_text">
               Save
             </div>
@@ -436,7 +435,7 @@
         <span onclick="close_modal('edit_liability_menu')" class="close">&times;</span>
         <input id="edit_liability_name" class="edit_liability_modal_input" type="text"></input>
         <center>
-          <button type="submit" onclick="save_edit_liability()" class="edit_liability_modal_input" id = "submit_bug_report">
+          <button type="submit" onclick="save_edit_liability()" class="edit_liability_modal_input" id="submit_bug_report">
             <div id="submit_edit_text">
               Save
             </div>
@@ -521,10 +520,10 @@
             </span>
           </img>
         </div>
-        <input id="asset_rent_name" class="rent_input" type="text" placeholder="Name" required></input>
-        <input id="asset_rent_worth" class="rent_input" type="number" placeholder="Rent" required></input>
+        <input id="asset_rent_name" class="modal_input rent_input" type="text" placeholder="Name"></input>
+        <input id="asset_rent_worth" class="modal_input rent_input" type="number" placeholder="Rent"></input>
         <form class="rent_input">
-          <select id="rent_dropdown" name="salary_occurence">
+          <select id="rent_dropdown">
             <option value="365">Daily</option>
             <option value="52">Weekly</option>
             <option value="26">Bi-Weekly</option>
@@ -533,7 +532,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_rent()" class="rent_input" id = "save_rent_button" class="submit_button">
+          <button onclick="save_rent()" class="rent_input" id = "save_rent_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -555,10 +554,10 @@
             </span>
           </img>
         </div>
-        <input id="asset_property_name" class="property_input" type="text" placeholder="Name" required></input>
-        <input id="asset_address" class="property_input" type="text" placeholder="Address" required></input>
-        <input id="asset_city" class="property_input" type="text" placeholder="City" required></input>
-        <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip" required></input>
+        <input id="asset_property_name" class="modal_input property_input" type="text" placeholder="Name"></input>
+        <input id="asset_address" class="modal_input property_input" type="text" placeholder="Address"></input>
+        <input id="asset_city" class="property_input" type="text" placeholder="City"></input>
+        <input id="asset_zip" class="property_input" type="text" pattern="\d*" maxlength="5" placeholder="Zip"></input>
         <form class="property_input">
           <select id="asset_state_dropdown" name="salary_occurence">
             <option value="AL">AL</option>
@@ -615,7 +614,7 @@
         </form>
         <div class="clearfix"/>
         <center>
-          <button onclick="save_property()" class="property_input" id = "save_property_button" class="submit_button">
+          <button onclick="save_property()" class="property_input" id = "save_property_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -635,10 +634,10 @@
             </span>
           </img>
         </div>
-        <input id="asset_salary_name" class="salary_input" type="text" placeholder="Name" required></input>
-        <input id="asset_salary_worth" class="salary_input" type="number" placeholder="Salary" required></input>
+        <input id="asset_salary_name" class="modal_input salary_input" type="text" placeholder="Name"></input>
+        <input id="asset_salary_worth" class="modal_input salary_input" type="number" placeholder="Salary"></input>
         <form class="salary_input">
-          <select id="salary_dropdown" name="salary_occurence">
+          <select id="salary_dropdown">
             <option value="2000">Hourly</option>
             <option value="250">Daily</option>
             <option value="50">Weekly</option>
@@ -647,7 +646,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_salary()" class="salary_input" id = "save_salary_button" class="submit_button">
+          <button onclick="save_salary()" class="salary_input" id ="save_salary_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -668,11 +667,11 @@
             </span>
           </img>
         </div>
-        <input id="stock_asset_name" class="stock_input" type="text" name="signup_username" placeholder="Name" required></input>
-        <input id="stock_asset_company" class="stock_input" type="text" name="signup_username" placeholder="Company ticker symbol" required></input>
-        <input id="stock_asset_worth" class="stock_input" type="number" name="signup_username" placeholder="Number of Shares" required></input>
+        <input id="stock_asset_name" class="modal_input stock_input" type="text" placeholder="Name"></input>
+        <input id="stock_asset_company" class="modal_input stock_input" type="text" placeholder="Company ticker symbol"></input>
+        <input id="stock_asset_worth" class="modal_input stock_input" type="number" placeholder="Number of Shares"></input>
         <center>
-          <button onclick="save_stock()" class="stock_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_stock()" class="stock_input" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -693,16 +692,16 @@
           </img>
         </div>
 
-        <input id="other_asset_name" class="others_input" type="text" name="signup_username" placeholder="Name" required></input>
-        <input id="other_asset_worth" class="others_input" type="number" name="signup_username" placeholder="Estimated Worth" required></input>
+        <input id="other_asset_name" class="modal_input others_input" type="text" placeholder="Name"></input>
+        <input id="other_asset_worth" class="modal_input others_input" type="number" placeholder="Estimated Worth"></input>
         <form class="others_input">
-          <select id="others_dropdown" name="salary_occurence">
+          <select id="others_dropdown">
             <option value="reoccurring">Reoccurring</option>
             <option value="single">One Time</option>
           </select>
         </form>
         <center>
-          <button onclick="save_other()" class="others_input" id = "save_other_button" class="submit_button">
+          <button onclick="save_other()" class="others_input" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
