@@ -89,6 +89,14 @@ body{
 
 /***************************LOADING.HTMl***********************/
 
+.hover_transparent{
+  transition: 0.5s;
+}
+
+.hover_transparent:hover{
+  background-color: #dadadb;
+}
+
 #background_tint{
   width: 100%;
   height: 100%;
@@ -226,6 +234,16 @@ body{
   cursor: pointer;
 }
 
+#quick_glance_add{
+  width: 20px;
+  height: 20px;
+  margin-top: 12.5px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  float: left;
+  margin-left: 10px;
+}
+
 #quick_glance_renew:hover{
   opacity: 0.5;
 }
@@ -295,9 +313,7 @@ body{
   font-size: 24px;
 }
 
-#profile_add_assets_button, #profile_add_liabilities_button,
-#profile_remove_assets_button, #profile_remove_liabilities_button,
-#profile_edit_assets_button, #profile_edit_liabilities_button{
+.button{
   width: 25px;
   height: 25px;
   margin-top: 10px;
@@ -305,16 +321,8 @@ body{
   margin-bottom: 25px;
 }
 
-#profile_remove_assets_button, #profile_remove_liabilities_button,
-#profile_edit_assets_button, #profile_edit_liabilities_button{
+.display_none{
   display: none;
-}
-
-#profile_add_assets_button:hover, #profile_add_liabilities_button:hover,
-#profile_remove_assets_button:hover, #profile_remove_liabilities_button:hover
-{
-  background-color: #dadadb;
-  transition: 0.5s;
 }
 
 #profile_edit_assets_button:hover, #profile_edit_liabilities_button:hover{
@@ -590,9 +598,7 @@ body{
   padding: 3px;
 }
 
-#modal_img:hover, #modal_img_other:hover, #save_other_button:hover, #save_loans_button:hover,
-#save_property_button:hover, #save_salary_button:hover, #save_rent_button:hover,
-#confirm_delete_button_no:hover, #confirm_delete_button_yes:hover, #submit_bug_report:hover, #save_bill_button:hover{
+.hover_opacity:hover{
   cursor: pointer;
   opacity: 0.5;
   transition: 0.5s;
@@ -653,8 +659,6 @@ body{
   margin-left: 8%;
   float: left;
 }
-
-
 
 #edit_asset_name, #edit_liability_name{
   width: 70%;

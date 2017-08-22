@@ -60,6 +60,7 @@
         </img>
       </div>
       <div>
+        <img id="quick_glance_add" src="../Images/add.png" class="hover_transparent"></img>
         <img onclick="renew_stock_cards()"id="quick_glance_renew" src="../Images/renew.png"></img>
       </div>
     </div>
@@ -101,18 +102,18 @@
         Assets:
       </div>
 
-      <img onclick="open_assets_modal()" id="profile_add_assets_button" src="../Images/add.png"></img>
-      <img id="profile_remove_assets_button" src="../Images/minus.png"></img>
-      <img id="profile_edit_assets_button" src="../Images/edit.png"></img>
+      <img onclick="open_assets_modal()" id="profile_add_assets_button" class="hover_transparent button" src="../Images/add.png"></img>
+      <img id="profile_remove_assets_button" class="display_none hover_transparent button" src="../Images/minus.png"></img>
+      <img id="profile_edit_assets_button" class="display_none button" src="../Images/edit.png"></img>
     </div>
 
     <div id="profile_liabilities_box_top">
       <div id="profile_liabilities_title">
          Liabilities:
       </div>
-        <img onclick="open_liabilities_modal()" id="profile_add_liabilities_button" src="../Images/add.png"></img>
-        <img id="profile_remove_liabilities_button" src="../Images/minus.png"></img>
-        <img id="profile_edit_liabilities_button" src="../Images/edit.png"></img>
+        <img onclick="open_liabilities_modal()" id="profile_add_liabilities_button" class="hover_transparent button" src="../Images/add.png"></img>
+        <img id="profile_remove_liabilities_button" class="display_none hover_transparent button" src="../Images/minus.png"></img>
+        <img id="profile_edit_liabilities_button" class="display_none button" src="../Images/edit.png"></img>
     </div>
 
     <div class = "clearfix"/>
@@ -135,12 +136,12 @@
         <div class="delete_modal" id="delete_modal_text">
           This will delete any saved data on your account and reset it to a clean slate. Do you wish to continue?
         </div>
-        <button onclick="hide('delete_menu')" class="delete_modal" id = "confirm_delete_button_no">
+        <button onclick="hide('delete_menu')" class="delete_modal hover_opacity" id = "confirm_delete_button_no">
           <div id="signup_button_text">
             No
           </div>
         </button>
-        <button onclick="reset_account()" class="delete_modal" id = "confirm_delete_button_yes">
+        <button onclick="reset_account()" class="delete_modal hover_opacity" id = "confirm_delete_button_yes">
           <div id="signup_button_text">
             Yes
           </div>
@@ -162,7 +163,7 @@
           <input id="report_bug_title" class="report_bug_content" type="text" placeholder="Title"></input>
           <textarea id="report_bug_summary" class="report_bug_content" type="text" placeholder="Summary"></textarea>
           <center>
-            <button type="submit" onclick="submit_bug()" class="report_bug_content" id = "submit_bug_report">
+            <button type="submit" onclick="submit_bug()" class="report_bug_content hover_opacity" id = "submit_bug_report">
               <div id="submit_bug_text">
                 Submit
               </div>
@@ -183,19 +184,19 @@
 
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_liabilities('bill_input')" id="modal_img" src="../Images/bill.png"></img>
+            <img onclick="open_liabilities('bill_input')" id="modal_img" class="hover_opacity" src="../Images/bill.png"></img>
             <p id="modal_logo_text">
               Bills
             </p>
           </div>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_liabilities('taxes_liabilities_input')" id="modal_img" src="../Images/taxes.png"></img>
+            <img onclick="open_liabilities('taxes_liabilities_input')" id="modal_img" class="hover_opacity" src="../Images/taxes.png"></img>
             <p id="modal_logo_text">
               Taxes
             </p>
           </div>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_liabilities('rent_liabilities_input')" id="modal_img" src="../Images/rent.png"></img>
+            <img onclick="open_liabilities('rent_liabilities_input')" id="modal_img" class="hover_opacity" src="../Images/rent.png"></img>
             <p id="modal_logo_text">
               Rent
             </p>
@@ -207,21 +208,21 @@
 
         <center>
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_liabilities('debt_liabilities_input')" id="modal_img" src="../Images/debt.png"></img>
+            <img onclick="open_liabilities('debt_liabilities_input')" id="modal_img" class="hover_opacity" src="../Images/debt.png"></img>
             <p id="modal_logo_text">
               Debt
             </p>
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img onclick="open_liabilities('loans_liabilities_input')" id="modal_img" src="../Images/loans.png"></img>
+            <img onclick="open_liabilities('loans_liabilities_input')" id="modal_img" class="hover_opacity" src="../Images/loans.png"></img>
             <p id="modal_logo_text">
               Loans
             </p>
           </div>
 
           <div id="liabilities_modal_logo" class="liabilities_modal_logo">
-            <img id="modal_img_other" onclick="open_liabilities('liabilities_others_input')" src="../Images/other.png"></img>
+            <img id="modal_img_other" class="hover_opacity" onclick="open_liabilities('liabilities_others_input')" src="../Images/other.png"></img>
             <p id="modal_logo_text">
               Other
             </p>
@@ -253,7 +254,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_bill_liabilities()" class="bill_input" id = "save_bill_button">
+          <button onclick="save_bill_liabilities()" class="bill_input hover_opacity" id = "save_bill_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -281,7 +282,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_tax_liabilities()" class="taxes_liabilities_input" id = "save_other_button">
+          <button onclick="save_tax_liabilities()" class="taxes_liabilities_input hover_opacity" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -314,7 +315,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_rent_liabilities()" class="rent_liabilities_input" id = "save_other_button">
+          <button onclick="save_rent_liabilities()" class="rent_liabilities_input hover_opacity" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -371,7 +372,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_loans_liabilities()" class="loans_liabilities_input" id = "save_loans_button">
+          <button onclick="save_loans_liabilities()" class="loans_liabilities_input hover_opacity" id = "save_loans_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -402,7 +403,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_other_liabilities()" class="liabilities_others_input" id = "save_other_button">
+          <button onclick="save_other_liabilities()" class="liabilities_others_input hover_opacity" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -453,19 +454,19 @@
 
         <center>
           <div id="modal_logo" class="modal_logo">
-            <img onclick="open_asset('account_input')" id="modal_img" src="../Images/account.png"></img>
+            <img onclick="open_asset('account_input')" id="modal_img" class="hover_opacity" src="../Images/account.png"></img>
             <p id="modal_logo_text">
               Account
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
-            <img onclick="open_asset('property_input')" id="modal_img" src="../Images/house.png"></img>
+            <img onclick="open_asset('property_input')" id="modal_img" class="hover_opacity" src="../Images/house.png"></img>
             <p id="modal_logo_text">
               Property
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
-            <img onclick="open_asset('rent_input')" id="modal_img" src="../Images/rent.png"></img>
+            <img onclick="open_asset('rent_input')" id="modal_img" class="hover_opacity" src="../Images/rent.png"></img>
             <p id="modal_logo_text">
               Rent
             </p>
@@ -479,19 +480,19 @@
 
         <center>
           <div id="modal_logo" class="modal_logo">
-            <img onclick="open_asset('salary_input')" id="modal_img" src="../Images/salary.png"></img>
+            <img onclick="open_asset('salary_input')" id="modal_img" class="hover_opacity" src="../Images/salary.png"></img>
             <p id="modal_logo_text">
               Salary
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
-            <img onclick="open_asset('stock_input')" id="modal_img" src="../Images/stock.png"></img>
+            <img onclick="open_asset('stock_input')" id="modal_img" class="hover_opacity" src="../Images/stock.png"></img>
             <p id="modal_logo_text">
               Stocks
             </p>
           </div>
           <div id="modal_logo" class="modal_logo">
-            <img id="modal_img_other" onclick="open_asset('others_input')" src="../Images/other.png"></img>
+            <img id="modal_img_other" class="hover_opacity" onclick="open_asset('others_input')" src="../Images/other.png"></img>
             <p id="modal_logo_text">
               Other
             </p>
@@ -532,7 +533,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_rent()" class="rent_input" id = "save_rent_button">
+          <button onclick="save_rent()" class="rent_input hover_opacity" id = "save_rent_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -614,7 +615,7 @@
         </form>
         <div class="clearfix"/>
         <center>
-          <button onclick="save_property()" class="property_input" id = "save_property_button">
+          <button onclick="save_property()" class="property_input hover_opacity" id = "save_property_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -646,7 +647,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_salary()" class="salary_input" id ="save_salary_button">
+          <button onclick="save_salary()" class="salary_input hover_opacity" id ="save_salary_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -671,7 +672,7 @@
         <input id="stock_asset_company" class="modal_input stock_input" type="text" placeholder="Company ticker symbol"></input>
         <input id="stock_asset_worth" class="modal_input stock_input" type="number" placeholder="Number of Shares"></input>
         <center>
-          <button onclick="save_stock()" class="stock_input" id = "save_other_button">
+          <button onclick="save_stock()" class="stock_input hover_opacity" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>
@@ -701,7 +702,7 @@
           </select>
         </form>
         <center>
-          <button onclick="save_other()" class="others_input" id = "save_other_button">
+          <button onclick="save_other()" class="others_input hover_opacity" id = "save_other_button">
             <div id="signup_button_text">
               Save
             </div>

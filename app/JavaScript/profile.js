@@ -33,8 +33,8 @@ var liabilitiesBulletsWorth = new Array();
 var liabilitiesBulletsType = new Array();
 var liabilitiesBulletsData = new Array();
 
-var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
-var defaultCompaniesPrice = new Array();
+//var defaultCompanies = ["FB", "AAPL", "AMZN", "NFLX", "GOOGL", "SNAP"];
+//var defaultCompaniesPrice = new Array();
 
 /**
   * Name:         setup_profile()
@@ -61,10 +61,12 @@ function setup_profile()
       var profile_worth_text;
       var profile_quick_glance_text_net_worth;
       var profile_quick_glance_text_earning_power;
+      var companiesLen;
       var user_earning_power_path = 'users/' + user.uid + '/earning_power';
       var user_net_worth_path = 'users/' + user.uid + '/net_worth';
       var user_assets_len_path = 'users/' + user.uid + '/assets_len';
       var user_liabilities_len_path = 'users/' + user.uid + '/liabilities_len';
+      var user_companies_path = 'users/' + user.uid + '/companies';
 
       curr_user = user;
 
@@ -106,8 +108,14 @@ function setup_profile()
           loader('end', 'loader');
       });
 
-      while ( counter < defaultCompanies.length)
-        post_stock_cards(defaultCompanies[counter++]);
+      database.ref(user_companies_path).on('value', function(snapshot)
+      {
+        companiesLen = snapshot.val();
+        while (counter < companiesLen.length){
+          post_stock_cards(companiesLen[counter++]);
+        }
+      });
+
     } else {
       loader('end', 'loader');
       window.location.href = "login.html";
@@ -181,6 +189,7 @@ function renew_stock_cards()
 {
   var node;
   var counter = 0;
+  var user_companies_path = 'users/' + user.uid + '/companies';
 
   node = document.getElementById('profile_news_placeholder');
 
@@ -189,10 +198,14 @@ function renew_stock_cards()
     node.removeChild(node.firstChild);
   }
 
-  while ( counter < defaultCompanies.length)
+  database.ref(user_companies_path).on('value', function(snapshot)
   {
-    post_stock_cards(defaultCompanies[counter++]);
-  }
+    companiesLen = snapshot.val();
+    while (counter < companiesLen.length){
+      post_stock_cards("" + companiesLen[counter++]);
+    }
+  });
+
   return;
 }
 
@@ -226,8 +239,7 @@ function post_stock_cards(company_ticker)
       {
         stock_card.innerHTML = company_ticker;
         var stock_card_price = document.createElement("P");
-        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
-        defaultCompaniesPrice.push(current_close);
+        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);        
         stock_card_price.innerHTML = "$" + current_close.toFixed(2);
         stock_card.appendChild(stock_card_price);
         placeholder.appendChild(stock_card);

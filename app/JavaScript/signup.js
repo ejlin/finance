@@ -16,16 +16,16 @@
 
 var curr_user;
 
-/** 
+/**
   * Name:         write_user_data()
   * Parameters:   userId = The identifying ID of the user in Firebase
   *               name = The name of the user in Firebase
   *               email = The name of the email in Firebase
   * Return:       None
-  * Description:  This function will validate the input the user uses to 
+  * Description:  This function will validate the input the user uses to
   *               sign up for a new account. If successfully validated, this
   *               function will call the Firebase API to create a new account
-  *               in Firebase. 
+  *               in Firebase.
   **/
 
 function write_user_data(userId, fname, lname, email, pass) {
@@ -37,18 +37,19 @@ function write_user_data(userId, fname, lname, email, pass) {
     net_worth_yesterday: 0,
     earning_power: 0,
     assets_len : 0,
-    liabilities_len : 0
+    liabilities_len : 0,
+    companies: ["FB", "AMZN", "AAPL", "NFLX", "GOOGL"]
   });
 }
 
-/** 
+/**
   * Name:         validate_signup_input()
   * Parameters:   None
   * Return:       None
-  * Description:  This function will validate the input the user uses to 
+  * Description:  This function will validate the input the user uses to
   *               sign up for a new account. If successfully validated, this
   *               function will call the Firebase API to create a new account
-  *               in Firebase. 
+  *               in Firebase.
   **/
 
 function validate_signup_input()
@@ -60,7 +61,7 @@ function validate_signup_input()
   var confirm_password = document.getElementById('signup_confirm_password').value;
   var name = first_name + " " + last_name;
   var toReturn = false;
-  
+
   var signup_input = document.getElementsByClassName('signup_input');
   for (var i = 0; i < signup_input.length; i++)
   {
@@ -77,24 +78,24 @@ function validate_signup_input()
 
   if (password == confirm_password)
   {
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) 
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user)
     {
       curr_user = firebase.auth().currentUser;
       write_user_data(user.uid, first_name, last_name, email, password);
       curr_user.updateProfile(
       {
         displayName: name,
-        
-      }).then(function() 
+
+      }).then(function()
               {
                 save_date_signup();
                 window.location.href = "profile.html";
-              }).catch(function(error) 
+              }).catch(function(error)
               {
                 //TODO
                 // An error happened.
               });
-      },function(error) 
+      },function(error)
       {
         //TODO
         // Handle Errors here.
@@ -111,7 +112,7 @@ function save_date_signup()
   var updates = {};
   var d = new Date();
   var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    
+
   var year = d.getFullYear();
   var day = days[d.getDay()];
   var date = d.getDate();
@@ -121,7 +122,7 @@ function save_date_signup()
   return database.ref().update(updates);
 }
 
-/** 
+/**
   * Name:         password_mismath()
   * Parameters:   None
   * Return:       None
@@ -137,9 +138,9 @@ function password_mismatch()
   confirm_password.value = "";
   confirm_password.className += " formInvalid";
   confirm_password.placeholder = "Passwords don't match!";
-} 
+}
 
-/** 
+/**
   * Name:         N/A
   * Parameters:   e
   * Return:       None
