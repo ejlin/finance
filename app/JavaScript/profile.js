@@ -239,7 +239,7 @@ function post_stock_cards(company_ticker)
       {
         stock_card.innerHTML = company_ticker;
         var stock_card_price = document.createElement("P");
-        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);        
+        current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         stock_card_price.innerHTML = "$" + current_close.toFixed(2);
         stock_card.appendChild(stock_card_price);
         placeholder.appendChild(stock_card);
@@ -1679,6 +1679,11 @@ function submit_bug()
 function temp_login()
 {
   window.location.href = "login.html";
+}
+
+function load_settings()
+{
+  window.location.href = "settings.html";  
 }
 
 //TODO

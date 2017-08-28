@@ -15,14 +15,14 @@
   </head>
 
   <body onload="setup_profile()">
-<!--
+
     <div id="menu">
-      <img id="menu_icon" src="../Images/avatar.png"></img>
-      <img id="menu_icon" src="../Images/news.png"></img>
-      <img id="menu_icon" src="../Images/stock.png"></img>
-      <img id="menu_icon" src="../Images/data.png"></img>
-      <img id="menu_icon" src="../Images/settings.png"></img>
-    </div>-->
+      <img onclick="load_profile()" id="menu_icon" class="menu_icon" src="../Images/avatar.png"></img>
+      <img id="menu_icon" class="menu_icon" src="../Images/news.png"></img>
+      <img id="menu_icon" class="menu_icon" src="../Images/stock.png"></img>
+      <img id="menu_icon" class="menu_icon" src="../Images/data.png"></img>
+      <img onclick="load_settings()" id="menu_icon" class="menu_icon" src="../Images/settings.png"></img>
+    </div>
 
     <div class = "clearfix"/>
 
@@ -717,5 +717,6 @@
     <script src = "../JavaScript/login.js"></script>
     <script src = "../JavaScript/signup.js"></script>
     <script src = "../JavaScript/profile.js"></script>
+    <script src = "../JavaScript/settings.js"></script>
   </body>
 </html>
