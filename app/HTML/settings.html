@@ -8,7 +8,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/settings.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
     </link>
     </script>
@@ -25,6 +25,46 @@
     </div>
 
     <div class = "clearfix"/>
+
+    <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png"></img>
+    <img onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png"></img>
+
+    <div id="delete_menu" class="modal">
+      <div class="delete_modal_content">
+        <span onclick="hide('delete_menu')" class="close">&times;</span>
+        <div class="delete_modal" id="delete_modal_text">
+          This will delete any saved data on your account and reset it to a clean slate. Do you wish to continue?
+        </div>
+        <button onclick="hide('delete_menu')" class="delete_modal hover_opacity" id = "confirm_delete_button_no">
+          <div id="signup_button_text">
+            No
+          </div>
+        </button>
+        <button onclick="reset_account()" class="delete_modal hover_opacity" id = "confirm_delete_button_yes">
+          <div id="signup_button_text">
+            Yes
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class = "clearfix"/>
+
+    <div id = "settings_background">
+        <div id="settings_title">
+            Settings
+        </div>
+        <br></br>
+        <input class="settings_input" type="text" placeholder="Name"></input>
+        <div class="settings_update_button"></div>
+        <input class="settings_input" type="text" placeholder="Email"></input>
+        <div class="settings_update_button"></div>
+        <input class="settings_input" type="password" placeholder="Password"></input>
+        <div class="settings_update_button"></div>
+        <input class="settings_input" type="password" placeholder="Confirm Password"></input>
+        <div class="settings_update_button"></div>
+
+    </div>
 
     <!-- Our scripts -->
 
