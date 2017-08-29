@@ -14,7 +14,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="setup_settings()">
 
     <div id="menu">
       <img onclick="load_profile()" id="menu_icon" class="menu_icon" src="../Images/avatar.png"></img>
@@ -51,18 +51,23 @@
     <div class = "clearfix"/>
 
     <div id = "settings_background">
-        <div id="settings_title">
-            Settings
-        </div>
-        <br></br>
-        <input class="settings_input" type="text" placeholder="Name"></input>
-        <div class="settings_update_button"></div>
-        <input class="settings_input" type="text" placeholder="Email"></input>
-        <div class="settings_update_button"></div>
-        <input class="settings_input" type="password" placeholder="Password"></input>
-        <div class="settings_update_button"></div>
-        <input class="settings_input" type="password" placeholder="Confirm Password"></input>
-        <div class="settings_update_button"></div>
+      <div id="settings_title">
+          Settings
+      </div>
+      <div class = "clearfix"/>
+      <br></br>
+      <div id="settings_label">
+          General
+      </div>
+      <br></br>
+      <input id="first_name_input" class="settings_input" type="text" placeholder="First Name" style="margin-top: 5px;"></input>
+      <img onclick="update('first_name')" src="../Images/check.png" class="settings_update_button" style="margin-top: 5px;"></img>
+      <input id="last_name_input" class="settings_input" type="text" placeholder="Last Name"></input>
+      <img onclick="update('last_name')" src="../Images/check.png" class="settings_update_button"></img>
+      <input id="email_input" class="settings_input" type="text" placeholder="Email"></input>
+      <img onclick="update('email')" src="../Images/check.png" class="settings_update_button"></img>
+      <input id="password_input" class="settings_input" type="password" placeholder="Password"></input>
+      <img onclick="confirm_password()" src="../Images/check.png" class="settings_update_button"></img>
 
     </div>
 

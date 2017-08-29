@@ -123,8 +123,6 @@ body{
   opacity: 0.5;
 }
 
-
-
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -235,11 +233,18 @@ body{
   float: left;
   font-size: 28px;
   color: #5c7598;
-  margin: 20px 0px 0px 7.5%;
+  margin: 40px 0px 0px 7.5%;
+}
+
+#settings_label{
+  float: left;
+  font-size: 22px;
+  color: #5c7598;
+  margin: 0px 0px 0px 7.5%;
 }
 
 .settings_input{
-  width: 75%;
+  width: 78%;
   height: 50px;
   box-sizing: border-box;
   border: none;
@@ -264,7 +269,14 @@ body{
   float: left;
   border-radius: 0px 2px 2px 0px;
   background-color:#5c7598;
-  width: 10%;
-  height: 50px;
+  width: 3%;
+  height: 25px;
   margin-top: 4%;
+  padding: 12.5px 2% 12.5px 2%;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.settings_update_button:hover{
+  opacity: 0.7;
 }
