@@ -26,6 +26,12 @@
 
     <div class = "clearfix"/>
 
+    <a onclick="signout()">
+      <div id="profile_signout">
+        Sign Out
+      </div>
+    </a>
+
     <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png"></img>
     <img onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png"></img>
 
@@ -61,13 +67,14 @@
       </div>
       <br></br>
       <input id="first_name_input" class="settings_input" type="text" placeholder="First Name" style="margin-top: 5px;"></input>
-      <img onclick="update('first_name')" src="../Images/check.png" class="settings_update_button" style="margin-top: 5px;"></img>
+      <img id="first_name_input_button" onclick="update('first_name')" src="../Images/check.png" class="settings_update_button" style="margin-top: 5px;"></img>
       <input id="last_name_input" class="settings_input" type="text" placeholder="Last Name"></input>
-      <img onclick="update('last_name')" src="../Images/check.png" class="settings_update_button"></img>
+      <img id="last_name_input_button" onclick="update('last_name')" src="../Images/check.png" class="settings_update_button"></img>
       <input id="email_input" class="settings_input" type="text" placeholder="Email"></input>
-      <img onclick="update('email')" src="../Images/check.png" class="settings_update_button"></img>
-      <input id="password_input" class="settings_input" type="password" placeholder="Password"></input>
-      <img onclick="confirm_password()" src="../Images/check.png" class="settings_update_button"></img>
+      <img id="email_input_button" onclick="update('email')" src="../Images/check.png" class="settings_update_button"></img>
+      <input id="password_input" onclick="confirm_password_show()" class="settings_input" type="password" placeholder="Password"></input>
+      <input id="confirm_password_input" class="settings_input confirm_password_hide" type="password" placeholder="Confirm Password"></input>
+      <img id="confirm_password_button" onclick="update('password')" src="../Images/check.png" class="settings_update_button confirm_password_hide"></img>
 
     </div>
 

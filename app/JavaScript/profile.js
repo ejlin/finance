@@ -112,6 +112,7 @@ function setup_profile()
       {
         companiesLen = snapshot.val();
         while (counter < companiesLen.length){
+          console.log(companiesLen[counter]);
           post_stock_cards(companiesLen[counter++]);
         }
       });
@@ -189,7 +190,7 @@ function renew_stock_cards()
 {
   var node;
   var counter = 0;
-  var user_companies_path = 'users/' + user.uid + '/companies';
+  var user_companies_path = 'users/' + curr_user.uid + '/companies';
 
   node = document.getElementById('profile_news_placeholder');
 
@@ -239,6 +240,7 @@ function post_stock_cards(company_ticker)
       {
         stock_card.innerHTML = company_ticker;
         var stock_card_price = document.createElement("P");
+        //TODO: FIX THIS 
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         stock_card_price.innerHTML = "$" + current_close.toFixed(2);
         stock_card.appendChild(stock_card_price);
@@ -1683,7 +1685,7 @@ function temp_login()
 
 function load_settings()
 {
-  window.location.href = "settings.html";  
+  window.location.href = "settings.html";
 }
 
 //TODO
