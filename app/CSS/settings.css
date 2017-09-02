@@ -299,3 +299,23 @@ body{
   margin-bottom: 20px;
   cursor: pointer;
 }
+
+.confirm_password_modal {
+  background-color: #abb7c8;
+  margin: 30% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border-radius: 2px;
+  width: 50%; /* Could be more or less, depending on screen size */
+  height: 27.5%;
+  position: fixed;
+  margin-left: calc(25% - 20px);
+}
+
+#confirm_password_modal_text{
+  font-size: 18px;
+  color:#5c7598;
+  margin-top: 10%;
+  text-align: center;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+}

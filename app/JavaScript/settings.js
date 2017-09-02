@@ -128,17 +128,13 @@ function update(type)
     case 'password':
       to_change_value = document.getElementById('password_input').value;
       var confirm_password_value = document.getElementById('confirm_password_input').value;
-      if (to_change_value != confirm_password_value)
+      if (to_change_value != confirm_password_value || to_change_value == "")
       {
         return;
       }
       else
       {
-        var user = firebase.auth().currentUser;
-        user.updatePassword(to_change_value).then(function() {
-          change_successful("Password");
-        }).catch(function(error) {
-        });
+        open_confirm_password_modal();
       }
     default:
       break;
@@ -172,5 +168,17 @@ window.onclick = function(event) {
     {
       elements[i].style.display = "none";
     }
+    password.value = "";
+    confirm_password.value = "";
+  }
+}
+/*
+function open_confirm_password_modal()
+{
+  show('confirm_password_menu');
+  var confirm_password_modal = document.getElementsByClassName('confirm_password_modal');
+  for (var i = 0; i < confirm_password_modal.length; i++)
+  {
+    confirm_password_modal[i].style.display = "block";
   }
 }

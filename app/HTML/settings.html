@@ -35,7 +35,7 @@
     <img onclick="open_delete_modal()" id = "reset_button" src = "../Images/delete.png"></img>
     <img onclick="open_bug_modal()" id = "report_bug_button" src = "../Images/bug.png"></img>
 
-    <div id="delete_menu" class="modal">
+    <div id="delete_menu" class="delete_modal_content modal">
       <div class="delete_modal_content">
         <span onclick="hide('delete_menu')" class="close">&times;</span>
         <div class="delete_modal" id="delete_modal_text">
@@ -75,9 +75,28 @@
       <input id="password_input" onclick="confirm_password_show()" class="settings_input" type="password" placeholder="Password"></input>
       <input id="confirm_password_input" class="settings_input confirm_password_hide" type="password" placeholder="Confirm Password"></input>
       <img id="confirm_password_button" onclick="update('password')" src="../Images/check.png" class="settings_update_button confirm_password_hide"></img>
-
     </div>
 
+    <!-- Confirm password -->
+<!--
+    <div class = "clearfix"/>
+
+    <div id="confirm_password_menu" class="modal">
+      <div class="confirm_password_modal">
+        <span onclick="hide('confirm_password_menu')" class="close">&times;</span>
+        <div class="confirm_password_modal" id="confirm_password_modal_text">
+          Re-type your password to verify your account
+        </div>
+        <input id="confirm_password_input_modal" class="settings_input confirm_password_modal" type="password" placeholder="Password"></input>
+        <button onclick="" class="confirm_password_modal hover_opacity" id="confirm_delete_button_yes">
+          <div id="signup_button_text">
+            Yes
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class = "clearfix"/>-->
     <!-- Our scripts -->
 
     <script src = "../../main.js"></script>
