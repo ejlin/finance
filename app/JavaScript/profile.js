@@ -112,7 +112,6 @@ function setup_profile()
       {
         companiesLen = snapshot.val();
         while (counter < companiesLen.length){
-          console.log(companiesLen[counter]);
           post_stock_cards(companiesLen[counter++]);
         }
       });
@@ -240,7 +239,7 @@ function post_stock_cards(company_ticker)
       {
         stock_card.innerHTML = company_ticker;
         var stock_card_price = document.createElement("P");
-        //TODO: FIX THIS 
+        //TODO: FIX THIS
         current_close = parseFloat(company["Time Series (1min)"][(Object.keys(company["Time Series (1min)"])[0])]["4. close"]);
         stock_card_price.innerHTML = "$" + current_close.toFixed(2);
         stock_card.appendChild(stock_card_price);

@@ -112,13 +112,7 @@ function update(type)
       to_change_value = document.getElementById('email_input').value;
       if (to_change_value != "")
       {
-        var user = firebase.auth().currentUser;
-        user.updateEmail(to_change_value).then(function() {
-          updates['/users/' + curr_user.uid + '/email/'] = to_change_value;
-          change_successful("Email");
-          return database.ref().update(updates);
-        }).catch(function(error) {
-        });
+        open_confirm_password_modal('email');
       }
       else
       {
@@ -134,7 +128,7 @@ function update(type)
       }
       else
       {
-        open_confirm_password_modal();
+        open_confirm_password_modal('password');
       }
     default:
       break;
@@ -152,33 +146,100 @@ function confirm_password_show()
   }
 }
 
-function confirm_password()
-{
-  console.log("here");
-}
-
 window.onclick = function(event) {
   var password = document.getElementById('password_input');
   var confirm_password = document.getElementById('confirm_password_input');
   var confirm_password_button = document.getElementById('confirm_password_button');
+  var reauthenticate_modal = document.getElementById('confirm_password_menu');
 
-  if (event.target != password && event.target != confirm_password && event.target != confirm_password_button) {
-    var elements = document.getElementsByClassName('confirm_password_hide');
-    for (var i = 0; i < elements.length; i++)
-    {
-      elements[i].style.display = "none";
-    }
-    password.value = "";
-    confirm_password.value = "";
+  if (event.target == password || event.target == confirm_password || event.target == confirm_password_button || reauthenticate_modal.style.display == "block") {
+    return;
   }
+  var elements = document.getElementsByClassName('confirm_password_hide');
+  for (var i = 0; i < elements.length; i++)
+  {
+    elements[i].style.display = "none";
+  }
+  password.value = "";
+  confirm_password.value = "";
 }
-/*
-function open_confirm_password_modal()
+
+function open_confirm_password_modal(type)
 {
   show('confirm_password_menu');
   var confirm_password_modal = document.getElementsByClassName('confirm_password_modal');
   for (var i = 0; i < confirm_password_modal.length; i++)
   {
     confirm_password_modal[i].style.display = "block";
+  }
+  var save_button = document.getElementById('reauthenticate_button');
+  save_button.onclick = function()
+  {
+    authenticate(type);
+  }
+}
+
+function authenticate(type)
+{
+  var pass = document.getElementById('confirm_password_input_modal');
+  var pass_value = pass.value;
+
+  try
+  {
+    const user = firebase.auth().currentUser;
+    const credentials = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      pass_value
+    );
+    user.reauthenticateWithCredential(credentials).then(function() {
+      if (type == 'password')
+      {
+        var new_password = document.getElementById('password_input').value;
+        if (new_password == "")
+        {
+          return;
+        }
+        user.updatePassword(new_password).then(function()
+        {
+          hide('confirm_password_menu');
+          var pass = document.getElementById('confirm_password_input_modal');
+          var new_pass = document.getElementById('password_input');
+          var confirm_new_pass = document.getElementById('confirm_password_input');
+          new_pass.value = "";
+          confirm_new_pass.value = "";
+          pass.value = "";
+          return;
+        }).catch(function(error)
+        {
+        });
+      }
+      else if (type == 'email')
+      {
+        var new_email = document.getElementById('email_input').value;
+        if (new_email == "")
+        {
+          return;
+        }
+        user.updateEmail(new_email).then(function()
+        {
+          hide('confirm_password_menu');
+          var updates = {};
+          const user = firebase.auth().currentUser;
+          var pass = document.getElementById('confirm_password_input_modal');
+          pass.value = "";
+          updates['/users/' + user.uid + '/email/'] = new_email;
+          return database.ref().update(updates);
+        }).catch(function(error)
+        {
+        });
+      }
+    }).catch(function(error) {
+    });
+
+  }
+  catch(err)
+  {
+    pass_value = "";
+    pass.style.color = "red";
   }
 }

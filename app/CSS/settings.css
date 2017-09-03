@@ -262,6 +262,29 @@ body{
   float: left;
 }
 
+.reauthenticate_input{
+  width: 85%;
+  height: 50px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px 0px 0px 2px;
+  font-size: 18px;
+  color: #5c7598;
+  background-color:#dadadb;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
+  margin-top: 4%;
+  margin-left: 7.5%;
+  float: left;
+  margin-bottom: 4%;
+}
+
+.reauthenticate_input::-webkit-input-placeholder{
+  color: #5c7598;
+}
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: white;
 }
@@ -300,7 +323,7 @@ body{
   cursor: pointer;
 }
 
-.confirm_password_modal {
+.confirm_password_modal_content {
   background-color: #abb7c8;
   margin: 30% auto; /* 15% from the top and centered */
   padding: 20px;
@@ -318,4 +341,16 @@ body{
   text-align: center;
   margin-left: 7.5%;
   margin-right: 7.5%;
+}
+
+#reauthenticate_button{
+  width: 15%;
+  height: 35px;
+  border: none;
+  background-color:#5c7598;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 2%;
+  display: none;
+  font-size: 18px;
 }
