@@ -6,7 +6,7 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-function createWindow () 
+function createWindow ()
 {
   // Create the browser window.
   win = new BrowserWindow({width: 1000, height: 800, minWidth: 1000, minHeight: 800, maxWidth: 1000, maxHeight: 800})
@@ -18,9 +18,6 @@ function createWindow ()
     slashes: true
   }))
 
-  //win.webContents.openDevTools()
-  
-
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -28,12 +25,6 @@ function createWindow ()
     // when you should delete the corresponding element.
     win = null
   })
-}
-
-
-
-function signup(){
-  window.location.href = "signup.html";
 }
 
 var firebase = require("firebase");
@@ -49,8 +40,6 @@ var config = {
       firebase.initializeApp(config);
 
 var database = firebase.database();
-
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

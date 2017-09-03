@@ -11,11 +11,11 @@
 /******************************************************************************/
 
 
-/** 
+/**
   * Name:         signup_login()
   * Parameters:   None
   * Return:       None
-  * Description:  This function will validate the input the user uses to 
+  * Description:  This function will validate the input the user uses to
   *               login to an account. If successfully validated, this
   *               function will call the Firebase API to sign the user in
   **/
@@ -23,7 +23,7 @@
 function signup_login () {
   var email = document.getElementById('login_username').value;
   var password = document.getElementById('login_password').value;
-  
+
   if ( email == "" || password == "")
   {
     return;
@@ -36,17 +36,17 @@ function signup_login () {
     return;
   }
 
-  firebase.auth().signInWithEmailAndPassword(email, password).then(function() 
+  firebase.auth().signInWithEmailAndPassword(email, password).then(function()
   {
     window.location.href = "profile.html";
-  }).catch(function(error) 
+  }).catch(function(error)
   {
     login_fail();
     reset_password();
   });
 }
 
-/** 
+/**
   * Name:         login_fail()
   * Parameters:   None
   * Return:       None
@@ -61,31 +61,31 @@ function login_fail()
   fail_text.style.display = "block";
 }
 
-/** 
+/**
   * Name:         email_fail()
   * Parameters:   None
   * Return:       None
   * Description:  This function will display an error message on failure
   *               to include a valid email address
   **/
-  
+
 function email_fail()
 {
   var fail_login_username = document.getElementById('login_username');
-  
+
   fail_login_username.value = "";
   fail_login_username.className += " formInvalid";
- 
+
   var fail_text = document.getElementById('login_fail');
   fail_text.innerHTML = "Invalid email. Try again";
   fail_text.style.display = "block";
-  
+
   fail_login_username.onclick = function(){
     fail_login_username.placeholder = "Email";
   }
 }
 
-/** 
+/**
   * Name:         reset_password()
   * Parameters:   None
   * Return:       None
@@ -98,7 +98,16 @@ function reset_password()
   fail_login_password.value = "";
 }
 
-/** 
+function signup()
+{
+  window.location.href = "signup.html";
+}
+
+function forgot_password()
+{
+  
+}
+/**
   * Name:         N/A
   * Parameters:   e
   * Return:       None
